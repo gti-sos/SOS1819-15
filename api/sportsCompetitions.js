@@ -13,9 +13,9 @@ routes.get("/sports-competitions",(req,res) => {
 });
 
 routes.post("/sports-competitions",(req,res) => {
-    let newEducationCenter = req.body;
+    let sportsCompetitions = req.body;
 
-    sportsCompetitions.push(newEducationCenter);
+    sportsCompetitions.push(sportsCompetitions);
 
     res.sendStatus(201);
 });
@@ -29,12 +29,12 @@ routes.get("/sports-competitions/:id",(req,res) => {
 
     let id = req.params.id;
 
-    let filteredCenters = sportsCompetitions.filter((c) => {
+    let filteredCompetitions = sportsCompetitions.filter((c) => {
         return c.id == parseInt(id);
     });
 
-    if (filteredCenters.length >= 1){
-        res.send(filteredCenters[0]);
+    if (filteredCompetitions.length >= 1){
+        res.send(filteredCompetitions[0]);
     } else {
         res.sendStatus(404);
     }
@@ -43,24 +43,22 @@ routes.get("/sports-competitions/:id",(req,res) => {
 routes.put("/sports-competitions/:id",(req,res) => {
 
     let id = req.params.id;
-    let updatedCenter = req.body;
+    let updatedCompetitions = req.body;
     var found = false;
 
-    let updatedEducationsCenters = sportsCompetitions.map((c) => {
+    let updatedSportsCompetitions = sportsCompetitions.map((c) => {
         if(c.id == id){
             found = true;
-            return updatedCenter;
+            return updatedCompetitions;
         } else {
             return c
         }
     });
 
-
-
     if (!found){
         res.sendStatus(404);
     } else {
-        sportsCompetitions = updatedEducationsCenters;
+        sportsCompetitions = updatedSportsCompetitions;
         res.sendStatus(200);
     }
 });
@@ -70,7 +68,7 @@ routes.delete("/sports-competitions/:id",(req,res) => {
     let id = req.params.id;
     var found = false;
 
-    let updatedEducationsCenters = sportsCompetitions.filter((c) => {
+    let updatedSportsCompetitions = sportsCompetitions.filter((c) => {
         if(c.id == id)
             found = true;
 
@@ -80,11 +78,10 @@ routes.delete("/sports-competitions/:id",(req,res) => {
     if (!found){
         res.sendStatus(404);
     } else {
-        sportsCompetitions = updatedEducationsCenters;
+        sportsCompetitions = updatedSportsCompetitions;
         res.sendStatus(200);
     }
 });
-
 
 
 routes.post("/sports-competitions/:id",(req,res) => {

@@ -9,5 +9,5 @@
 - **URL**: http://sos1819-15.herokuapp.com/
 -  **APIs**:
     - [https://sos1819-15.herokuapp.com/api/v1/sport-centers/docs](https://sos1819-15.herokuapp.com/api/v1/sport-centers/docs) (developed by [Juan Luis Gómez Durán](https://github.com/juagomdur1))
-    - [https://sos1819-15.herokuapp.com/api/v1/sports-competitions/docs](https://sos1819-15.herokuapp.com/api/v1/sports-competitions/docs) (developed by [Pablo Fernández Sánchez](https://github.com/pabfersan5))
+    - [https://sos1819-15.herokuapp.com/api/v1/sports-competitions/](https://sos1819-15.herokuapp.com/api/v1/sports-competitions/) (developed by [Pablo Fernández Sánchez](https://github.com/pabfersan5))
     - [https://sos1819-15.herokuapp.com/api/v1/educations-centers/docs](https://sos1819-15.herokuapp.com/api/v1/educations-centers/docs) (developed by [Daniel José Ramírez Otero](https://github.com/danramirez))
