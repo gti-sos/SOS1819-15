@@ -13,9 +13,9 @@ routes.get("/sports-competitions",(req,res) => {
 });
 
 routes.post("/sports-competitions",(req,res) => {
-    let sportsCompetitions = req.body;
+    let newSportsCompetitions = req.body;
 
-    sportsCompetitions.push(sportsCompetitions);
+    sportsCompetitions.push(newSportsCompetitions);
 
     res.sendStatus(201);
 });
