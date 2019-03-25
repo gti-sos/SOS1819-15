@@ -1,6 +1,5 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-
+let express = require('express');
+let routes = express.Router();
 
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://juanlu:3636jlgD@sos1819jlgd-su7hb.mongodb.net/test?retryWrites=true";
@@ -13,13 +12,10 @@ client.connect(err => {
   console.log("Connected!");
 });
 
-var app = express();
 
-app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;
 
-app.get("/contacts", (req,res)=>{
+routes.get("/sports-centers/", (req,res)=>{
     
     contacts.find({}).toArray((err,contactsArray)=>{
         
@@ -34,7 +30,7 @@ app.get("/contacts", (req,res)=>{
 
 // POST /contacts/
 
-app.post("/contacts", (req,res)=>{
+routes.post("/sports-centers/", (req,res)=>{
     
     var newContact = req.body;
     
@@ -43,7 +39,4 @@ app.post("/contacts", (req,res)=>{
     res.sendStatus(201);
 });
 
-
-app.listen(port, () => {
-    console.log("Super server ready on port " + port);
-});
+module.exports = routes;
