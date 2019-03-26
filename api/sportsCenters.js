@@ -12,8 +12,6 @@ client.connect(err => {
   console.log("Connected!");
 });
 
-
-
 // Get a un conjunto 
 
 routes.get("/sports-centers/", (req,res)=>{
@@ -114,7 +112,7 @@ routes.delete("/sports-centers",(req,res) => {
 
 // Get a un recurso concreto
     
-  routes.get("/sports-centers/:id",(req,res) => {  
+routes.get("/sports-centers/:id",(req,res) => {  
       
     let id = req.params.id;
     
@@ -139,7 +137,7 @@ routes.put("/sports-centers/:id",(req,res) => {
     
     var myquery = { _id: vid };
     var newvalues = { $set: {street: vstreet, name: vname } };
-    contacts.updateOne(myquery, newvalues, function(err, res) {
+    contacts.update(myquery, newvalues, function(err, res) {
         if (err)
           {
             console.log(err);
