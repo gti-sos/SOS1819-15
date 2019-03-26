@@ -135,7 +135,7 @@ routes.put("/sports-centers/:id",(req,res) => {
     let vname = req.params.name;
     let vstreet = req.params.street;
     
-    var myquery = { "_id": vid };
+    var myquery = { "_id": 1 };
     var newvalues = { $set: {street: vstreet, name: vname } };
     contacts.update(myquery, newvalues, function(err, res) {
         if (err)
