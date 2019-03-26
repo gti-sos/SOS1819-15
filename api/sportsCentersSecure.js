@@ -1,3 +1,4 @@
+
 let express = require('express');
 let routes = express.Router();
 
@@ -9,17 +10,17 @@ const uri = "mongodb+srv://juanlu:3636jlgD@sos1819jlgd-su7hb.mongodb.net/test?re
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 var sportsCenters = [];
-var apiKey = "xcacapse";
+var apiKey = "juanlu123";
 
 client.connect(err => {
-    sportsCenters = client.db("sos1819").collection("sportscenters");
+    sportsCenters = client.db("sos1819-pfs").collection("competitions");
     console.log("Connected!");
 });
-
 
 //POSTMAN
 
 routes.get("/sports-centers/docs", (req, res) => {
+    
     let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -29,16 +30,16 @@ routes.get("/sports-centers/docs", (req, res) => {
     res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
 });
 
-// GET A UN CONJUNTO + IMPLEMENTACION PAGINACIÓN 
+// GET y PAGINACIÓN 
 
 routes.get("/sports-centers", (req, res) => {
+    
     let apikeyReq = req.query.apikey;
+
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
         return ;
     }
-    
-    
     let ownership = req.query.ownership;
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
@@ -64,7 +65,7 @@ routes.get("/sports-centers", (req, res) => {
 // LOAD INITIAL DATA
 
 routes.get("/sports-centers/loadInitialData", (req, res) => {
-     let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
@@ -83,7 +84,7 @@ routes.get("/sports-centers/loadInitialData", (req, res) => {
 
 // POST A UN CONJUNTO
 routes.post("/sports-centers", (req, res) => {
-     let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
@@ -110,7 +111,7 @@ routes.post("/sports-centers", (req, res) => {
 // DELETE A UN CONJUNTO 
 
 routes.delete("/sports-centers", (req, res) => {
-     let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
@@ -124,7 +125,7 @@ routes.delete("/sports-centers", (req, res) => {
 // GET A UN RECURSO CONCRETO
 
 routes.get("/sports-centers/:id", (req, res) => {
-     let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
@@ -146,7 +147,7 @@ routes.get("/sports-centers/:id", (req, res) => {
 // PUT A UN RECURSO CONCRETO 
 
 routes.put("/sports-centers/:id", (req, res) => {
-     let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
@@ -183,7 +184,7 @@ routes.put("/sports-centers/:id", (req, res) => {
 // DELETE RECURSO CONCRETO
 
 routes.delete("/sports-centers/:id", (req, res) => {
-     let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
@@ -207,7 +208,7 @@ routes.delete("/sports-centers/:id", (req, res) => {
 // POST A UN RECURSO CONCRETO (ERROR)
 
 routes.post("/sports-centers/:id", (req, res) => {
-     let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
@@ -220,7 +221,7 @@ routes.post("/sports-centers/:id", (req, res) => {
 // PUT A UN CONJUNTO
 
 routes.put("/sports-centers", (req, res) => {
-     let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);

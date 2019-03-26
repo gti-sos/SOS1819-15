@@ -21,7 +21,7 @@ routes.get("/sports-centers/docs", (req, res) => {
     res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
 });
 
-// PAGINACIÓN 
+// GET y PAGINACIÓN 
 
 routes.get("/sports-centers", (req, res) => {
     let ownership = req.query.ownership;
@@ -59,16 +59,6 @@ routes.get("/sports-centers/loadInitialData", (req, res) => {
     });
 });
 
-
-
-// GET A UN CONJUNTO
-
-routes.get("/sports-centers", (req, res) => {
-    sportsCenters.find({}).toArray((err, sportscentersArray) => {
-        if (err) console.log("Error: " + err);
-        res.send(sportscentersArray);
-    });
-});
 
 // POST A UN CONJUNTO
 routes.post("/sports-centers", (req, res) => {
