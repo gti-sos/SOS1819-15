@@ -98,29 +98,32 @@ routes.put("/sports-competitions/:id", (req, res) => {
 
     let id = req.params.id;
     let updatedCompetition = req.body;
-    var myquery = {_id: parseInt(id, 10)};
+    
+    if (updatedCompetition.hasOwnProperty("_id")){
+        var myquery = {_id: parseInt(id, 10)};
 
-    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+        sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
 
         if (contactsArray.length == 1) {
             if (contactsArray[0]._id==id){
-                sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
-                if (err) {
-                    console.log("error: " + err);
-                    res.sendStatus(404);
-                } else {
-                    res.sendStatus(200);
+                    sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
+                    if (err) {
+                        console.log("error: " + err);
+                        res.sendStatus(404);
+                    } else {
+                        res.sendStatus(200);
+                    }
+                });
+                } else{
+                    res.sendStatus(400)
                 }
-            });
-            } else{
-                res.sendStatus(400)
+            } else {
+                res.sendStatus(404);
             }
-        } else {
-            res.sendStatus(404);
-        }
-    });
-
-
+        });
+    } else{
+        res.sendStatus(400);
+    }
 });
 
 routes.delete("/sports-competitions/:id", (req, res) => {
