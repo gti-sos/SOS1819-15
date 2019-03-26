@@ -1,102 +1,118 @@
 let express = require('express');
 let routes = express.Router();
 
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://sos:sos@sos1819-15dro-hqcpp.mongodb.net/test?retryWrites=true";
+const client = new MongoClient(uri, {useNewUrlParser: true});
+
 var educationsCenters = [];
 
-routes.get("/educations-centers/loadInitialData",(req,res) => {
+client.connect(err => {
+    educationsCenters = client.db("sos1819-15dro").collection("educationsCenter");
+    console.log("Connected!");
+});
+
+routes.get("/educations-centers/loadInitialData", (req, res) => {
     addData();
-    res.send("creado")
+    res.send("created")
 });
 
-routes.get("/educations-centers",(req,res) => {
-    res.send(educationsCenters)
+routes.get("/educations-centers/docs", (req, res) => {
+    res.redirect('https://documenter.getpostman.com/view/6901186/S17tRntf');
 });
 
-routes.post("/educations-centers",(req,res) => {
+routes.get("/educations-centers", (req, res) => {
+    educationsCenters.find({}).toArray((err, contactsArray) => {
+
+        if (err)
+            console.log("Error: " + err);
+
+        res.send(contactsArray);
+    });
+});
+
+routes.post("/educations-centers", (req, res) => {
     let newEducationCenter = req.body;
 
-    educationsCenters.push(newEducationCenter);
+    educationsCenters.insert(newEducationCenter);
 
     res.sendStatus(201);
 });
 
-routes.delete("/educations-centers",(req,res) => {
-    educationsCenters = [];
-    res.send(educationsCenters)
+routes.delete("/educations-centers", (req, res) => {
+    educationsCenters.deleteMany();
+
+    res.sendStatus(200);
 });
 
-routes.get("/educations-centers/:id",(req,res) => {
+routes.get("/educations-centers/:id", (req, res) => {
 
     let id = req.params.id;
 
-    let filteredCenters = educationsCenters.filter((c) => {
-        return c.id == parseInt(id);
+    educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+
+        if (contactsArray.length == 1) {
+            res.send(contactsArray[0]);
+        } else {
+            res.sendStatus(404);
+        }
     });
 
-    if (filteredCenters.length >= 1){
-        res.send(filteredCenters[0]);
-    } else {
-        res.sendStatus(404);
-    }
 });
 
-routes.put("/educations-centers/:id",(req,res) => {
+routes.put("/educations-centers/:id", (req, res) => {
 
     let id = req.params.id;
-    let updatedCenter = req.body;
-    var found = false;
+    let updatedCenters = req.body;
+    var myquery = {id: parseInt(id, 10)};
 
-    let updatedEducationsCenters = educationsCenters.map((c) => {
-        if(c.id == id){
-            found = true;
-            return updatedCenter;
+    educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+
+        if (contactsArray.length == 1) {
+            educationsCenters.replaceOne(myquery, updatedCenters, function (err, obj) {
+                if (err) {
+                    console.log("error: " + err);
+                    res.sendStatus(404);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
         } else {
-            return c
+            res.sendStatus(404);
         }
     });
 
 
-
-    if (!found){
-        res.sendStatus(404);
-    } else {
-        educationsCenters = updatedEducationsCenters;
-        res.sendStatus(200);
-    }
 });
 
-routes.delete("/educations-centers/:id",(req,res) => {
+routes.delete("/educations-centers/:id", (req, res) => {
 
     let id = req.params.id;
-    var found = false;
 
-    let updatedEducationsCenters = educationsCenters.filter((c) => {
-        if(c.id == id)
-            found = true;
+    var myquery = {id: parseInt(id, 10)};
 
-        return c.id != id;
+    educationsCenters.deleteOne(myquery, function (err, obj) {
+        if (err) {
+            res.sendStatus(404);
+        } else {
+            res.sendStatus(200);
+        }
     });
 
-    if (!found){
-        res.sendStatus(404);
-    } else {
-        educationsCenters = updatedEducationsCenters;
-        res.sendStatus(200);
-    }
 });
 
 
-
-routes.post("/educations-centers/:id",(req,res) => {
+routes.post("/educations-centers/:id", (req, res) => {
     res.sendStatus(405);
 });
 
-routes.put("/educations-centers",(req,res) => {
+routes.put("/educations-centers", (req, res) => {
     res.sendStatus(405);
 });
 
-function addData(){
-    educationsCenters = [{
+function addData() {
+
+    educationsCenters.insertMany([{
         id: 1,
         country: "spain",
         center: "Centro Docente Privado",
@@ -122,10 +138,48 @@ function addData(){
         lon: -5.974888801574707,
         sports_education: 0,
         monthStart: 6
+    }, {
+        id: 3,
+        country: "spain",
+        center: "Centro Docente Privado",
+        name: "El Tobogán",
+        ownership: "Privado",
+        domicile: "C/ Virgen del Valle  38",
+        locality: "Sevilla",
+        phone: 954276212,
+        lat: 37.37596064,
+        lon: -5.998167749,
+        sports_education: 1,
+        monthStart: 1
+    }, {
+        id: 4,
+        country: "spain",
+        center: "Colegio de Educación Infantil y Primaria",
+        name: "Centro de Estudios Sanitarios  Dr. Arduán",
+        ownership: "Privado",
+        domicile: "Avda. de Jerez  46",
+        locality: "Sevilla",
+        phone: 955623540,
+        lat: 37.325442656,
+        lon: -5.965175402,
+        sports_education: 1,
+        monthStart: 4
+    }, {
+        id: 5,
+        country: "spain",
+        center: "Centro de Educación Infantil",
+        name: "Snoopy 8",
+        ownership: "Privado",
+        domicile: "C/ San Roque  6 y 8",
+        locality: "Sevilla",
+        phone: 954210595,
+        lat: 37.3913194325946,
+        lon: -5.99841846498611,
+        sports_education: 0,
+        monthStart: 9
     }
-    ]
+    ]);
 }
-
 
 
 module.exports = routes;
