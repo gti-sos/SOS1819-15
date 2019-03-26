@@ -1,49 +1,181 @@
 let express = require('express');
 let routes = express.Router();
 
-const MongoClient = require('mongodb').MongoClient;
+
+// Conexión MongoDB 
+const MongoClient = require("mongodb").MongoClient;
 const uri = "mongodb+srv://juanlu:3636jlgD@sos1819jlgd-su7hb.mongodb.net/test?retryWrites=true";
+
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
-var contacts;
+var sportsCenters = [];
 
 client.connect(err => {
-  contacts = client.db("sos1819jlgd").collection("contacts");
-  console.log("Connected!");
+    sportsCenters = client.db("sos1819-pfs").collection("competitions");
+    console.log("Connected!");
 });
 
-// Get a un conjunto 
+//POSTMAN
 
-routes.get("/sports-centers/", (req,res)=>{
+routes.get("/sports-centers/docs", (req, res) => {
+    res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
+});
+
+// PAGINACIÓN 
+
+routes.get("/sports-centers", (req, res) => {
+    let ownership = req.query.ownership;
+    let limit = parseInt(req.query.limit, 10);
+    let offset = parseInt(req.query.offset, 10);
+    var myquery = {};
+    if (typeof ownership !== 'undefined') {
+        myquery = {ownership: ownership};
+    }
+    if (typeof limit === 'undefined') {
+        limit = 10000;
+    }
+    if (typeof offset === 'undefined') {
+        offset = 0;
+    }
+
+    console.log("Limit: " + limit);
+    sportsCenters.find(myquery).skip(offset).limit(limit).toArray((err, sportscentersArray) => {
+        if (err)
+            console.log("Error: " + err);
+        res.send(sportscentersArray);
+    });
+});
+
+// LOAD INITIAL DATA
+
+routes.get("/sports-centers/loadInitialData", (req, res) => {
+    sportsCenters.find().toArray((err, sportscentersArray) => {
+        if (sportscentersArray.length > 0) {
+            res.sendStatus(409);
+        } else {
+            addData();
+            res.send("created")
+        }
+    });
+});
+
+
+
+// GET A UN CONJUNTO
+
+routes.get("/sports-centers", (req, res) => {
+    sportsCenters.find({}).toArray((err, sportscentersArray) => {
+        if (err) console.log("Error: " + err);
+        res.send(sportscentersArray);
+    });
+});
+
+// POST A UN CONJUNTO
+routes.post("/sports-competitions", (req, res) => {
+    let newsportscenter = req.body;
     
-    contacts.find({}).toArray((err,contactsArray)=>{
-        
-        if(err)
-            console.log("Error: "+err);
-        
-        res.send(contactsArray);        
+    sportsCenters.find({"_id": parseInt(newsportscenter._id)}).toArray((err, sportscentersArray) => {
+
+        if (sportscentersArray.length < 1) {
+            sportsCenters.insert(newsportscenter);
+            res.sendStatus(201);
+        } else {
+            res.sendStatus(409);
+        }
+    });
+});
+
+// DELETE A UN CONJUNTO 
+
+routes.delete("/sports-centers", (req, res) => {
+    sportsCenters.deleteMany();
+
+    res.sendStatus(200);
+});
+
+// GET A UN RECURSO CONCRETO
+
+routes.get("/sports-centers/:id", (req, res) => {
+
+    let id = req.params.id;
+
+    sportsCenters.find({"_id": parseInt(id)}).toArray((err, sportscentersArray) => {
+
+        if (sportscentersArray.length == 1) {
+            res.send(sportscentersArray[0]);
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});
+
+// PUT A UN RECURSO CONCRETO 
+
+routes.put("/sports-centers/:id", (req, res) => {
+
+    let id = req.params.id;
+    let updatedCenter = req.body;
+    var myquery = {_id: parseInt(id, 10)};
+
+    sportsCenters.find({"_id": parseInt(id)}).toArray((err, sportscentersArray) => {
+
+        if (sportscentersArray.length == 1) {
+            if (sportscentersArray[0]._id==id){
+                sportsCenters.replaceOne(myquery, updatedCenter, function (err, obj) {
+                if (err) {
+                    console.log("error: " + err);
+                    res.sendStatus(404);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
+            } else{
+                res.sendStatus(400)
+            }
+        } else {
+            res.sendStatus(404);
+        }
+    });
+
+
+});
+
+// DELETE RECURSO CONCRETO
+
+routes.delete("/sports-centers/:id", (req, res) => {
+
+    let id = req.params.id;
+
+    var myquery = {_id: parseInt(id, 10)};
+
+    sportsCenters.deleteOne(myquery, function (err, obj) {
+        if (err) {
+            res.sendStatus(404);
+        } else {
+            res.sendStatus(200);
+        }
     });
 
 });
 
+// POST A UN RECURSO CONCRETO (ERROR)
 
-// POST /contacts/
+routes.post("/sports-centers/:id", (req, res) => {
+    res.sendStatus(405);
+});
 
-routes.post("/sports-centers/", (req,res)=>{
-    
-    var newContact = req.body;
-    
-    contacts.insert(newContact);
-    
-    res.sendStatus(201);
+
+// PUT A UN CONJUNTO
+
+routes.put("/sports-centers", (req, res) => {
+    res.sendStatus(405);
 });
 
 // Load Initial Data
 
-routes.get("/sports-centers/loadInitialData",(req,res) => {
-    
-    contacts.insertMany( 
-        [{ 
+
+    function addData() {
+    sportsCenters.insertMany([{ 
         
         _id:1,
         street: "Rafael Alberti",
@@ -100,59 +232,25 @@ routes.get("/sports-centers/loadInitialData",(req,res) => {
         
         
     ]);
-    
-    res.send("created");
-});
-    
-// Eliminar conjunto de datos
-
-routes.delete("/sports-centers",(req,res) => {
-    contacts.deleteMany();
-    res.sendStatus(200);
-});
-
-// Get a un recurso concreto
-    
-routes.get("/sports-centers/:id",(req,res) => {  
-      
-    let id = req.params.id;
-    
-    
-    contacts.find({"_id":parseInt(id)}).toArray((err,contactsArray)=>{
         
-    if (contactsArray.length == 1){
-        res.send(contactsArray[0]);
-    } else {
-        res.sendStatus(404);
-    }
-});
-});
-
-// PUT a un recurso concreto
-
-routes.put("/sports-centers/:id",(req,res) => {
-
-    let id = req.params.id;
-    let updatedCenters = req.body;
-    var myquery = {_id: parseInt(id, 10)};
-
-    contacts.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
-
-        if (contactsArray.length == 1) {
-            contacts.replaceOne(myquery, updatedCenters, function (err, obj) {
-                if (err) {
-                    console.log("error: " + err);
-                    res.sendStatus(404);
-                } else {
-                    res.sendStatus(200);
-                }
-            });
-        } else {
-            res.sendStatus(404);
-        }
-    });
-    
-});
-
+   } 
 
 module.exports = routes;
+
+// VALIDACIÓN JSON
+
+function validation(newsportscenter){
+    let r = false;
+    if (newsportscenter.hasOwnProperty("_id") &&
+    newsportscenter.hasOwnProperty("street") &&
+    newsportscenter.hasOwnProperty("name") &&
+    newsportscenter.hasOwnProperty("postalcode") &&
+    newsportscenter.hasOwnProperty("startingyear") &&
+    newsportscenter.hasOwnProperty("surface") &&
+    newsportscenter.hasOwnProperty("activity") &&
+    newsportscenter.hasOwnProperty("paviment") &&
+    newsportscenter.hasOwnProperty("sportfields")){
+        r = true;  
+    }
+    return r;
+} 
