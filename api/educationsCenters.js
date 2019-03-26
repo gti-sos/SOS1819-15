@@ -18,7 +18,7 @@ routes.get("/educations-centers/loadInitialData", (req, res) => {
 });
 
 routes.get("/educations-centers/docs", (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/6901186/S17tRntf');
+    res.redirect('https://documenter.getpostman.com/view/6901186/S17tS8XH');
 });
 
 routes.get("/educations-centers", (req, res) => {
