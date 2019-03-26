@@ -134,7 +134,7 @@ routes.put("/sports-centers/:id",(req,res) => {
 
     let id = req.params.id;
     let updatedCenters = req.body;
-    var myquery = {id: parseInt(id, 10)};
+    var myquery = {_id: parseInt(id, 10)};
 
     contacts.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
 
