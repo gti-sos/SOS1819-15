@@ -1,7 +1,4 @@
 let express = require('express');
-let expressvalidator = require('express-validator');
-
-var validator = expressvalidator();
 let routes = express.Router();
 
 const MongoClient = require('mongodb').MongoClient;
@@ -128,23 +125,6 @@ routes.post("/sports-competitions/:id", (req, res) => {
 routes.put("/sports-competitions", (req, res) => {
     res.sendStatus(405);
 });
-
-function validationField(req){
-    var r = true;
-    
-    req.checkBody('_id', 'Id required').notEmpty();
-    req.checkBody('year', 'Id required').notEmpty();
-    req.checkBody('day', 'Id required').notEmpty();
-    req.checkBody('month', 'Id required').notEmpty();
-    req.checkBody('name', 'Id required').notEmpty();
-    req.checkBody('activity', 'Id required').notEmpty();
-        
-    var errors = req.validationErrors();
-    if (errors) {
-        r = false;
-    }
-    return r;
-}
 
 function addData() {
     sportsCompetitions.insertMany([{ 
