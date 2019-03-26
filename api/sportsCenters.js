@@ -119,7 +119,7 @@ routes.put("/sports-centers/:id", (req, res) => {
                 sportsCenters.replaceOne(myquery, updatedCenter, function (err, obj) {
                 if (err) {
                     console.log("error: " + err);
-                    res.sendStatus(404);
+                    res.sendStatus(400);
                 } else {
                     res.sendStatus(200);
                 }
