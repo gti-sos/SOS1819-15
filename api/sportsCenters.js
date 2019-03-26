@@ -153,6 +153,27 @@ routes.delete("/sports-centers/:id", (req, res) => {
 
 });
 
+ // POST A UN CONJUNTO
+
+routes.post("/sports-centers", (req, res) => {
+    let newsportsCenters = req.body;
+    
+    if (validation(newsportsCenters)){
+        sportsCompetitions.find({"_id": parseInt(newsportsCenters._id)}).toArray((err, sportscentersArray) => {
+
+        if (sportscentersArray.length < 1) {
+            sportsCenters.insert(newsportsCenters);
+            res.sendStatus(201);
+        } else {
+            res.sendStatus(409);
+        }
+        });
+    }else{
+        res.sendStatus(400);
+    }
+    
+});
+
 // POST A UN RECURSO CONCRETO (ERROR)
 
 routes.post("/sports-centers/:id", (req, res) => {
