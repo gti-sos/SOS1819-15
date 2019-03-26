@@ -60,10 +60,29 @@ routes.get("/sports-competitions", (req, res) => {
     });
 });*/
 
+function validation(newCompetitions){
+    let r = false;
+    if (newCompetitions.hasOwnProperty("_id") &&
+    newCompetitions.hasOwnProperty("day") &&
+    newCompetitions.hasOwnProperty("month") &&
+    newCompetitions.hasOwnProperty("name") &&
+    newCompetitions.hasOwnProperty("sportcenter") &&
+    newCompetitions.hasOwnProperty("schoolcenter") &&
+    newCompetitions.hasOwnProperty("activity") &&
+    newCompetitions.hasOwnProperty("lengthactivity") &&
+    newCompetitions.hasOwnProperty("totaldistance") &&
+    newCompetitions.hasOwnProperty("inscriptionprice") &&
+    newCompetitions.hasOwnProperty("additionalinfo")){
+        r = true;  
+    }
+    return r;
+}
+
 routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
     
-    sportsCompetitions.find({"_id": parseInt(newCompetitions._id)}).toArray((err, contactsArray) => {
+    if (validation(newCompetitions)){
+        sportsCompetitions.find({"_id": parseInt(newCompetitions._id)}).toArray((err, contactsArray) => {
 
         if (contactsArray.length < 1) {
             sportsCompetitions.insert(newCompetitions);
@@ -71,7 +90,12 @@ routes.post("/sports-competitions", (req, res) => {
         } else {
             res.sendStatus(409);
         }
-    });
+        });
+    }else{
+        res.sendStatus(400);
+    }
+    
+    
 });
 
 routes.delete("/sports-competitions", (req, res) => {
@@ -99,31 +123,29 @@ routes.put("/sports-competitions/:id", (req, res) => {
     let id = req.params.id;
     let updatedCompetition = req.body;
     
-    if (updatedCompetition.hasOwnProperty("_id")){
-        var myquery = {_id: parseInt(id, 10)};
+    var myquery = {_id: parseInt(id, 10)};
 
-        sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
 
         if (contactsArray.length == 1) {
             if (contactsArray[0]._id==id){
-                    sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
-                    if (err) {
-                        console.log("error: " + err);
-                        res.sendStatus(404);
-                    } else {
-                        res.sendStatus(200);
-                    }
-                });
-                } else{
-                    res.sendStatus(400)
+                sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
+                if (err) {
+                    console.log("error: " + err);
+                    res.sendStatus(404);
+                } else {
+                    res.sendStatus(200);
                 }
-            } else {
-                res.sendStatus(404);
+            });
+            } else{
+                res.sendStatus(400)
             }
-        });
-    } else{
-        res.sendStatus(400);
-    }
+        } else {
+            res.sendStatus(404);
+        }
+    });
+
+
 });
 
 routes.delete("/sports-competitions/:id", (req, res) => {
