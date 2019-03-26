@@ -136,7 +136,7 @@ routes.put("/sports-centers/:id",(req,res) => {
     let updatedCenters = req.body;
     var myquery = {id: parseInt(id, 10)};
 
-    contacts.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+    contacts.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
 
         if (contactsArray.length == 1) {
             contacts.replaceOne(myquery, updatedCenters, function (err, obj) {
