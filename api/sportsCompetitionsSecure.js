@@ -7,6 +7,7 @@ const uri = "mongodb+srv://dbPablo:sossos@cluster0-s3eqj.mongodb.net/test?retryW
 const client = new MongoClient(uri, {useNewUrlParser: true});
 
 var sportsCompetitions = [];
+var apiKey = "gbbzajbw";
 
 client.connect(err => {
     sportsCompetitions = client.db("sos1819-pfs").collection("competitions");
@@ -14,11 +15,24 @@ client.connect(err => {
 });
 
 routes.get("/sports-competitions/docs", (req, res) => {
+    let apikeyReq = req.query.apikey;
+
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
     res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
 });
 
 
 routes.get("/sports-competitions/loadInitialData", (req, res) => {
+    let apikeyReq = req.query.apikey;
+
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
     sportsCompetitions.find().toArray((err, competitionArray) => {
         if (competitionArray.length > 0) {
             res.sendStatus(409);
@@ -30,6 +44,13 @@ routes.get("/sports-competitions/loadInitialData", (req, res) => {
 });
 
 routes.get("/sports-competitions", (req, res) => {
+    let apikeyReq = req.query.apikey;
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
+    
     let ownership = req.query.ownership;
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
@@ -61,6 +82,14 @@ routes.get("/sports-competitions", (req, res) => {
 });*/
 
 routes.post("/sports-competitions", (req, res) => {
+    let apikeyReq = req.query.apikey;
+
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
+    
     let newCompetitions = req.body;
     
     if (validation(newCompetitions)){
@@ -80,13 +109,26 @@ routes.post("/sports-competitions", (req, res) => {
 });
 
 routes.delete("/sports-competitions", (req, res) => {
+    let apikeyReq = req.query.apikey;
+
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
     sportsCompetitions.deleteMany();
 
     res.sendStatus(200);
 });
 
 routes.get("/sports-competitions/:id", (req, res) => {
+    let apikeyReq = req.query.apikey;
 
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
     let id = req.params.id;
 
     sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, competitionArray) => {
@@ -100,7 +142,13 @@ routes.get("/sports-competitions/:id", (req, res) => {
 });
 
 routes.put("/sports-competitions/:id", (req, res) => {
+    let apikeyReq = req.query.apikey;
 
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
     let id = req.params.id;
     let updatedCompetition = req.body;
     
@@ -130,7 +178,13 @@ routes.put("/sports-competitions/:id", (req, res) => {
 });
 
 routes.delete("/sports-competitions/:id", (req, res) => {
+    let apikeyReq = req.query.apikey;
 
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
     let id = req.params.id;
 
     var myquery = {_id: parseInt(id, 10)};
