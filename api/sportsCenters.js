@@ -133,14 +133,11 @@ routes.get("/sports-centers/:id",(req,res) => {
 routes.put("/sports-centers/:id",(req,res) => {
 
     let id = req.params.id;
-    let name = req.params.name;
-    let street = req.params.street;
     
     var myquery = { _id: parseInt(id) };
-    var newvalues = { $set: {name: name, street: street } };
+    var newvalues = { $set: {name: req.params.name, street: req.params.street } };
     
     contacts.find({"_id":parseInt(id)}).toArray((err,contactsArray)=>{
-        
         if (contactsArray.length == 1){
             contacts.updateOne(myquery, newvalues, function(err, res) {
                     if (err) {
