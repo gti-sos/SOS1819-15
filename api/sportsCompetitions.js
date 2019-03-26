@@ -39,14 +39,14 @@ routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
 
     sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
-        if (contactsArray.length > 0) {
-            res.sendStatus(409);
-        } else {
+
+        if (contactsArray.length < 1) {
             sportsCompetitions.insert(newCompetitions);
+            res.sendStatus(201);
+        } else {
+            res.sendStatus(409);
         }
     });
-
-    res.sendStatus(201);
 });
 
 routes.delete("/sports-competitions", (req, res) => {
