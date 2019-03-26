@@ -1,4 +1,7 @@
 let express = require('express');
+let expressvalidator = require('express-validator');
+
+var validator = expressvalidator();
 let routes = express.Router();
 
 const MongoClient = require('mongodb').MongoClient;
