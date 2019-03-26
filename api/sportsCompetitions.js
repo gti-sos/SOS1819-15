@@ -37,8 +37,8 @@ routes.get("/sports-competitions", (req, res) => {
 
 routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
-
-    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+    
+    sportsCompetitions.find({"_id": parseInt(newCompetitions._id)}).toArray((err, contactsArray) => {
 
         if (contactsArray.length < 1) {
             sportsCompetitions.insert(newCompetitions);
