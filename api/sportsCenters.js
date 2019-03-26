@@ -134,32 +134,20 @@ routes.delete("/sports-centers",(req,res) => {
 routes.put("/sports-centers/:id",(req,res) => {
 
     let id = req.params.id;
-    let updatedCenters = req.body;
-    var found = false;
-    contacts.find({"_id":parseInt(id)}).toArray((err,contactsArray)=>{
-        
-    if (contactsArray.length == 1){
-        res.send(contactsArray[0]);
-    } else {
-        res.sendStatus(404);
-    }
+    let name = req.params.name;
+    let street = req.params.street;
     
-    let updatedSportsCenters = sportsCenters.map((c) => {
-        if(c.id == id){
-            found = true;
-            return updatedCenters;
+    var myquery = { id: id };
+    var newvalues = { $set: {street: street, name: name } };
+    contacts.updateOne(myquery, newvalues, function(err, res) {
+        if (err){
+            res.sendStatus(404);
         } else {
-            return c
+            console.log("Document updated, id "+id);
+            res.sendStatus(200);
         }
     });
-
-    if (!found){
-        res.sendStatus(404);
-    } else {
-        sportsCenters = updatedSportsCenters;
-        res.sendStatus(200);
-    }
-});
+    
 });
 
 
