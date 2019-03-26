@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 let routesEducationsCenters = require('./api/educationsCenters');
+let routesEducationsCentersSecure = require('./api/educationsCentersSecure');
 let routesSportsCompetitions = require('./api/sportsCompetitions');
 let routesSportsCenters = require('./api/sportsCenters');
 let bodyParse = require("body-parser");
@@ -11,6 +12,7 @@ app.use(bodyParse.json());
 app.use("/",express.static(__dirname+"/public"));
 
 app.use('/api/v1', routesEducationsCenters);
+app.use('/api/v1/secure', routesEducationsCentersSecure);
 app.use('/api/v1', routesSportsCompetitions);
 app.use('/api/v1', routesSportsCenters);
 
