@@ -132,17 +132,24 @@ routes.get("/sports-centers/:id",(req,res) => {
 
 routes.put("/sports-centers/:id",(req,res) => {
 
-    let vid = req.params.id;
-    let vname = req.params.name;
-    let vstreet = req.params.street;
-    
-    
-    var myquery = { name: "AA.VV El pueblo" };
-    var newvalues = { $set: {name: "El pueblo", street: "Calle Rafael Alberti" } };
-    contacts.updateOne(myquery, newvalues, function(err, res) {
-        if (err) throw err;
-        console.log("1 document updated");
-        res.sendStatus(200);
+    let id = req.params.id;
+    let updatedCenters = req.body;
+    var myquery = {_id: parseInt(id, 10)};
+
+    contacts.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+
+        if (contactsArray.length == 1) {
+            contacts.replaceOne(myquery, updatedCenters, function (err, obj) {
+                if (err) {
+                    console.log("error: " + err);
+                    res.sendStatus(404);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
+        } else {
+            res.sendStatus(404);
+        }
     });
     
 });
