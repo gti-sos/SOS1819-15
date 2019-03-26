@@ -135,15 +135,13 @@ routes.put("/sports-centers/:id",(req,res) => {
     let vname = req.params.name;
     let vstreet = req.params.street;
     
-    client.connect(err => {
-        var dbo = client.db.db("sos1819jlgd");
-        var myquery = { _id : vid };
-        var newvalues = { $set: {name: vname, street: vstreet } };
-        dbo.collection("contacts").updateOne(myquery, newvalues, function(err, res) {
-            if (err) throw err;
-            console.log("1 document updated");
-            client.db.close();
-        });
+    
+    var myquery = { name: "AA.VV El pueblo" };
+    var newvalues = { $set: {name: "El pueblo", street: "Calle Rafael Alberti" } };
+    contacts.updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+
     });
     
 });
