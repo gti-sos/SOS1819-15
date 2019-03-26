@@ -13,6 +13,11 @@ client.connect(err => {
     console.log("Connected!");
 });
 
+routes.get("/sports-competitions/docs", (req, res) => {
+    res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
+});
+
+/*
 routes.get("/sports-competitions/loadInitialData", (req, res) => {
     sportsCompetitions.find().toArray((err, competitionArray) => {
         if (competitionArray.length > 0) {
@@ -22,10 +27,29 @@ routes.get("/sports-competitions/loadInitialData", (req, res) => {
             res.send("created")
         }
     });
-});
+});*/
 
-routes.get("/sports-competitions/docs", (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
+routes.get("/educations-centers", (req, res) => {
+    let ownership = req.query.ownership;
+    let limit = parseInt(req.query.limit, 10);
+    let offset = parseInt(req.query.offset, 10);
+    var myquery = {};
+    if (typeof ownership !== 'undefined') {
+        myquery = {ownership: ownership};
+    }
+    if (typeof limit === 'undefined') {
+        limit = 10000;
+    }
+    if (typeof offset === 'undefined') {
+        offset = 0;
+    }
+
+    console.log("Limit: " + limit);
+    sportsCompetitions.find(myquery).skip(offset).limit(limit).toArray((err, competitionArray) => {
+        if (err)
+            console.log("Error: " + err);
+        res.send(competitionArray);
+    });
 });
 
 routes.get("/sports-competitions", (req, res) => {
