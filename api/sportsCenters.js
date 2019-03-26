@@ -140,6 +140,8 @@ routes.put("/sports-centers/:id",(req,res) => {
     var myquery = { id: id };
     var newvalues = { $set: {street: street, name: name } };
     contacts.updateOne(myquery, newvalues, function(err, res) {
+        if (err) throw err;
+        
         if (err){
             res.sendStatus(404);
         } else {
