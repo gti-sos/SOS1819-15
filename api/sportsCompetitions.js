@@ -38,15 +38,18 @@ routes.get("/sports-competitions", (req, res) => {
 routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
 
-    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
-        if (contactsArray.length > 0) {
-            res.sendStatus(409);
-        } else {
-            sportsCompetitions.insert(newCompetitions);
-        }
-    });
-
-    res.sendStatus(201);
+    if ( validationField(req) == true ) {
+        sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+            if (contactsArray.length > 0) {
+                res.sendStatus(409);
+            } else {
+                sportsCompetitions.insert(newCompetitions);
+                res.sendStatus(201);
+            }
+        });
+    }else{
+        res.sendStatus(400);
+    }
 });
 
 routes.delete("/sports-competitions", (req, res) => {
@@ -122,6 +125,23 @@ routes.post("/sports-competitions/:id", (req, res) => {
 routes.put("/sports-competitions", (req, res) => {
     res.sendStatus(405);
 });
+
+function validationField(req){
+    var r = true;
+    
+    req.checkBody('_id', 'Id required').notEmpty();
+    req.checkBody('year', 'Id required').notEmpty();
+    req.checkBody('day', 'Id required').notEmpty();
+    req.checkBody('month', 'Id required').notEmpty();
+    req.checkBody('name', 'Id required').notEmpty();
+    req.checkBody('activity', 'Id required').notEmpty();
+        
+    var errors = req.validationErrors();
+    if (errors) {
+        r = false;
+    }
+    return r;
+}
 
 function addData() {
     sportsCompetitions.insertMany([{ 
