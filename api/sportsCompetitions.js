@@ -14,17 +14,18 @@ client.connect(err => {
 });
 
 routes.get("/sports-competitions/loadInitialData", (req, res) => {
-    if (sportsCompetitions.length > 0) {
-        addData();
-        res.send("created")
-    } else {
-        res.sendStatus(409);
-    }
-    
+    sportsCompetitions.find().toArray((err, competitionArray) => {
+        if (competitionArray.length > 0) {
+            res.sendStatus(409);
+        } else {
+            addData();
+            res.send("created")
+        }
+    });
 });
 
 routes.get("/sports-competitions/docs", (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/6901186/S17tRntf');
+    res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
 });
 
 routes.get("/sports-competitions", (req, res) => {
@@ -37,7 +38,13 @@ routes.get("/sports-competitions", (req, res) => {
 routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
 
-    sportsCompetitions.insert(newCompetitions);
+    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+        if (contactsArray.length > 0) {
+            res.sendStatus(409);
+        } else {
+            sportsCompetitions.insert(newCompetitions);
+        }
+    });
 
     res.sendStatus(201);
 });
@@ -71,7 +78,8 @@ routes.put("/sports-competitions/:id", (req, res) => {
     sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
 
         if (contactsArray.length == 1) {
-            sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
+            if (contactsArray[0]._id==id){
+                sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
                 if (err) {
                     console.log("error: " + err);
                     res.sendStatus(404);
@@ -79,6 +87,9 @@ routes.put("/sports-competitions/:id", (req, res) => {
                     res.sendStatus(200);
                 }
             });
+            } else{
+                res.sendStatus(400)
+            }
         } else {
             res.sendStatus(404);
         }
