@@ -135,11 +135,12 @@ routes.put("/sports-centers/:id",(req,res) => {
     let id = req.params.id;
     
     var myquery = { _id: parseInt(id) };
+    let updatedCenters = req.body;
     var newvalues = { $set: {name: req.params.name, street: req.params.street } };
     
     contacts.find({"_id":parseInt(id)}).toArray((err,contactsArray)=>{
         if (contactsArray.length == 1){
-            contacts.updateOne(myquery, newvalues, function(err, res) {
+            contacts.updateOne(myquery, updatedCenters, function(err, res) {
                     if (err) {
                         console.log("error: " + err);
                         res.sendStatus(404);
