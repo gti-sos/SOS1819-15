@@ -32,9 +32,7 @@ routes.get("/sports-centers/docs", (req, res) => {
 // GET A UN CONJUNTO + IMPLEMENTACION PAGINACIÓN 
 
 routes.get("/sports-centers", (req, res) => {
-    
     let apikeyReq = req.query.apikey;
-
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
         return ;
