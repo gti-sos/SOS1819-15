@@ -12,8 +12,6 @@ client.connect(err => {
   console.log("Connected!");
 });
 
-
-
 // Get a un conjunto 
 
 routes.get("/sports-centers/", (req,res)=>{
@@ -110,11 +108,12 @@ routes.get("/sports-centers/loadInitialData",(req,res) => {
 
 routes.delete("/sports-centers",(req,res) => {
     contacts.deleteMany();
+    res.sendStatus(200);
 });
 
 // Get a un recurso concreto
     
-  routes.get("/sports-centers/:id",(req,res) => {  
+routes.get("/sports-centers/:id",(req,res) => {  
       
     let id = req.params.id;
     
@@ -133,33 +132,19 @@ routes.delete("/sports-centers",(req,res) => {
 
 routes.put("/sports-centers/:id",(req,res) => {
 
-    let id = req.params.id;
-    let updatedCenters = req.body;
-    var found = false;
-    contacts.find({"_id":parseInt(id)}).toArray((err,contactsArray)=>{
-        
-    if (contactsArray.length == 1){
-        res.send(contactsArray[0]);
-    } else {
-        res.sendStatus(404);
-    }
+    let vid = req.params.id;
+    let vname = req.params.name;
+    let vstreet = req.params.street;
     
-    let updatedSportsCenters = sportsCenters.map((c) => {
-        if(c.id == id){
-            found = true;
-            return updatedCenters;
-        } else {
-            return c
-        }
-    });
-
-    if (!found){
-        res.sendStatus(404);
-    } else {
-        sportsCenters = updatedSportsCenters;
+    
+    var myquery = { name: "AA.VV El pueblo" };
+    var newvalues = { $set: {name: "El pueblo", street: "Calle Rafael Alberti" } };
+    contacts.updateOne(myquery, newvalues, function(err, res) {
+        if (err) throw err;
+        console.log("1 document updated");
         res.sendStatus(200);
-    }
-});
+    });
+    
 });
 
 
