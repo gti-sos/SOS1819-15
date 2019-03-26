@@ -18,7 +18,7 @@ routes.get("/educations-centers/loadInitialData", (req, res) => {
 });
 
 routes.get("/educations-centers/docs", (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/6901186/S17tRntf');
+    res.redirect('https://documenter.getpostman.com/view/6901186/S17tS8XH');
 });
 
 routes.get("/educations-centers", (req, res) => {
@@ -127,13 +127,22 @@ routes.delete("/educations-centers/:id", (req, res) => {
 
     var myquery = {id: parseInt(id, 10)};
 
-    educationsCenters.deleteOne(myquery, function (err, obj) {
-        if (err) {
-            res.sendStatus(404);
+    educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+
+        if (contactsArray.length > 0) {
+            educationsCenters.deleteOne(myquery, function (err, obj) {
+                if (err) {
+                    res.sendStatus(404);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
         } else {
-            res.sendStatus(200);
+            res.sendStatus(404);
         }
     });
+
+
 
 });
 
