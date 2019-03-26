@@ -47,11 +47,27 @@ routes.get("/educations-centers", (req, res) => {
 });
 
 routes.post("/educations-centers", (req, res) => {
+
     let newEducationCenter = req.body;
+    let id = parseInt(newEducationCenter.id, 10);
 
-    educationsCenters.insert(newEducationCenter);
+    if (!validation(newEducationCenter)){
+        res.sendStatus(400);
+        return;
+    }
 
-    res.sendStatus(201);
+    educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+
+        if (contactsArray.length == 0) {
+            educationsCenters.insertOne(newEducationCenter);
+
+            res.sendStatus(201);
+        } else {
+            res.sendStatus(409);
+        }
+    });
+
+
 });
 
 routes.delete("/educations-centers", (req, res) => {
@@ -80,6 +96,11 @@ routes.put("/educations-centers/:id", (req, res) => {
     let id = req.params.id;
     let updatedCenters = req.body;
     var myquery = {id: parseInt(id, 10)};
+
+    if(parseInt(id, 10) !== parseInt(updatedCenters.id, 10)){
+        res.sendStatus(400);
+        return;
+    }
 
     educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
 
@@ -124,6 +145,25 @@ routes.post("/educations-centers/:id", (req, res) => {
 routes.put("/educations-centers", (req, res) => {
     res.sendStatus(405);
 });
+
+function validation(newCompetitions){
+    let r = false;
+    if (newCompetitions.hasOwnProperty("id") &&
+        newCompetitions.hasOwnProperty("country") &&
+        newCompetitions.hasOwnProperty("center") &&
+        newCompetitions.hasOwnProperty("name") &&
+        newCompetitions.hasOwnProperty("ownership") &&
+        newCompetitions.hasOwnProperty("domicile") &&
+        newCompetitions.hasOwnProperty("locality") &&
+        newCompetitions.hasOwnProperty("phone") &&
+        newCompetitions.hasOwnProperty("lat") &&
+        newCompetitions.hasOwnProperty("lon") &&
+        newCompetitions.hasOwnProperty("sports_education") &&
+        newCompetitions.hasOwnProperty("monthStart")){
+        r = true;
+    }
+    return r;
+}
 
 function addData() {
 
