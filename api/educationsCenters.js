@@ -23,11 +23,21 @@ routes.get("/educations-centers/docs", (req, res) => {
 
 routes.get("/educations-centers", (req, res) => {
     let ownership = req.query.ownership;
+    let limit = parseInt(req.query.limit, 10);
+    let offset = parseInt(req.query.offset, 10);
     var myquery = {};
     if (typeof ownership !== 'undefined') {
         myquery = {ownership: ownership};
     }
-    educationsCenters.find(myquery).toArray((err, contactsArray) => {
+    if (typeof limit === 'undefined') {
+        limit = 10000;
+    }
+    if (typeof offset === 'undefined') {
+        offset = 0;
+    }
+
+    console.log("Limit: " + limit);
+    educationsCenters.find(myquery).skip(offset).limit(limit).toArray((err, contactsArray) => {
 
         if (err)
             console.log("Error: " + err);
