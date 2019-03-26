@@ -71,18 +71,23 @@ routes.get("/sports-centers", (req, res) => {
 });
 
 // POST A UN CONJUNTO
-routes.post("/sports-competitions", (req, res) => {
-    let newsportscenter = req.body;
+routes.post("/sports-centers", (req, res) => {
+    let newsportsCenters = req.body;
     
-    sportsCenters.find({"_id": parseInt(newsportscenter._id)}).toArray((err, sportscentersArray) => {
+    if (validation(newsportsCenters)){
+        sportsCenters.find({"_id": parseInt(newsportsCenters._id)}).toArray((err, sportscentersArray) => {
 
         if (sportscentersArray.length < 1) {
-            sportsCenters.insert(newsportscenter);
+            sportsCenters.insert(newsportsCenters);
             res.sendStatus(201);
         } else {
             res.sendStatus(409);
         }
-    });
+        });
+    }else{
+        res.sendStatus(400);
+    }
+    
 });
 
 // DELETE A UN CONJUNTO 
