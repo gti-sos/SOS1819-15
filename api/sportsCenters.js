@@ -135,15 +135,14 @@ routes.put("/sports-centers/:id",(req,res) => {
     let vname = req.params.name;
     let vstreet = req.params.street;
     
-    MongoClient.connect(uri, function(err, db) {
-        if (err) throw err;
-        var dbo = db.db("sos1819jlgd");
+    client.connect(err => {
+        var dbo = client.db.db("sos1819jlgd");
         var myquery = { _id : vid };
         var newvalues = { $set: {name: vname, street: vstreet } };
         dbo.collection("contacts").updateOne(myquery, newvalues, function(err, res) {
             if (err) throw err;
             console.log("1 document updated");
-            db.close();
+            client.db.close();
         });
     });
     
