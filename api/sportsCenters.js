@@ -133,20 +133,19 @@ routes.get("/sports-centers/:id",(req,res) => {
 routes.put("/sports-centers/:id",(req,res) => {
 
     let id = req.params.id;
-    
-    var myquery = { _id: parseInt(id) };
     let updatedCenters = req.body;
-    var newvalues = { $set: {name: req.params.name, street: req.params.street } };
-    
-    contacts.find({"_id":parseInt(id)}).toArray((err,contactsArray)=>{
-        if (contactsArray.length == 1){
-            contacts.updateOne(myquery, updatedCenters, function(err, res) {
-                    if (err) {
-                        console.log("error: " + err);
-                        res.sendStatus(404);
-                    } else {
-                        res.sendStatus(200);
-                    }
+    var myquery = {id: parseInt(id, 10)};
+
+    contacts.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+
+        if (contactsArray.length == 1) {
+            contacts.replaceOne(myquery, updatedCenters, function (err, obj) {
+                if (err) {
+                    console.log("error: " + err);
+                    res.sendStatus(404);
+                } else {
+                    res.sendStatus(200);
+                }
             });
         } else {
             res.sendStatus(404);
