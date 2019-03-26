@@ -20,6 +20,7 @@ routes.post("/sports-centers",(req,res) => {
     res.sendStatus(201);
 });
 
+// Delete a un conjunto 
 routes.delete("/sports-centers",(req,res) => {
     sportsCenters = [];
     res.send(sportsCenters)

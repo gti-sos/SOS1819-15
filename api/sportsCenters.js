@@ -14,6 +14,7 @@ client.connect(err => {
 
 
 
+// Get a un conjunto 
 
 routes.get("/sports-centers/", (req,res)=>{
     
@@ -105,9 +106,60 @@ routes.get("/sports-centers/loadInitialData",(req,res) => {
     res.send("created");
 });
     
+// Eliminar conjunto de datos
+
 routes.delete("/sports-centers",(req,res) => {
     contacts.deleteMany();
-    res.send(sportsCenters)
+});
+
+// Get a un recurso concreto
+    
+  routes.get("/sports-centers/:id",(req,res) => {  
+      
+    let id = req.params.id;
+    
+    
+    contacts.find({"_id":parseInt(id)}).toArray((err,contactsArray)=>{
+        
+    if (contactsArray.length == 1){
+        res.send(contactsArray[0]);
+    } else {
+        res.sendStatus(404);
+    }
+});
+});
+
+// PUT a un recurso concreto
+
+routes.put("/sports-centers/:id",(req,res) => {
+
+    let id = req.params.id;
+    let updatedCenters = req.body;
+    var found = false;
+    contacts.find({"_id":parseInt(id)}).toArray((err,contactsArray)=>{
+        
+    if (contactsArray.length == 1){
+        res.send(contactsArray[0]);
+    } else {
+        res.sendStatus(404);
+    }
+    
+    let updatedSportsCenters = sportsCenters.map((c) => {
+        if(c.id == id){
+            found = true;
+            return updatedCenters;
+        } else {
+            return c
+        }
+    });
+
+    if (!found){
+        res.sendStatus(404);
+    } else {
+        sportsCenters = updatedSportsCenters;
+        res.sendStatus(200);
+    }
+});
 });
 
 
