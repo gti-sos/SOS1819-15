@@ -22,7 +22,12 @@ routes.get("/educations-centers/docs", (req, res) => {
 });
 
 routes.get("/educations-centers", (req, res) => {
-    educationsCenters.find({}).toArray((err, contactsArray) => {
+    let ownership = req.query.ownership;
+    var myquery = {};
+    if (typeof ownership !== 'undefined') {
+        myquery = {ownership: ownership};
+    }
+    educationsCenters.find(myquery).toArray((err, contactsArray) => {
 
         if (err)
             console.log("Error: " + err);
