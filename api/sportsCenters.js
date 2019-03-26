@@ -133,21 +133,21 @@ routes.delete("/sports-centers",(req,res) => {
 
 routes.put("/sports-centers/:id",(req,res) => {
 
-    let id = req.params.id;
-    let name = req.params.name;
-    let street = req.params.street;
+    let vid = req.params.id;
+    let vname = req.params.name;
+    let vstreet = req.params.street;
     
-    var myquery = { id: id };
-    var newvalues = { $set: {street: street, name: name } };
+    var myquery = { _id: vid };
+    var newvalues = { $set: {street: vstreet, name: vname } };
     contacts.updateOne(myquery, newvalues, function(err, res) {
-        if (err) throw err;
-        
-        if (err){
-            res.sendStatus(404);
-        } else {
-            console.log("Document updated, id "+id);
+        if (err)
+          {
+            console.log(err);
+
+          }
+          else{
             res.sendStatus(200);
-        }
+          }
     });
     
 });
