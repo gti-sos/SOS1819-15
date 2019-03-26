@@ -17,7 +17,7 @@ routes.get("/sports-competitions/docs", (req, res) => {
     res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
 });
 
-/*
+
 routes.get("/sports-competitions/loadInitialData", (req, res) => {
     sportsCompetitions.find().toArray((err, competitionArray) => {
         if (competitionArray.length > 0) {
@@ -27,7 +27,7 @@ routes.get("/sports-competitions/loadInitialData", (req, res) => {
             res.send("created")
         }
     });
-});*/
+});
 
 routes.get("/educations-centers", (req, res) => {
     let ownership = req.query.ownership;
@@ -52,12 +52,13 @@ routes.get("/educations-centers", (req, res) => {
     });
 });
 
+/*
 routes.get("/sports-competitions", (req, res) => {
     sportsCompetitions.find({}).toArray((err, competitionArray) => {
         if (err) console.log("Error: " + err);
         res.send(competitionArray);
     });
-});
+});*/
 
 routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
