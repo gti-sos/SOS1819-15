@@ -33,6 +33,8 @@ routes.get("/sports-centers/docs", (req, res) => {
 
 routes.get("/sports-centers", (req, res) => {
     
+    
+    
     let ownership = req.query.ownership;
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
