@@ -29,7 +29,7 @@ routes.get("/sports-competitions/loadInitialData", (req, res) => {
     });
 });
 
-routes.get("/educations-centers", (req, res) => {
+routes.get("/sports-competitions", (req, res) => {
     let ownership = req.query.ownership;
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
@@ -60,24 +60,6 @@ routes.get("/sports-competitions", (req, res) => {
     });
 });*/
 
-function validation(newCompetitions){
-    let r = false;
-    if (newCompetitions.hasOwnProperty("_id") &&
-    newCompetitions.hasOwnProperty("day") &&
-    newCompetitions.hasOwnProperty("month") &&
-    newCompetitions.hasOwnProperty("name") &&
-    newCompetitions.hasOwnProperty("sportcenter") &&
-    newCompetitions.hasOwnProperty("schoolcenter") &&
-    newCompetitions.hasOwnProperty("activity") &&
-    newCompetitions.hasOwnProperty("lengthactivity") &&
-    newCompetitions.hasOwnProperty("totaldistance") &&
-    newCompetitions.hasOwnProperty("inscriptionprice") &&
-    newCompetitions.hasOwnProperty("additionalinfo")){
-        r = true;  
-    }
-    return r;
-}
-
 routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
     
@@ -94,7 +76,6 @@ routes.post("/sports-competitions", (req, res) => {
     }else{
         res.sendStatus(400);
     }
-    
     
 });
 
@@ -172,6 +153,24 @@ routes.post("/sports-competitions/:id", (req, res) => {
 routes.put("/sports-competitions", (req, res) => {
     res.sendStatus(405);
 });
+
+function validation(newCompetitions){
+    let r = false;
+    if (newCompetitions.hasOwnProperty("_id") &&
+    newCompetitions.hasOwnProperty("day") &&
+    newCompetitions.hasOwnProperty("month") &&
+    newCompetitions.hasOwnProperty("name") &&
+    newCompetitions.hasOwnProperty("sportcenter") &&
+    newCompetitions.hasOwnProperty("schoolcenter") &&
+    newCompetitions.hasOwnProperty("activity") &&
+    newCompetitions.hasOwnProperty("lengthactivity") &&
+    newCompetitions.hasOwnProperty("totaldistance") &&
+    newCompetitions.hasOwnProperty("inscriptionprice") &&
+    newCompetitions.hasOwnProperty("additionalinfo")){
+        r = true;  
+    }
+    return r;
+}
 
 function addData() {
     sportsCompetitions.insertMany([{ 
