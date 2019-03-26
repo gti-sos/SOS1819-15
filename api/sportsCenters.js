@@ -108,6 +108,7 @@ routes.get("/sports-centers/loadInitialData",(req,res) => {
 
 routes.delete("/sports-centers",(req,res) => {
     contacts.deleteMany();
+    res.sendStatus(200);
 });
 
 // Get a un recurso concreto
@@ -139,9 +140,9 @@ routes.put("/sports-centers/:id",(req,res) => {
     var myquery = { name: "AA.VV El pueblo" };
     var newvalues = { $set: {name: "El pueblo", street: "Calle Rafael Alberti" } };
     contacts.updateOne(myquery, newvalues, function(err, res) {
-    if (err) throw err;
-    console.log("1 document updated");
-
+        if (err) throw err;
+        console.log("1 document updated");
+        res.sendStatus(200);
     });
     
 });
