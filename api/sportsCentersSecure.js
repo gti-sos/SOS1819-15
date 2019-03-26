@@ -17,23 +17,22 @@ client.connect(err => {
     console.log("Connected!");
 });
 
+
 //POSTMAN
 
 routes.get("/sports-centers/docs", (req, res) => {
-    
     let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
         res.sendStatus(401);
         return ;
     }
-    res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
+    res.redirect('https://documenter.getpostman.com/view/6924371/S17tS8XN');
 });
 
 // GET y PAGINACIÓN 
 
 routes.get("/sports-centers", (req, res) => {
-    
     let apikeyReq = req.query.apikey;
 
     if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -205,6 +204,33 @@ routes.delete("/sports-centers/:id", (req, res) => {
 
 });
 
+ // POST A UN CONJUNTO
+
+routes.post("/sports-centers", (req, res) => {
+    let apikeyReq = req.query.apikey;
+
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    let newsportsCenters = req.body;
+    
+    if (validation(newsportsCenters)){
+        sportsCompetitions.find({"_id": parseInt(newsportsCenters._id)}).toArray((err, sportscentersArray) => {
+
+        if (sportscentersArray.length < 1) {
+            sportsCenters.insert(newsportsCenters);
+            res.sendStatus(201);
+        } else {
+            res.sendStatus(409);
+        }
+        });
+    }else{
+        res.sendStatus(400);
+    }
+    
+});
+
 // POST A UN RECURSO CONCRETO (ERROR)
 
 routes.post("/sports-centers/:id", (req, res) => {
@@ -313,3 +339,25 @@ function validation(newsportscenter){
     }
     return r;
 } 
+
+// Get Busqueda Implementacion
+
+routes.get("/sports-centers/:postalcode/:startingyear", (req, res) => {
+    let apikeyReq = req.query.apikey;
+
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    var postalcode = req.params.postalcode;
+    var startingyear = req.params.startingyear;
+    
+    sportsCenters.find({"postalcode": parseInt(postalcode),"startingyear": parseInt(startingyear)}).toArray((err, sportscentersArray) => {
+
+        if (sportscentersArray.length > 0) {
+            res.send(sportscentersArray);
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});

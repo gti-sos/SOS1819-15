@@ -18,7 +18,7 @@ client.connect(err => {
 //POSTMAN
 
 routes.get("/sports-centers/docs", (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
+    res.redirect('https://documenter.getpostman.com/view/6924371/S17tS8XN');
 });
 
 // GET y PAGINACIÓN 
@@ -270,3 +270,19 @@ function validation(newsportscenter){
     }
     return r;
 } 
+
+// Get Busqueda Implementacion
+
+routes.get("/sports-centers/:postalcode/:startingyear", (req, res) => {
+    var postalcode = req.params.postalcode;
+    var startingyear = req.params.startingyear;
+    
+    sportsCenters.find({"postalcode": parseInt(postalcode),"startingyear": parseInt(startingyear)}).toArray((err, sportscentersArray) => {
+
+        if (sportscentersArray.length > 0) {
+            res.send(sportscentersArray);
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});
