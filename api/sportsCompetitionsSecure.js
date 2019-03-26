@@ -141,6 +141,27 @@ routes.get("/sports-competitions/:id", (req, res) => {
     });
 });
 
+routes.get("/sports-competitions/:year/:month", (req, res) => {
+    let apikeyReq = req.query.apikey;
+
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
+    var year = req.params.year;
+    var month = req.params.month;
+    
+    sportsCompetitions.find({"year": parseInt(year),"month": parseInt(month)}).toArray((err, competitionArray) => {
+
+        if (competitionArray.length > 0) {
+            res.send(competitionArray);
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});
+
 routes.put("/sports-competitions/:id", (req, res) => {
     let apikeyReq = req.query.apikey;
 
