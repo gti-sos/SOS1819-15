@@ -37,19 +37,17 @@ routes.get("/sports-competitions", (req, res) => {
 
 routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
+    res.send(req.body.attributes);
 
-    if ( validationField(req) == true ) {
-        sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+    /*
+    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
             if (contactsArray.length > 0) {
                 res.sendStatus(409);
             } else {
                 sportsCompetitions.insert(newCompetitions);
                 res.sendStatus(201);
             }
-        });
-    }else{
-        res.sendStatus(400);
-    }
+    });*/
 });
 
 routes.delete("/sports-competitions", (req, res) => {
