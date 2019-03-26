@@ -13,6 +13,11 @@ client.connect(err => {
     console.log("Connected!");
 });
 
+routes.get("/sports-competitions/docs", (req, res) => {
+    res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
+});
+
+
 routes.get("/sports-competitions/loadInitialData", (req, res) => {
     sportsCompetitions.find().toArray((err, competitionArray) => {
         if (competitionArray.length > 0) {
@@ -24,21 +29,41 @@ routes.get("/sports-competitions/loadInitialData", (req, res) => {
     });
 });
 
-routes.get("/sports-competitions/docs", (req, res) => {
-    res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
+routes.get("/educations-centers", (req, res) => {
+    let ownership = req.query.ownership;
+    let limit = parseInt(req.query.limit, 10);
+    let offset = parseInt(req.query.offset, 10);
+    var myquery = {};
+    if (typeof ownership !== 'undefined') {
+        myquery = {ownership: ownership};
+    }
+    if (typeof limit === 'undefined') {
+        limit = 10000;
+    }
+    if (typeof offset === 'undefined') {
+        offset = 0;
+    }
+
+    console.log("Limit: " + limit);
+    sportsCompetitions.find(myquery).skip(offset).limit(limit).toArray((err, competitionArray) => {
+        if (err)
+            console.log("Error: " + err);
+        res.send(competitionArray);
+    });
 });
 
+/*
 routes.get("/sports-competitions", (req, res) => {
     sportsCompetitions.find({}).toArray((err, competitionArray) => {
         if (err) console.log("Error: " + err);
         res.send(competitionArray);
     });
-});
+});*/
 
 routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
-
-    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+    
+    sportsCompetitions.find({"_id": parseInt(newCompetitions._id)}).toArray((err, contactsArray) => {
 
         if (contactsArray.length < 1) {
             sportsCompetitions.insert(newCompetitions);
@@ -73,29 +98,32 @@ routes.put("/sports-competitions/:id", (req, res) => {
 
     let id = req.params.id;
     let updatedCompetition = req.body;
-    var myquery = {_id: parseInt(id, 10)};
+    
+    if (updatedCompetition.hasOwnProperty("_id")){
+        var myquery = {_id: parseInt(id, 10)};
 
-    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+        sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
 
         if (contactsArray.length == 1) {
             if (contactsArray[0]._id==id){
-                sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
-                if (err) {
-                    console.log("error: " + err);
-                    res.sendStatus(404);
-                } else {
-                    res.sendStatus(200);
+                    sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
+                    if (err) {
+                        console.log("error: " + err);
+                        res.sendStatus(404);
+                    } else {
+                        res.sendStatus(200);
+                    }
+                });
+                } else{
+                    res.sendStatus(400)
                 }
-            });
-            } else{
-                res.sendStatus(400)
+            } else {
+                res.sendStatus(404);
             }
-        } else {
-            res.sendStatus(404);
-        }
-    });
-
-
+        });
+    } else{
+        res.sendStatus(400);
+    }
 });
 
 routes.delete("/sports-competitions/:id", (req, res) => {
