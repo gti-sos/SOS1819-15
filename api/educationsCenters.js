@@ -82,7 +82,7 @@ routes.get("/educations-centers/:id", (req, res) => {
 
     educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
 
-        if (contactsArray.length == 1) {
+        if (contactsArray.length > 0) {
             res.send(contactsArray[0]);
         } else {
             res.sendStatus(404);
