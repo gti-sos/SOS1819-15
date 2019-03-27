@@ -119,6 +119,11 @@ routes.put("/sports-competitions/:id", (req, res) => {
     let updatedCompetition = req.body;
     
     var myquery = {_id: parseInt(id, 10)};
+    
+    if (!validation(updatedCompetition)) {
+        res.sendStatus(400);
+        return ;
+    }
 
     sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, competitionArray) => {
 

@@ -168,6 +168,11 @@ routes.put("/sports-competitions/:id", (req, res) => {
         return ;
     }
     
+    if (!validation(updatedCompetition)) {
+        res.sendStatus(400);
+        return ;
+    }
+    
     let id = req.params.id;
     let updatedCompetition = req.body;
     
