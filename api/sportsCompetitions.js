@@ -30,12 +30,12 @@ routes.get("/sports-competitions/loadInitialData", (req, res) => {
 });
 
 routes.get("/sports-competitions", (req, res) => {
-    let ownership = req.query.ownership;
+    let month = req.query.month;
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
     var myquery = {};
-    if (typeof ownership !== 'undefined') {
-        myquery = {ownership: ownership};
+    if (typeof month !== 'undefined') {
+        myquery = {month: month};
     }
     if (typeof limit === 'undefined') {
         limit = 10000;
@@ -64,7 +64,7 @@ routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
     
     if (validation(newCompetitions)){
-        sportsCompetitions.find({"_id": parseInt(newCompetitions._id)}).toArray((err, competitionArray) => {
+        sportsCompetitions.find({"id": parseInt(newCompetitions.id)}).toArray((err, competitionArray) => {
 
         if (competitionArray.length < 1) {
             sportsCompetitions.insert(newCompetitions);
@@ -89,7 +89,7 @@ routes.get("/sports-competitions/:id", (req, res) => {
 
     let id = req.params.id;
 
-    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, competitionArray) => {
+    sportsCompetitions.find({"id": parseInt(id)}).toArray((err, competitionArray) => {
 
         if (competitionArray.length == 1) {
             res.send(competitionArray[0]);
@@ -118,17 +118,17 @@ routes.put("/sports-competitions/:id", (req, res) => {
     let id = req.params.id;
     let updatedCompetition = req.body;
     
-    var myquery = {_id: parseInt(id, 10)};
+    var myquery = {id: parseInt(id, 10)};
     
     if (!validation(updatedCompetition)) {
         res.sendStatus(400);
         return ;
     }
 
-    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, competitionArray) => {
+    sportsCompetitions.find({"id": parseInt(id)}).toArray((err, competitionArray) => {
 
         if (competitionArray.length == 1) {
-            if (competitionArray[0]._id==parseInt(id)){
+            if (competitionArray[0].id==parseInt(id)){
                 sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
                     if (err) {
                         console.log("error: " + err);
@@ -152,7 +152,7 @@ routes.delete("/sports-competitions/:id", (req, res) => {
 
     let id = req.params.id;
 
-    var myquery = {_id: parseInt(id, 10)};
+    var myquery = {id: parseInt(id, 10)};
 
     sportsCompetitions.deleteOne(myquery, function (err, obj) {
         if (err) {
@@ -175,7 +175,7 @@ routes.put("/sports-competitions", (req, res) => {
 
 function validation(newCompetitions){
     let r = false;
-    if (newCompetitions.hasOwnProperty("_id") &&
+    if (newCompetitions.hasOwnProperty("id") &&
     newCompetitions.hasOwnProperty("day") &&
     newCompetitions.hasOwnProperty("month") &&
     newCompetitions.hasOwnProperty("name") &&
@@ -193,7 +193,7 @@ function validation(newCompetitions){
 
 function addData() {
     sportsCompetitions.insertMany([{ 
-        _id: 1,
+        id: 1,
         year: 2019,
         day: 4,
         month : 4,
@@ -206,7 +206,7 @@ function addData() {
         inscriptionprice: 0,
         additionalinfo: "actividad de promoción deportiva en la que participan los ceip de los distritos Macarena y Norte."},
     {
-        _id: 2,
+        id: 2,
         year: 2019,
         day: 23,
         month : 3,
@@ -219,7 +219,7 @@ function addData() {
         inscriptionprice: 0,
         additionalinfo: "Hora: 20:30"},
     {
-        _id: 3,
+        id: 3,
         year: 2019,
         day: 4,
         month : 4,
@@ -232,7 +232,7 @@ function addData() {
         inscriptionprice: 0,
         additionalinfo: "Impulsar y fomentar el interés por conocer diversas modalidades deportivas entre los alumnos de Educación Primaria de los colegios pertenecientes al Distrito Cerro-Amate."},
     {
-        _id: 4,
+        id: 4,
         year: 2019,
         day: 4,
         month : 4,
@@ -245,7 +245,7 @@ function addData() {
         inscriptionprice: 0,
         additionalinfo: "Actividad de promoción deportiva en la que participan los CEIP de los distritos Macarena y Norte."},
     {
-        _id: 5,
+        id: 5,
         year: 2019,
         day: 19,
         month : 5,
