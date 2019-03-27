@@ -64,9 +64,9 @@ routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
     
     if (validation(newCompetitions)){
-        sportsCompetitions.find({"_id": parseInt(newCompetitions._id)}).toArray((err, contactsArray) => {
+        sportsCompetitions.find({"_id": parseInt(newCompetitions._id)}).toArray((err, competitionArray) => {
 
-        if (contactsArray.length < 1) {
+        if (competitionArray.length < 1) {
             sportsCompetitions.insert(newCompetitions);
             res.sendStatus(201);
         } else {
@@ -120,18 +120,18 @@ routes.put("/sports-competitions/:id", (req, res) => {
     
     var myquery = {_id: parseInt(id, 10)};
 
-    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, contactsArray) => {
+    sportsCompetitions.find({"_id": parseInt(id)}).toArray((err, competitionArray) => {
 
-        if (contactsArray.length == 1) {
-            if (contactsArray[0]._id==id){
+        if (competitionArray.length == 1) {
+            if (competitionArray[0]._id==parseInt(id)){
                 sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
-                if (err) {
-                    console.log("error: " + err);
-                    res.sendStatus(404);
-                } else {
-                    res.sendStatus(200);
-                }
-            });
+                    if (err) {
+                        console.log("error: " + err);
+                        res.sendStatus(400);
+                    } else {
+                        res.sendStatus(200);
+                    }
+                });
             } else{
                 res.sendStatus(400)
             }
