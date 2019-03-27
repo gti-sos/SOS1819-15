@@ -11,7 +11,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 var sportsCenters = [];
 
 client.connect(err => {
-    sportsCenters = client.db("sos1819-pfs").collection("competitions");
+    sportsCenters = client.db("sos1819").collection("sportscenters");
     console.log("Connected!");
 });
 
