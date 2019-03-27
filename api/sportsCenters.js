@@ -24,6 +24,7 @@ routes.get("/sports-centers/docs", (req, res) => {
 // GET y PAGINACIÓN 
 
 routes.get("/sports-centers", (req, res) => {
+    let postalcode = parseInt(req.query.postalcode);
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
     var myquery = {};
