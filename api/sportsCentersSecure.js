@@ -216,7 +216,7 @@ routes.post("/sports-centers", (req, res) => {
     let newsportsCenters = req.body;
     
     if (validation(newsportsCenters)){
-        sportsCompetitions.find({"id": parseInt(newsportsCenters.id)}).toArray((err, sportscentersArray) => {
+        sportsCenters.find({"id": parseInt(newsportsCenters.id)}).toArray((err, sportscentersArray) => {
 
         if (sportscentersArray.length < 1) {
             sportsCenters.insert(newsportsCenters);
