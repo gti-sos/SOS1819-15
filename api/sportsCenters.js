@@ -24,12 +24,12 @@ routes.get("/sports-centers/docs", (req, res) => {
 // GET y PAGINACIÓN 
 
 routes.get("/sports-centers", (req, res) => {
-    let ownership = req.query.ownership;
+    let postalcode = req.query.postalcode;
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
     var myquery = {};
-    if (typeof ownership !== 'undefined') {
-        myquery = {ownership: ownership};
+    if (typeof postalcode !== 'undefined') {
+        myquery = {postalcode: postalcode};
     }
     if (typeof limit === 'undefined') {
         limit = 10000;
