@@ -180,7 +180,7 @@ routes.put("/sports-competitions/:id", (req, res) => {
                 sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
                     if (err) {
                     console.log("error: " + err);
-                        res.sendStatus(404);
+                        res.sendStatus(400);
                     } else {
                         res.sendStatus(200);
                     }
