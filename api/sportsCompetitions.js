@@ -30,12 +30,12 @@ routes.get("/sports-competitions/loadInitialData", (req, res) => {
 });
 
 routes.get("/sports-competitions", (req, res) => {
-    let month = parseInt(req.query.month,10);
+    let month = req.query.month;
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
     var myquery = {};
     if (typeof month !== 'undefined') {
-        myquery = {month: month};
+        myquery = {month: parseInt(month,10)};
     }
     if (typeof limit === 'undefined') {
         limit = 10000;

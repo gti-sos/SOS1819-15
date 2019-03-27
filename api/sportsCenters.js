@@ -22,14 +22,13 @@ routes.get("/sports-centers/docs", (req, res) => {
 });
 
 // GET y PAGINACIÓN 
-
 routes.get("/sports-centers", (req, res) => {
-    let postalcode = parseInt(req.query.postalcode);
+    let pc = req.query.pc;
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
     var myquery = {};
-    if (typeof postalcode !== 'undefined') {
-        myquery = {postalcode: postalcode};
+    if (typeof pc !== 'undefined') {
+        myquery = {postalcode: parseInt(pc,10)};
     }
     if (typeof limit === 'undefined') {
         limit = 10000;
@@ -39,10 +38,10 @@ routes.get("/sports-centers", (req, res) => {
     }
 
     console.log("Limit: " + limit);
-    sportsCenters.find(myquery).skip(offset).limit(limit).toArray((err, sportscentersArray) => {
+    sportsCenters.find(myquery).skip(offset).limit(limit).toArray((err, sportsCentersArray) => {
         if (err)
             console.log("Error: " + err);
-        res.send(sportscentersArray);
+        res.send(sportsCentersArray);
     });
 });
 
