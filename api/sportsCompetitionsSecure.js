@@ -51,7 +51,7 @@ routes.get("/sports-competitions", (req, res) => {
     }
     
     
-    let ownership = req.query.ownership;
+    let month = parseInt(req.query.month,10);
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
     var myquery = {};
