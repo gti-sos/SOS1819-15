@@ -176,6 +176,8 @@ function validation(newCompetitions){
 
 function addData() {
 
+    educationsCenters.deleteMany();
+
     educationsCenters.insertMany([{
         id: 1,
         country: "spain",
