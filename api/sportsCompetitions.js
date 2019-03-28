@@ -119,22 +119,6 @@ routes.get("/sports-competitions/:year/:month", (req, res) => {
     });
 });
 
-routes.get("/sports-competitions/:year", (req, res) => {
-    var year = req.params.year;
-    
-    sportsCompetitions.find({"year": parseInt(year)}).toArray((err, competitionArray) => {
-        if (competitionArray.length > 0) {
-            if (competitionArray.length == 1) {
-                res.send(competitionArray[0]);
-            } else {
-                res.send(competitionArray);
-            }
-        } else {
-            res.sendStatus(404);
-        }
-    });
-});
-
 routes.put("/sports-competitions/:id", (req, res) => {
 
     let id = req.params.id;
@@ -150,7 +134,7 @@ routes.put("/sports-competitions/:id", (req, res) => {
     sportsCompetitions.find({"id": parseInt(id)}).toArray((err, competitionArray) => {
 
         if (competitionArray.length == 1) {
-            if (competitionArray[0].id==parseInt(id)){
+            if (competitionArray[0].id==parseInt(updatedCompetition.id)){
                 sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
                     if (err) {
                         console.log("error: " + err);
