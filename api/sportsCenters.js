@@ -39,10 +39,14 @@ routes.get("/sports-centers", (req, res) => {
 
     console.log("Limit: " + limit);
     sportsCenters.find(myquery).skip(offset).limit(limit).toArray((err, sportsCentersArray) => {
+        
         if (err)
             console.log("Error: " + err);
+        if(sportsCentersArray.length == 1){
+            res.send(sportsCentersArray[0]);
+        }else{
         res.send(sportsCentersArray);
-    });
+    }});
 });
 
 // LOAD INITIAL DATA
