@@ -3,15 +3,15 @@ let routes = express.Router();
 
 
 // Conexión MongoDB 
-const MongoClient = require("mongodb").MongoClient;
-const uri = "mongodb+srv://juanlu:3636jlgD@sos1819jlgd-su7hb.mongodb.net/test?retryWrites=true";
 
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://juanlu:3636jlgD@sos1819jlgd-wayhl.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 
 var sportsCenters = [];
 
 client.connect(err => {
-    sportsCenters = client.db("sos1819").collection("sportscenters");
+    sportsCenters = client.db("sos1819-jlg").collection("sportscenters");
     console.log("Connected!");
 });
 
