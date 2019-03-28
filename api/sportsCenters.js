@@ -64,7 +64,7 @@ routes.post("/sports-centers", (req, res) => {
     let newsportsCenters = req.body;
     
     if (validation(newsportsCenters)){
-        sportsCenters.find({"_id": parseInt(newsportsCenters._id)}).toArray((err, sportscentersArray) => {
+        sportsCenters.find({"id": parseInt(newsportsCenters.id)}).toArray((err, sportscentersArray) => {
 
         if (sportscentersArray.length < 1) {
             sportsCenters.insert(newsportsCenters);
@@ -93,7 +93,7 @@ routes.get("/sports-centers/:id", (req, res) => {
 
     let id = req.params.id;
 
-    sportsCenters.find({"_id": parseInt(id)}).toArray((err, sportscentersArray) => {
+    sportsCenters.find({"id": parseInt(id)}).toArray((err, sportscentersArray) => {
 
         if (sportscentersArray.length == 1) {
             res.send(sportscentersArray[0]);
@@ -109,12 +109,12 @@ routes.put("/sports-centers/:id", (req, res) => {
 
     let id = req.params.id;
     let updatedCenter = req.body;
-    var myquery = {_id: parseInt(id, 10)};
+    var myquery = {id: parseInt(id, 10)};
 
-    sportsCenters.find({"_id": parseInt(id)}).toArray((err, sportscentersArray) => {
+    sportsCenters.find({"id": parseInt(id)}).toArray((err, sportscentersArray) => {
 
         if (sportscentersArray.length == 1) {
-            if (sportscentersArray[0]._id==id){
+            if (sportscentersArray[0].id==id){
                 sportsCenters.replaceOne(myquery, updatedCenter, function (err, obj) {
                 if (err) {
                     console.log("error: " + err);
@@ -140,7 +140,7 @@ routes.delete("/sports-centers/:id", (req, res) => {
 
     let id = req.params.id;
 
-    var myquery = {_id: parseInt(id, 10)};
+    var myquery = {id: parseInt(id, 10)};
 
     sportsCenters.deleteOne(myquery, function (err, obj) {
         if (err) {
@@ -158,7 +158,7 @@ routes.post("/sports-centers", (req, res) => {
     let newsportsCenters = req.body;
     
     if (validation(newsportsCenters)){
-        sportsCompetitions.find({"_id": parseInt(newsportsCenters._id)}).toArray((err, sportscentersArray) => {
+        sportsCompetitions.find({"id": parseInt(newsportsCenters.id)}).toArray((err, sportscentersArray) => {
 
         if (sportscentersArray.length < 1) {
             sportsCenters.insert(newsportsCenters);
@@ -192,7 +192,7 @@ routes.put("/sports-centers", (req, res) => {
     function addData() {
     sportsCenters.insertMany([{ 
         
-        _id:1,
+        id:1,
         street: "Rafael Alberti",
         name: "AA.VV El pueblo",
         postalcode:41008,
@@ -202,7 +202,7 @@ routes.put("/sports-centers", (req, res) => {
         paviment:"tierra",
         sportfields: 7 },
     {
-        _id:2,
+        id:2,
         street: "Avda La Revoltosa",
         name: "C.D. Amate",
         postalcode:41006,
@@ -213,7 +213,7 @@ routes.put("/sports-centers", (req, res) => {
         sportfields: 3 },
         
     {
-        _id:3,
+        id:3,
         street: "Tesalónica",
         name: "C.D. San Pablo",
         postalcode:41007,
@@ -224,7 +224,7 @@ routes.put("/sports-centers", (req, res) => {
         sportfields: 5 },
         
     {
-        _id:4,
+        id:4,
         street: "Avda Virgen De La Esperanza",
         name: "C.D. Los Bermejales",
         postalcode:41012,
@@ -235,7 +235,7 @@ routes.put("/sports-centers", (req, res) => {
         sportfields: 1 },
         
     {
-        _id:5,
+        id:5,
         street: "Avda Hytasa",
         name: "C.D. Hytasa",
         postalcode:41006,
@@ -256,7 +256,7 @@ module.exports = routes;
 
 function validation(newsportscenter){
     let r = false;
-    if (newsportscenter.hasOwnProperty("_id") &&
+    if (newsportscenter.hasOwnProperty("id") &&
     newsportscenter.hasOwnProperty("street") &&
     newsportscenter.hasOwnProperty("name") &&
     newsportscenter.hasOwnProperty("postalcode") &&
