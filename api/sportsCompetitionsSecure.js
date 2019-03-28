@@ -67,9 +67,12 @@ routes.get("/sports-competitions", (req, res) => {
 
     console.log("Limit: " + limit);
     sportsCompetitions.find(myquery).skip(offset).limit(limit).toArray((err, competitionArray) => {
-        if (err)
-            console.log("Error: " + err);
-        res.send(competitionArray);
+        if (err) console.log("Error: " + err);
+        if (competitionArray.length == 1) {
+            res.send(competitionArray[0]);
+        } else {
+            res.send(competitionArray);
+        }
     });
 });
 
@@ -153,7 +156,34 @@ routes.get("/sports-competitions/:year/:month", (req, res) => {
     sportsCompetitions.find({"year": parseInt(year),"month": parseInt(month)}).toArray((err, competitionArray) => {
 
         if (competitionArray.length > 0) {
-            res.send(competitionArray);
+            if (competitionArray.length == 1) {
+                res.send(competitionArray[0]);
+            } else {
+                res.send(competitionArray);
+            }
+        } else {
+            res.sendStatus(404);
+        }
+    });
+});
+
+routes.get("/sports-competitions/:year", (req, res) => {
+    let apikeyReq = req.query.apikey;
+
+    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+        res.sendStatus(401);
+        return ;
+    }
+    
+    var year = req.params.year;
+    
+    sportsCompetitions.find({"year": parseInt(year)}).toArray((err, competitionArray) => {
+        if (competitionArray.length > 0) {
+            if (competitionArray.length == 1) {
+                res.send(competitionArray[0]);
+            } else {
+                res.send(competitionArray);
+            }
         } else {
             res.sendStatus(404);
         }
