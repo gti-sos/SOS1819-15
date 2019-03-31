@@ -64,7 +64,7 @@ routes.get("/sports-centers/loadInitialData", (req, res) => {
 
 
 // POST A UN CONJUNTO
-routes.post("/sports-centers", (req, res) => {
+routes.post("/sports-competitions", (req, res) => {
     let newsportsCenters = req.body;
     
     if (validation(newsportsCenters)){
@@ -82,6 +82,7 @@ routes.post("/sports-centers", (req, res) => {
     }
     
 });
+
 
 // DELETE A UN CONJUNTO 
 
