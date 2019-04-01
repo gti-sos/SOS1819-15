@@ -45,7 +45,7 @@ routes.get("/sports-competitions", (req, res) => {
     }
 
     console.log("Limit: " + limit);
-    sportsCompetitions.find(myquery).skip(offset).limit(limit).toArray((err, competitionArray) => {
+    sportsCompetitions.find(myquery, {projection:{_id: 0 }}).skip(offset).limit(limit).toArray((err, competitionArray) => {
         if (err) console.log("Error: " + err);
         if (competitionArray.length == 1) {
             res.send(competitionArray[0]);
@@ -67,7 +67,7 @@ routes.post("/sports-competitions", (req, res) => {
     let newCompetitions = req.body;
     
     if (validation(newCompetitions)){
-        sportsCompetitions.find({"id": parseInt(newCompetitions.id)}).toArray((err, competitionArray) => {
+        sportsCompetitions.find({"id": parseInt(newCompetitions.id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
 
         if (competitionArray.length < 1) {
             sportsCompetitions.insert(newCompetitions);
@@ -91,7 +91,7 @@ routes.get("/sports-competitions/:id", (req, res) => {
 
     let id = req.params.id;
 
-    sportsCompetitions.find({"id": parseInt(id)}).toArray((err, competitionArray) => {
+    sportsCompetitions.find({"id": parseInt(id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
 
         if (competitionArray.length == 1) {
             res.send(competitionArray[0]);
@@ -105,7 +105,7 @@ routes.get("/sports-competitions/:year/:month", (req, res) => {
     var year = req.params.year;
     var month = req.params.month;
     
-    sportsCompetitions.find({"year": parseInt(year),"month": parseInt(month)}).toArray((err, competitionArray) => {
+    sportsCompetitions.find({"year": parseInt(year),"month": parseInt(month)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
 
         if (competitionArray.length > 0) {
             if (competitionArray.length == 1) {
@@ -131,7 +131,7 @@ routes.put("/sports-competitions/:id", (req, res) => {
         return ;
     }
 
-    sportsCompetitions.find({"id": parseInt(id)}).toArray((err, competitionArray) => {
+    sportsCompetitions.find({"id": parseInt(id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
 
         if (competitionArray.length == 1) {
             if (competitionArray[0].id==parseInt(updatedCompetition.id)){
