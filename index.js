@@ -8,6 +8,7 @@ const BASE_PATH = "/api"
 
 app.use(bodyParse.json());
 sportsAPI.sportsCompetitions(app, BASE_PATH);
+sportsAPI.sportsCompetitionsSecure(app, BASE_PATH);
 
 var port = process.env.PORT || 8080;
 

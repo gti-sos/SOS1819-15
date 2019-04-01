@@ -16,6 +16,7 @@ module.exports = function(app, BASE_PATH){
     
     console.log("Registering redirection to docs");
     path = BASE_PATH + "/sports-competitions/docs";
+    console.log("LOG "+path);
     app.get(path, (req, res) => {
         let apikeyReq = req.query.apikey;
 
@@ -55,12 +56,51 @@ module.exports = function(app, BASE_PATH){
             res.sendStatus(401);
             return ;
         }
-        let month = req.query.month;
+
         let limit = parseInt(req.query.limit, 10);
         let offset = parseInt(req.query.offset, 10);
-        var myquery = {};
+        let myquery = {};
+
+        let year = req.params.year;
+        let month = req.params.month;
+        let day = req.query.day;
+        let name = req.query.name;
+        let sportcenter = req.query.sportcenter;
+        let schoolcenter = req.query.schoolcenter;
+        let activity = req.query.activity;
+        let lengthactivity = req.query.lengthactivity;
+        let totaldistance = req.query.totaldistance;
+        let inscriptionprice = req.query.inscriptionprice;
+
+        if (typeof year !== 'undefined') {
+            myquery.year = parseInt(year);
+        }
         if (typeof month !== 'undefined') {
-            myquery = {month: parseInt(month,10)};
+            myquery.month = parseInt(month);
+        }
+        if (typeof day !== 'undefined') {
+            myquery.day = day;
+        }
+        if (typeof name !== 'undefined') {
+            myquery.name = name;
+        }
+        if (typeof sportcenter !== 'undefined') {
+            myquery.sportcenter = sportcenter;
+        }
+        if (typeof schoolcenter !== 'undefined') {
+            myquery.schoolcenter = schoolcenter;
+        }
+        if (typeof activity !== 'undefined') {
+            myquery.activity = activity;
+        }
+        if (typeof lengthactivity !== 'undefined') {
+            myquery.lengthactivity = lengthactivity;
+        }
+        if (typeof totaldistance !== 'undefined') {
+            myquery.totaldistance = totaldistance;
+        }
+        if (typeof inscriptionprice !== 'undefined') {
+            myquery.inscriptionprice = inscriptionprice;
         }
         if (typeof limit === 'undefined') {
             limit = 10000;

@@ -12,7 +12,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node index.js",
-    "test": "newman run https://www.getpostman.com/collections/e7479b7f8520a738e5ff; newman run https://www.getpostman.com/collections/e1672f9f13027801f019"
+    "test": "newman run https://www.getpostman.com/collections/e7479b7f8520a738e5ff; newman run https://www.getpostman.com/collections/7c14b58b4687aa24028e"
   },
   "repository": {
     "type": "git",
