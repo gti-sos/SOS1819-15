@@ -64,7 +64,19 @@ module.exports = function(app, BASE_PATH){
     path = BASE_PATH + "/sports-competitions";
     app.post(path, (req, res) => {
         let newCompetitions = req.body;
-        res.send(newCompetitions);
+        if (validation(newCompetitions)){
+            sportsCompetitions.find({"id": parseInt(newCompetitions.id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
+    
+            if (competitionArray.length < 1) {
+                sportsCompetitions.insert(newCompetitions);
+                res.sendStatus(201);
+            } else {
+                res.sendStatus(409);
+            }
+            });
+        }else{
+            res.sendStatus(400);
+        }
     });
     
     console.log("Registering delete to /sports-competitions");
