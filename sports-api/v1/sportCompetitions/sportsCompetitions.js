@@ -64,6 +64,8 @@ module.exports = function(app, BASE_PATH){
     path = BASE_PATH + "/sports-competitions";
     app.post(path, (req, res) => {
         let newCompetitions = req.body;
+        console.log(newCompetitions);
+        
         if (validation(newCompetitions)){
             sportsCompetitions.find({"id": parseInt(newCompetitions.id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
     
