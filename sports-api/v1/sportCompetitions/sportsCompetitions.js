@@ -2,6 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dbPablo:sossos@cluster0-s3eqj.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, {useNewUrlParser: true});
 
+
 var sportsCompetitions = [];
 
 client.connect(err => {
@@ -60,12 +61,11 @@ module.exports = function(app, BASE_PATH){
         });
     });
     console.log("Resource /sports-competitions/ registered");
-    
+   
     path = BASE_PATH + "/sports-competitions";
     app.post(path, (req, res) => {
         let newCompetitions = req.body;
-        console.log(newCompetitions);
-        
+
         if (validation(newCompetitions)){
             sportsCompetitions.find({"id": parseInt(newCompetitions.id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
     

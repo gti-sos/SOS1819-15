@@ -1,15 +1,17 @@
 var express = require("express");
 var sportsAPI = require("./sports-api");
+let bodyParse = require("body-parser");
 
 var app = express();
 
 const BASE_PATH = "/api"
 
+app.use(bodyParse.json());
 sportsAPI.sportsCompetitions(app, BASE_PATH);
 
 var port = process.env.PORT || 8080;
 
-app.use("/",express.static(__dirname+"/public"));
+app.use("/", express.static(__dirname + "/public"));
 
 /*
 /* MongoDB connections
