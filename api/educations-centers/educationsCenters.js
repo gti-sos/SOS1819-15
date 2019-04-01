@@ -13,8 +13,18 @@ client.connect(err => {
 });
 
 routes.get("/educations-centers/loadInitialData", (req, res) => {
-    addData();
-    res.send("created")
+    educationsCenters.find().toArray((err, contactsArray) => {
+        if(contactsArray.length !== 0){
+            res.sendStatus(409);
+            return ;
+        } else {
+            addData();
+            res.send("created")
+        }
+
+        if (err)
+            console.log("Error: " + err);
+    });
 });
 
 routes.get("/educations-centers/docs", (req, res) => {
@@ -23,12 +33,55 @@ routes.get("/educations-centers/docs", (req, res) => {
 
 routes.get("/educations-centers", (req, res) => {
     let ownership = req.query.ownership;
+    let country = req.query.country;
+    let center = req.query.center;
+    let name = req.query.name;
+    let domicile = req.query.domicile;
+    let locality = req.query.locality;
+    let phone = req.query.phone;
+    let lat = req.query.lat;
+    let lon = req.query.lon;
+    let sports_education = req.query.sports_education;
+    let monthStart = req.query.monthStart;
+
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
-    var myquery = {};
+    let myquery = {};
+
     if (typeof ownership !== 'undefined') {
-        myquery = {ownership: ownership};
+        myquery.ownership = ownership;
     }
+    if (typeof country !== 'undefined') {
+        myquery.country = country;
+    }
+    if (typeof center !== 'undefined') {
+        myquery.center = center
+    }
+    if (typeof name !== 'undefined') {
+        myquery.name = name
+    }
+    if (typeof domicile !== 'undefined') {
+        myquery.domicile = domicile
+    }
+    if (typeof phone !== 'undefined') {
+        myquery.phone = parseInt(phone);
+    }
+    if (typeof locality !== 'undefined') {
+        myquery.locality = locality
+    }
+    if (typeof lat !== 'undefined') {
+        myquery.lat = parseFloat(lat);
+    }
+    if (typeof lon !== 'undefined') {
+        myquery.lon = parseFloat(lon);
+    }
+    if (typeof sports_education !== 'undefined') {
+        myquery.sports_education = parseInt(sports_education);
+    }
+    if (typeof monthStart !== 'undefined') {
+        myquery.monthStart = parseInt(monthStart);
+    }
+
     if (typeof limit === 'undefined') {
         limit = 10000;
     }
@@ -36,8 +89,8 @@ routes.get("/educations-centers", (req, res) => {
         offset = 0;
     }
 
-    console.log("Limit: " + limit);
-    educationsCenters.find(myquery).skip(offset).limit(limit).toArray((err, contactsArray) => {
+    console.log("Query: " + JSON.stringify(myquery));
+    educationsCenters.find(myquery).project({_id:0}).skip(offset).limit(limit).toArray((err, contactsArray) => {
 
         if (err)
             console.log("Error: " + err);
@@ -80,7 +133,7 @@ routes.get("/educations-centers/:id", (req, res) => {
 
     let id = req.params.id;
 
-    educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+    educationsCenters.find({"id": parseInt(id)}).project({_id:0}).toArray((err, contactsArray) => {
 
         if (contactsArray.length > 0) {
             res.send(contactsArray[0]);
