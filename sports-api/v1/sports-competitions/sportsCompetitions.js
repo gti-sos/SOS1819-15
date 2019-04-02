@@ -226,6 +226,7 @@ function validation(newCompetitions){
     let r = false;
     if (newCompetitions.hasOwnProperty("id") &&
     newCompetitions.hasOwnProperty("day") &&
+    newCompetitions.hasOwnProperty("year") &&
     newCompetitions.hasOwnProperty("month") &&
     newCompetitions.hasOwnProperty("name") &&
     newCompetitions.hasOwnProperty("sportcenter") &&
@@ -235,7 +236,11 @@ function validation(newCompetitions){
     newCompetitions.hasOwnProperty("totaldistance") &&
     newCompetitions.hasOwnProperty("inscriptionprice") &&
     newCompetitions.hasOwnProperty("additionalinfo")){
-        r = true;  
+        if (typeof newCompetitions.year !== 'undefined' &&
+        typeof newCompetitions.year !== 'month' &&
+        typeof newCompetitions.year !== 'day') {
+            r = true; 
+        }         
     }
     return r;
 }
@@ -246,23 +251,23 @@ function addData() {
         year: 2019,
         day: 4,
         month : 4,
-        name: "v encuentro escolar y deportivo (programa distrito: macarena - norte)",
+        name: "V encuentro escolar y deportivo (programa distrito: macarena - norte)",
         sportcenter: "",
-        schoolcenter: "centro virgen milagrosa",
-        activity: "escolar",
+        schoolcenter: "Centro virgen milagrosa",
+        activity: "Escolar",
         lengthactivity: 6,
         totaldistance: 0,
         inscriptionprice: 0,
-        additionalinfo: "actividad de promoción deportiva en la que participan los ceip de los distritos Macarena y Norte."},
+        additionalinfo: "Actividad de promoción deportiva en la que participan los ceip de los distritos Macarena y Norte."},
     {
         id: 2,
         year: 2019,
         day: 23,
         month : 3,
-        name: "campeonato de andalucía de taekwondo, categoría promesas",
+        name: "Campeonato de andalucía de taekwondo, categoría promesas",
         sportcenter: "C.D. Hytasa",
         schoolcenter: "",
-        activity: "artes marciales",
+        activity: "Artes marciales",
         lengthactivity: 6,
         totaldistance: 0,
         inscriptionprice: 0,
