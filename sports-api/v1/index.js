@@ -22,7 +22,7 @@ module.exports = {
         sportsCenters(app,BASE_PATH);
     },
     sportsCentersSecure : function(app, BASE_PATH){
-        sportsCenters(app,BASE_PATH+"/secure");
+        sportsCentersSecure(app,BASE_PATH+"/secure");
     }
     
     
