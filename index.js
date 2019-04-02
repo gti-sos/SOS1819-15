@@ -15,6 +15,7 @@ sportsAPI.educationsCenters(app, BASE_PATH);
 sportsAPI.educationsCentersSecure(app, BASE_PATH);
 
 sportsAPI.sportsCenters(app, BASE_PATH);
+sportsAPI.sportsCentersSecure(app, BASE_PATH);
 
 var port = process.env.PORT || 8080;
 
