@@ -66,13 +66,13 @@ module.exports = function(app, BASE_PATH){
             myquery.name = name;
         }
         if (typeof postalcode !== 'undefined') {
-            myquery.postalcode = parseInt(postalcode);
+            myquery.postalcode = parseInt(postalcode,10);
         }
         if (typeof startingyear !== 'undefined') {
-            myquery.startingyear = parseInt(startingyear);
+            myquery.startingyear = parseInt(startingyear,10);
         }
         if (typeof surface !== 'undefined') {
-            myquery.surface = parseInt(surface);
+            myquery.surface = parseInt(surface,10);
         }
         if (typeof activity !== 'undefined') {
             myquery.activity = activity;
@@ -81,7 +81,7 @@ module.exports = function(app, BASE_PATH){
             myquery.paviment = paviment;
         }
         if (typeof sportfields !== 'undefined') {
-            myquery.sportfields = parseInt(sportfields);
+            myquery.sportfields = parseInt(sportfields,10);
         }
        
         if (typeof limit === 'undefined') {
