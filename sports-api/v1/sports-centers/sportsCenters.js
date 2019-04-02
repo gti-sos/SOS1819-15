@@ -49,8 +49,8 @@ module.exports = function(app, BASE_PATH){
         let offset = parseInt(req.query.offset, 10);
         let myquery = {};
 
-        let street = req.params.street;
-        let name = req.params.name;
+        let street = req.query.street;
+        let name = req.query.name;
         let postalcode = req.query.postalcode;
         let startingyear = req.query.startingyear;
         let surface = req.query.surface;
