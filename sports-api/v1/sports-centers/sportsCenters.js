@@ -112,8 +112,8 @@ module.exports = function(app, BASE_PATH){
         if (validation(newsportsCenters)){
             sportsCenters.find({"id": parseInt(newsportsCenters.id)}, {projection:{_id: 0 }}).toArray((err, sportscentersArray) => {
     
-            if (sportsCenters.length < 1) {
-                sportsCenters.insert(sportscentersArray);
+            if (sportscentersArray.length < 1) {
+                sportsCenters.insert(newsportsCenters);
                 res.sendStatus(201);
             } else {
                 res.sendStatus(409);
