@@ -7,11 +7,14 @@ var app = express();
 const BASE_PATH = "/api"
 
 app.use(bodyParse.json());
+
 sportsAPI.sportsCompetitions(app, BASE_PATH);
 sportsAPI.sportsCompetitionsSecure(app, BASE_PATH);
 
+sportsAPI.educationsCenters(app, BASE_PATH);
+sportsAPI.educationsCentersSecure(app, BASE_PATH);
+
 sportsAPI.sportsCenters(app, BASE_PATH);
-sportsAPI.sportsCentersSecure(app, BASE_PATH);
 
 var port = process.env.PORT || 8080;
 
@@ -44,4 +47,3 @@ client.connect(err => {
         });
     });
 });
-

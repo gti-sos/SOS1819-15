@@ -1,5 +1,9 @@
-var sportsCompetitions =  require("./sportCompetitions/sportsCompetitions.js");
-var sportsCompetitionsSecure =  require("./sportCompetitions/sportsCompetitionsSecure.js");
+var sportsCompetitions =  require("./sports-competitions/sportsCompetitions.js");
+var sportsCompetitionsSecure =  require("./sports-competitions/sportsCompetitionsSecure.js");
+var educationsCenters =  require("./educations-centers/educationsCenters.js");
+var educationsCentersSecure =  require("./educations-centers/educationsCentersSecure.js");
+var sportsCenters =  require("./sports-centers/sportsCenters.js");
+//var sportsCentersSecure =  require("./sportsCenters/sportsCentersSecure.js");
 
 module.exports = {
     sportsCompetitions : function(app, BASE_PATH){
@@ -7,18 +11,14 @@ module.exports = {
     },
     sportsCompetitionsSecure : function(app, BASE_PATH){
         sportsCompetitionsSecure(app,BASE_PATH+"/secure");
-    }
-}
-
-var sportsCenters =  require("./sportsCenters/sportsCenters.js");
-var sportsCentersSecure =  require("./sportsCenters/sportsCentersSecure.js");
-
-module.exports = {
+    },
+    educationsCenters : function(app, BASE_PATH){
+        educationsCenters(app,BASE_PATH);
+    },
+    educationsCentersSecure : function(app, BASE_PATH){
+        educationsCentersSecure(app,BASE_PATH+"/secure");
+    },
     sportsCenters : function(app, BASE_PATH){
         sportsCenters(app,BASE_PATH);
-    },
-    sportsCompetitionsSecure : function(app, BASE_PATH){
-        sportsCentersSecure(app,BASE_PATH+"/secure");
     }
 }
-

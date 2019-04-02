@@ -3,7 +3,6 @@ const uri = "mongodb+srv://dbPablo:sossos@cluster0-s3eqj.mongodb.net/test?retryW
 const client = new MongoClient(uri, {useNewUrlParser: true});
 
 var sportsCompetitions = [];
-var apiKey = "gbbzajbw";
 
 client.connect(err => {
     sportsCompetitions = client.db("sos1819-pfs").collection("competitions");
@@ -16,26 +15,13 @@ module.exports = function(app, BASE_PATH){
     
     console.log("Registering redirection to docs");
     path = BASE_PATH + "/sports-competitions/docs";
-    console.log("LOG "+path);
     app.get(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
     });
     
     console.log("Registering get /sports-competitions/loadInitialData");
     path = BASE_PATH + "/sports-competitions/loadInitialData";
     app.get(path, (req,res) =>{
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         sportsCompetitions.find().toArray((err, competitionArray) => {
             if (competitionArray.length > 0) {
                 res.sendStatus(409);
@@ -50,19 +36,12 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering get /sports-competitions/");
     path = BASE_PATH + "/sports-competitions";
     app.get(path, (req,res) =>{
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
-
         let limit = parseInt(req.query.limit, 10);
         let offset = parseInt(req.query.offset, 10);
         let myquery = {};
 
-        let year = req.params.year;
-        let month = req.params.month;
+        let year = req.query.year;
+        let month = req.query.month;
         let day = req.query.day;
         let name = req.query.name;
         let sportcenter = req.query.sportcenter;
@@ -73,13 +52,13 @@ module.exports = function(app, BASE_PATH){
         let inscriptionprice = req.query.inscriptionprice;
 
         if (typeof year !== 'undefined') {
-            myquery.year = parseInt(year);
+            myquery.year = parseInt(year,10);
         }
         if (typeof month !== 'undefined') {
-            myquery.month = parseInt(month);
+            myquery.month = parseInt(month,10);
         }
         if (typeof day !== 'undefined') {
-            myquery.day = day;
+            myquery.day = parseInt(year,10);
         }
         if (typeof name !== 'undefined') {
             myquery.name = name;
@@ -94,13 +73,13 @@ module.exports = function(app, BASE_PATH){
             myquery.activity = activity;
         }
         if (typeof lengthactivity !== 'undefined') {
-            myquery.lengthactivity = lengthactivity;
+            myquery.lengthactivity = parseInt(lengthactivity,10);
         }
         if (typeof totaldistance !== 'undefined') {
-            myquery.totaldistance = totaldistance;
+            myquery.totaldistance = parseInt(totaldistance,10);
         }
         if (typeof inscriptionprice !== 'undefined') {
-            myquery.inscriptionprice = inscriptionprice;
+            myquery.inscriptionprice = parseInt(inscriptionprice,10);
         }
         if (typeof limit === 'undefined') {
             limit = 10000;
@@ -122,12 +101,6 @@ module.exports = function(app, BASE_PATH){
    
     path = BASE_PATH + "/sports-competitions";
     app.post(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         let newCompetitions = req.body;
 
         if (validation(newCompetitions)){
@@ -148,12 +121,6 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering delete to /sports-competitions");
     path = BASE_PATH + "/sports-competitions";
     app.delete(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         sportsCompetitions.deleteMany();
         res.sendStatus(200);
     });
@@ -161,12 +128,6 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering get to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
     app.get(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         let id = req.params.id;
     
         sportsCompetitions.find({"id": parseInt(id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
@@ -181,12 +142,6 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering get to /sports-competitions/:year/:month");
     path = BASE_PATH + "/sports-competitions/:year/:month";
     app.get(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         var year = req.params.year;
         var month = req.params.month;
         
@@ -207,12 +162,6 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering put to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
     app.put(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         let id = req.params.id;
         let updatedCompetition = req.body;
         
@@ -246,12 +195,6 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering delete to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
     app.delete(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         let id = req.params.id;
         var myquery = {id: parseInt(id, 10)};
     
@@ -267,24 +210,12 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering post to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
     app.post(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         res.sendStatus(405);
     });
     
     console.log("Registering put to /sports-competitions");
     path = BASE_PATH + "/sports-competitions";
     app.put(path, (req, res) => {
-        let apikeyReq = req.query.apikey;
-
-        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-            res.sendStatus(401);
-            return ;
-        }
         res.sendStatus(405);
     });
     
