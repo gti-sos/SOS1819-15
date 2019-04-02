@@ -18,14 +18,10 @@ module.exports = function (app, BASE_PATH) {
         educationsCenters.find().toArray((err, contactsArray) => {
             if (contactsArray.length > 0) {
                 res.sendStatus(409);
-                return;
             } else {
                 addData();
-                res.send("created")
+                res.sendStatus(201);
             }
-
-            if (err)
-                console.log("Error: " + err);
         });
     });
 
