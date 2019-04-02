@@ -93,11 +93,7 @@ module.exports = function(app, BASE_PATH){
 
         sportsCenters.find(myquery, {projection:{_id: 0 }}).skip(offset).limit(limit).toArray((err, sportscentersArray) => {
             if (err) console.log("Error: " + err);
-            if (sportscentersArray.length == 1) {
-                res.send(sportscentersArray[0]);
-            } else {
-                res.send(sportscentersArray);
-            }
+            res.send(sportscentersArray);
         });
     });
     console.log("Resource /sports-centers/ registered");
