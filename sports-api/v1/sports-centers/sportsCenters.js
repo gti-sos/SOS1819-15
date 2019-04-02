@@ -18,7 +18,7 @@ module.exports = function(app, BASE_PATH){
     var path = "";
     
     console.log("Registering redirection to docs");
-    path = BASE_PATH + "/sports-centers//docs";
+    path = BASE_PATH + "/sports-centers/docs";
     app.get(path, (req, res) => {
         res.redirect('https://documenter.getpostman.com/view/6924371/S17tS8XN');
     });
@@ -43,7 +43,7 @@ module.exports = function(app, BASE_PATH){
     // GET a un RECURSO + Busqueda Implementada
     
     console.log("Registering get /sports-centers/");
-    path = BASE_PATH + "/sports-centers/";
+    path = BASE_PATH + "/sports-centers";
     app.get(path, (req,res) =>{
         let limit = parseInt(req.query.limit, 10);
         let offset = parseInt(req.query.offset, 10);
@@ -127,7 +127,7 @@ module.exports = function(app, BASE_PATH){
     // DELETE a un RECURSO (Borra TODO)
     
     console.log("Registering delete to /sports-centers/");
-    path = BASE_PATH + "/sports-centers/";
+    path = BASE_PATH + "/sports-centers";
     app.delete(path, (req, res) => {
         sportsCenters.deleteMany();
         res.sendStatus(200);
@@ -234,7 +234,7 @@ module.exports = function(app, BASE_PATH){
     });
     
     console.log("Registering put to /sports-centers/");
-    path = BASE_PATH + "/sports-centers/";
+    path = BASE_PATH + "/sports-centers";
     app.put(path, (req, res) => {
         res.sendStatus(405);
     });
