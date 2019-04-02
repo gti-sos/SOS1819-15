@@ -12,7 +12,9 @@
   "devDependencies": {},
   "scripts": {
     "start": "node index.js",
-    "test": "newman run https://www.getpostman.com/collections/e7479b7f8520a738e5ff; newman run https://www.getpostman.com/collections/7c14b58b4687aa24028e"
+    "test": "newman run https://www.getpostman.com/collections/e7479b7f8520a738e5ff; newman run https://www.getpostman.com/collections/7c14b58b4687aa24028e; newman run https://www.getpostman.com/collections/eac4325634ae3ff2dbbd",
+    "test-sportsCenters-api": "newman run https://www.getpostman.com/collections/eac4325634ae3ff2dbbd"
+    
   },
   "repository": {
     "type": "git",

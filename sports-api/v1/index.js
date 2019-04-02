@@ -9,3 +9,16 @@ module.exports = {
         sportsCompetitionsSecure(app,BASE_PATH+"/secure");
     }
 }
+
+var sportsCenters =  require("./sportsCenters/sportsCenters.js");
+var sportsCentersSecure =  require("./sportsCenters/sportsCentersSecure.js");
+
+module.exports = {
+    sportsCenters : function(app, BASE_PATH){
+        sportsCenters(app,BASE_PATH);
+    },
+    sportsCompetitionsSecure : function(app, BASE_PATH){
+        sportsCentersSecure(app,BASE_PATH+"/secure");
+    }
+}
+
