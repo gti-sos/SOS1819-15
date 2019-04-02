@@ -105,14 +105,15 @@ module.exports = function(app, BASE_PATH){
     
     // POST a un RECURSO
    
-    path = BASE_PATH + "/sports-centers/";
+    path = BASE_PATH + "/sports-centers";
     app.post(path, (req, res) => {
         let newsportsCenters = req.body;
 
         if (validation(newsportsCenters)){
             sportsCenters.find({"id": parseInt(newsportsCenters.id)}, {projection:{_id: 0 }}).toArray((err, sportscentersArray) => {
     
-            if (sportscentersArray.length < 1) {
+            if (sportsCenters.length < 1) {
+                sportsCenters.insert(sportscentersArray);
                 res.sendStatus(201);
             } else {
                 res.sendStatus(409);
