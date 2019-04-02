@@ -19,14 +19,14 @@ module.exports = function(app, BASE_PATH){
     var path = "";
     
     console.log("Registering redirection to docs");
-    path = BASE_PATH + "/sports-centers//docs";
+    path = BASE_PATH + "/sports-centers/docs";
     app.get(path, (req, res) => {
     let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
-    }
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+        }
         res.redirect('https://documenter.getpostman.com/view/6924371/S17tS8XN');
     });
     
@@ -38,9 +38,10 @@ module.exports = function(app, BASE_PATH){
     app.get(path, (req,res) =>{
             let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+
     }
         sportsCenters.find().toArray((err, sportscentersArray) => {
             if (sportscentersArray.length > 0) {
@@ -58,12 +59,13 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering get /sports-centers/");
     path = BASE_PATH + "/sports-centers/";
     app.get(path, (req,res) =>{
-            let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
-    }
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+        
+        }
         let limit = parseInt(req.query.limit, 10);
         let offset = parseInt(req.query.offset, 10);
         let myquery = {};
@@ -128,10 +130,10 @@ module.exports = function(app, BASE_PATH){
     app.post(path, (req, res) => {
     let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
-    }
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+        }
         let newsportsCenters = req.body;
 
         if (validation(newsportsCenters)){
@@ -155,9 +157,10 @@ module.exports = function(app, BASE_PATH){
     app.delete(path, (req, res) => {
     let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+    
     }
         sportsCenters.deleteMany();
         res.sendStatus(200);
@@ -168,12 +171,12 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering get to /sports-centers/:id");
     path = BASE_PATH + "/sports-centers/:id";
     app.get(path, (req, res) => {
-            let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
-    }
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+        }
         let id = req.params.id;
     
         sportsCenters.find({"id": parseInt(id)}, {projection:{_id: 0 }}).toArray((err, sportscentersArray) => {
@@ -190,12 +193,12 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering get to /sports-centers/:postalcode/:sportfields");
     path = BASE_PATH + "/sports-centers/:postalcode/:activity";
     app.get(path, (req, res) => {
-            let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
-    }
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+        }
         var postalcode = req.params.postalcode;
         var sportfields = req.params.sportfields;
         
@@ -219,11 +222,12 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering put to /sports-centers/:id");
     path = BASE_PATH + "/sports-centers/:id";
     app.put(path, (req, res) => {
-            let apikeyReq = req.query.apikey;
+     let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+
     }
         let id = req.params.id;
         let updatedCenters = req.body;
@@ -260,12 +264,12 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering delete to /sports-centers/:id");
     path = BASE_PATH + "/sports-centers/:id";
     app.delete(path, (req, res) => {
-            let apikeyReq = req.query.apikey;
+     let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
-    }
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+        }
         let id = req.params.id;
         var myquery = {id: parseInt(id, 10)};
     
@@ -284,23 +288,23 @@ module.exports = function(app, BASE_PATH){
     console.log("Registering post to /sports-centers/:id");
     path = BASE_PATH + "/sports-centers/:id";
     app.post(path, (req, res) => {
-            let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
-    }
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
+        }
         res.sendStatus(405);
     });
     
     console.log("Registering put to /sports-centers/");
     path = BASE_PATH + "/sports-centers/";
     app.put(path, (req, res) => {
-            let apikeyReq = req.query.apikey;
+    let apikeyReq = req.query.apikey;
 
-    if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
-        res.sendStatus(401);
-        return ;
+        if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
+            res.sendStatus(401);
+            return ;
     }
         res.sendStatus(405);
     });
