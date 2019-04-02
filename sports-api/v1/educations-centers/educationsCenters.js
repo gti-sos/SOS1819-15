@@ -9,205 +9,217 @@ client.connect(err => {
     console.log("Connected!");
 });
 
-module.exports = function(app, BASE_PATH){
-        app.get("/educations-centers/loadInitialData", (req, res) => {
-            educationsCenters.find().toArray((err, contactsArray) => {
-                if(contactsArray.length !== 0){
-                    res.sendStatus(409);
-                    return ;
-                } else {
-                    addData();
-                    res.send("created")
-                }
+module.exports = function (app, BASE_PATH) {
 
-                if (err)
-                    console.log("Error: " + err);
-            });
-        });
+    var path;
 
-        app.get("/educations-centers/docs", (req, res) => {
-            res.redirect('https://documenter.getpostman.com/view/6901186/S17tS8XH');
-        });
-
-        app.get("/educations-centers", (req, res) => {
-            let ownership = req.query.ownership;
-            let country = req.query.country;
-            let center = req.query.center;
-            let name = req.query.name;
-            let domicile = req.query.domicile;
-            let locality = req.query.locality;
-            let phone = req.query.phone;
-            let lat = req.query.lat;
-            let lon = req.query.lon;
-            let sports_education = req.query.sports_education;
-            let monthStart = req.query.monthStart;
-
-            let limit = parseInt(req.query.limit, 10);
-            let offset = parseInt(req.query.offset, 10);
-            let myquery = {};
-
-            if (typeof ownership !== 'undefined') {
-                myquery.ownership = ownership;
-            }
-            if (typeof country !== 'undefined') {
-                myquery.country = country;
-            }
-            if (typeof center !== 'undefined') {
-                myquery.center = center
-            }
-            if (typeof name !== 'undefined') {
-                myquery.name = name
-            }
-            if (typeof domicile !== 'undefined') {
-                myquery.domicile = domicile
-            }
-            if (typeof phone !== 'undefined') {
-                myquery.phone = parseInt(phone);
-            }
-            if (typeof locality !== 'undefined') {
-                myquery.locality = locality
-            }
-            if (typeof lat !== 'undefined') {
-                myquery.lat = parseFloat(lat);
-            }
-            if (typeof lon !== 'undefined') {
-                myquery.lon = parseFloat(lon);
-            }
-            if (typeof sports_education !== 'undefined') {
-                myquery.sports_education = parseInt(sports_education);
-            }
-            if (typeof monthStart !== 'undefined') {
-                myquery.monthStart = parseInt(monthStart);
-            }
-
-            if (typeof limit === 'undefined') {
-                limit = 10000;
-            }
-            if (typeof offset === 'undefined') {
-                offset = 0;
-            }
-
-            console.log("Query: " + JSON.stringify(myquery));
-            educationsCenters.find(myquery).project({_id:0}).skip(offset).limit(limit).toArray((err, contactsArray) => {
-
-                if (err)
-                    console.log("Error: " + err);
-
-                res.send(contactsArray);
-            });
-        });
-
-        app.post("/educations-centers", (req, res) => {
-
-            let newEducationCenter = req.body;
-            let id = parseInt(newEducationCenter.id, 10);
-
-            if (!validation(newEducationCenter)){
-                res.sendStatus(400);
+    path = BASE_PATH + "/educations-centers/loadInitialData";
+    app.get(path, (req, res) => {
+        educationsCenters.find().toArray((err, contactsArray) => {
+            if (contactsArray.length !== 0) {
+                res.sendStatus(409);
                 return;
+            } else {
+                addData();
+                res.send("created")
             }
 
-            educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
-
-                if (contactsArray.length == 0) {
-                    educationsCenters.insertOne(newEducationCenter);
-
-                    res.sendStatus(201);
-                } else {
-                    res.sendStatus(409);
-                }
-            });
-
-
+            if (err)
+                console.log("Error: " + err);
         });
-
-        app.delete("/educations-centers", (req, res) => {
-            educationsCenters.deleteMany();
-
-            res.sendStatus(200);
-        });
-
-        app.get("/educations-centers/:id", (req, res) => {
-
-            let id = req.params.id;
-
-            educationsCenters.find({"id": parseInt(id)}).project({_id:0}).toArray((err, contactsArray) => {
-
-                if (contactsArray.length > 0) {
-                    res.send(contactsArray[0]);
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-
-        });
-
-        app.put("/educations-centers/:id", (req, res) => {
-
-            let id = req.params.id;
-            let updatedCenters = req.body;
-            var myquery = {id: parseInt(id, 10)};
-
-            if(parseInt(id, 10) !== parseInt(updatedCenters.id, 10)){
-                res.sendStatus(400);
-                return;
-            }
-
-            educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
-
-                if (contactsArray.length == 1) {
-                    educationsCenters.replaceOne(myquery, updatedCenters, function (err, obj) {
-                        if (err) {
-                            console.log("error: " + err);
-                            res.sendStatus(404);
-                        } else {
-                            res.sendStatus(200);
-                        }
-                    });
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-
-
-        });
-
-        app.delete("/educations-centers/:id", (req, res) => {
-
-            let id = req.params.id;
-
-            var myquery = {id: parseInt(id, 10)};
-
-            educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
-
-                if (contactsArray.length > 0) {
-                    educationsCenters.deleteOne(myquery, function (err, obj) {
-                        if (err) {
-                            res.sendStatus(404);
-                        } else {
-                            res.sendStatus(200);
-                        }
-                    });
-                } else {
-                    res.sendStatus(404);
-                }
-            });
-
-
-
-        });
-
-
-        app.post("/educations-centers/:id", (req, res) => {
-            res.sendStatus(405);
-        });
-
-        app.put("/educations-centers", (req, res) => {
-            res.sendStatus(405);
     });
-}
 
-function validation(newCompetitions){
+    path = BASE_PATH + "/educations-centers/docs";
+    app.get(path, (req, res) => {
+        res.redirect('https://documenter.getpostman.com/view/6901186/S17tS8XH');
+    });
+
+    path = BASE_PATH + "/educations-centers";
+    app.get(path, (req, res) => {
+        let ownership = req.query.ownership;
+        let country = req.query.country;
+        let center = req.query.center;
+        let name = req.query.name;
+        let domicile = req.query.domicile;
+        let locality = req.query.locality;
+        let phone = req.query.phone;
+        let lat = req.query.lat;
+        let lon = req.query.lon;
+        let sports_education = req.query.sports_education;
+        let monthStart = req.query.monthStart;
+
+        let limit = parseInt(req.query.limit, 10);
+        let offset = parseInt(req.query.offset, 10);
+        let myquery = {};
+
+        if (typeof ownership !== 'undefined') {
+            myquery.ownership = ownership;
+        }
+        if (typeof country !== 'undefined') {
+            myquery.country = country;
+        }
+        if (typeof center !== 'undefined') {
+            myquery.center = center
+        }
+        if (typeof name !== 'undefined') {
+            myquery.name = name
+        }
+        if (typeof domicile !== 'undefined') {
+            myquery.domicile = domicile
+        }
+        if (typeof phone !== 'undefined') {
+            myquery.phone = parseInt(phone);
+        }
+        if (typeof locality !== 'undefined') {
+            myquery.locality = locality
+        }
+        if (typeof lat !== 'undefined') {
+            myquery.lat = parseFloat(lat);
+        }
+        if (typeof lon !== 'undefined') {
+            myquery.lon = parseFloat(lon);
+        }
+        if (typeof sports_education !== 'undefined') {
+            myquery.sports_education = parseInt(sports_education);
+        }
+        if (typeof monthStart !== 'undefined') {
+            myquery.monthStart = parseInt(monthStart);
+        }
+
+        if (typeof limit === 'undefined') {
+            limit = 10000;
+        }
+        if (typeof offset === 'undefined') {
+            offset = 0;
+        }
+
+        console.log("Query: " + JSON.stringify(myquery));
+        educationsCenters.find(myquery).project({_id: 0}).skip(offset).limit(limit).toArray((err, contactsArray) => {
+
+            if (err)
+                console.log("Error: " + err);
+
+            res.send(contactsArray);
+        });
+    });
+
+    path = BASE_PATH + "/educations-centers";
+    app.post(path, (req, res) => {
+
+        let newEducationCenter = req.body;
+        let id = parseInt(newEducationCenter.id, 10);
+
+        if (!validation(newEducationCenter)) {
+            res.sendStatus(400);
+            return;
+        }
+
+        educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+
+            if (contactsArray.length == 0) {
+                educationsCenters.insertOne(newEducationCenter);
+
+                res.sendStatus(201);
+            } else {
+                res.sendStatus(409);
+            }
+        });
+
+
+    });
+
+    path = BASE_PATH + "/educations-centers";
+    app.delete(path, (req, res) => {
+        educationsCenters.deleteMany();
+
+        res.sendStatus(200);
+    });
+
+    path = BASE_PATH + "/educations-centers/:id";
+    app.get(path, (req, res) => {
+
+        let id = req.params.id;
+
+        educationsCenters.find({"id": parseInt(id)}).project({_id: 0}).toArray((err, contactsArray) => {
+
+            if (contactsArray.length > 0) {
+                res.send(contactsArray[0]);
+            } else {
+                res.sendStatus(404);
+            }
+        });
+
+    });
+
+    path = BASE_PATH + "/educations-centers/:id";
+    app.put(path, (req, res) => {
+
+        let id = req.params.id;
+        let updatedCenters = req.body;
+        var myquery = {id: parseInt(id, 10)};
+
+        if (parseInt(id, 10) !== parseInt(updatedCenters.id, 10)) {
+            res.sendStatus(400);
+            return;
+        }
+
+        educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+
+            if (contactsArray.length == 1) {
+                educationsCenters.replaceOne(myquery, updatedCenters, function (err, obj) {
+                    if (err) {
+                        console.log("error: " + err);
+                        res.sendStatus(404);
+                    } else {
+                        res.sendStatus(200);
+                    }
+                });
+            } else {
+                res.sendStatus(404);
+            }
+        });
+
+
+    });
+
+    path = BASE_PATH + "/educations-centers/:id";
+    app.delete(path, (req, res) => {
+
+        let id = req.params.id;
+
+        var myquery = {id: parseInt(id, 10)};
+
+        educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
+
+            if (contactsArray.length > 0) {
+                educationsCenters.deleteOne(myquery, function (err, obj) {
+                    if (err) {
+                        res.sendStatus(404);
+                    } else {
+                        res.sendStatus(200);
+                    }
+                });
+            } else {
+                res.sendStatus(404);
+            }
+        });
+
+
+    });
+
+
+    path = BASE_PATH + "/educations-centers/:id";
+    app.post(path, (req, res) => {
+        res.sendStatus(405);
+    });
+
+    path = BASE_PATH + "/educations-centers";
+    app.put(path, (req, res) => {
+        res.sendStatus(405);
+    });
+};
+
+function validation(newCompetitions) {
     let r = false;
     if (newCompetitions.hasOwnProperty("id") &&
         newCompetitions.hasOwnProperty("country") &&
@@ -220,7 +232,7 @@ function validation(newCompetitions){
         newCompetitions.hasOwnProperty("lat") &&
         newCompetitions.hasOwnProperty("lon") &&
         newCompetitions.hasOwnProperty("sports_education") &&
-        newCompetitions.hasOwnProperty("monthStart")){
+        newCompetitions.hasOwnProperty("monthStart")) {
         r = true;
     }
     return r;
