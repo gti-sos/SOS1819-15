@@ -113,7 +113,7 @@ module.exports = function(app, BASE_PATH){
             sportsCenters.find({"id": parseInt(newsportsCenters.id)}, {projection:{_id: 0 }}).toArray((err, sportscentersArray) => {
     
             if (sportscentersArray.length < 1) {
-                sportsCenters.insert(sportscentersArray);
+                sportsCenters.insert(newsportsCenters);
                 res.sendStatus(201);
             } else {
                 res.sendStatus(409);
@@ -123,7 +123,6 @@ module.exports = function(app, BASE_PATH){
             res.sendStatus(400);
         }
     });
-    
     
     // DELETE a un RECURSO (Borra TODO)
     
