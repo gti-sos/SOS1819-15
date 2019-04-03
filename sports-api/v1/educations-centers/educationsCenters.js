@@ -16,16 +16,12 @@ module.exports = function (app, BASE_PATH) {
     path = BASE_PATH + "/educations-centers/loadInitialData";
     app.get(path, (req, res) => {
         educationsCenters.find().toArray((err, contactsArray) => {
-            if (contactsArray.length !== 0) {
+            if (contactsArray.length > 0) {
                 res.sendStatus(409);
-                return;
             } else {
                 addData();
-                res.send("created")
+                res.sendStatus(201);
             }
-
-            if (err)
-                console.log("Error: " + err);
         });
     });
 
