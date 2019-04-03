@@ -25,9 +25,8 @@ module.exports = function(app, BASE_PATH){
         sportsCompetitions.find().toArray((err, competitionArray) => {
             if (competitionArray.length > 0) {
                 res.sendStatus(409);
-            } else {
-                addData();
-                res.sendStatus(201);
+            } else {   
+                addData(res);             
             }
         });
     });
@@ -241,7 +240,7 @@ function validation(newCompetitions){
     return r;
 }
 
-function addData() {
+function addData(r) {
     sportsCompetitions.insertMany([{ 
         id: 1,
         year: 2019,
@@ -307,5 +306,7 @@ function addData() {
         totaldistance: 10,
         inscriptionprice: 0,
         additionalinfo: "Salida 10Kms: 9:30 horas"}
-    ]);
+    ], function(){
+        r.sendStatus(201);
+    });
 }
