@@ -380,5 +380,7 @@ function addData() {
         totaldistance: 10,
         inscriptionprice: 0,
         additionalinfo: "Salida 10Kms: 9:30 horas"}
-    ]);
+    ], function(){
+        r.sendStatus(201);
+    });
 }
