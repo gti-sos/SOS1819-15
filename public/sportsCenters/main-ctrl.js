@@ -34,7 +34,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
                 name:name,
                 postalcode:parseInt(postalcode),
                 startingyear:parseInt(startingyear),
-                surface:surface,
+                surface:parseInt(surface),
                 activity:activity,
                 paviment:paviment,
                 sportcenter:parseInt(sportfields)
