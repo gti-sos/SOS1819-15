@@ -26,7 +26,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
         && typeof surface!=='undefined'
         && typeof activity!=='undefined'
         && typeof paviment!=='undefined'
-        && typeof sportfields!=='undefined'){
+        && typeof sportfields!=='undefined');
 
             var data = {
                 id: parseInt(id),
@@ -48,9 +48,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
                 console.log("Error PUT method: Code "+response.status+", "+response.statusText);
                 $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
             });
-        }else{
-            $scope.dataResponse="Fields required";
-        }      
+        
     }
 
     $scope.sendPut = function(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields){
@@ -62,7 +60,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
         && typeof surface!=='undefined'
         && typeof activity!=='undefined'
         && typeof paviment!=='undefined'
-        && typeof sportfields!=='undefined'){
+        && typeof sportfields!=='undefined');
 
             var data = {
                 id: parseInt(id),
@@ -84,9 +82,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
                 console.log("Error PUT method: Code "+response.status+", "+response.statusText);
                 $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
             });
-        }else{
-            $scope.dataResponse="Fields required";
-        }
+     
     }
 
     $scope.sendDel = function(){
