@@ -16,6 +16,8 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             $scope.dataResponse=response.status+", "+response.statusText
         });
     }
+    
+    // POST sobre el conjunto
 
     $scope.sendPost = function(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields){
         if(typeof id!=='undefined'
@@ -26,7 +28,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
         && typeof surface!=='undefined'
         && typeof activity!=='undefined'
         && typeof paviment!=='undefined'
-        && typeof sportfields!=='undefined');
+        && typeof sportfields!=='undefined'){
 
             var data = {
                 id: parseInt(id),
@@ -50,6 +52,9 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             });
         
     }
+    }
+    
+    // PUT sobre recurso concreto
 
     $scope.sendPut = function(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields){
         if(typeof id!=='undefined'
@@ -68,7 +73,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
                 name:name,
                 postalcode:parseInt(postalcode),
                 startingyear:parseInt(startingyear),
-                surface:surface,
+                surface:parseInt(surface),
                 activity:activity,
                 paviment:paviment,
                 sportcenter:parseInt(sportfields)
@@ -85,6 +90,8 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
      
     }
 
+ // Elimina conjunto o recurso concreto
+ 
     $scope.sendDel = function(){
         $http.delete(path+$scope.url).then(function(response){
             console.log($scope.url);
@@ -99,5 +106,3 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
     }
 
 }]);
-// Modulo 1, modulo que usaremos,
-// El último parámetro es el CALLBACK.
