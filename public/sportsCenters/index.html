@@ -1,0 +1,42 @@
+<html ng-app="MiniPostmanAppSportsCentersApp">
+    <head>
+        <title>Mini Postman SportsCenters</title>
+        <link rel="stylesheet" href="../bootstrap.min.css" >
+        <script src="../bootstrap.min.js"></script>
+        <script src="../angular.min.js"></script>
+        <script src="./minipostman-app.js"></script>
+        <script src="./main-ctrl.js"></script>
+    </head>
+    <body ng-controller="MainCtrl">
+        <div class="main">
+            <h1>Mini Postman SportsCenters</h1>
+                <div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary" ng-click="sendGet()">GET</button>
+                        <button type="button" class="btn btn-secondary" ng-click="sendPost((id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields)">POST</button>
+                        <button type="button" class="btn btn-primary" ng-click="sendPut(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields)">PUT</button>
+                        <button type="button" class="btn btn-secondary" ng-click="sendDel()">DEL</button>
+                    </div>           
+                <label><input class="form-control text-center" ng-model="url" size="50"/></label>
+            </div>
+            <div>
+                <div class="col-xs-5" style="width: 50%;float:left;">
+                    <label>ID:<input class="form-control text-center" ng-model="id"/></label>
+                    <label>street:<input class="form-control text-center" ng-model="street"/></label>
+                    <label>name:<input class="form-control text-center" ng-model="name"/></label>
+                    <label>postalcode:<input class="form-control text-center" ng-model="postalcode"/></label>
+                    <label>startingyear:<input class="form-control text-center" ng-model="startingyear"/></label>
+                    <label>surface:<input class="form-control text-center" ng-model="surface"/></label>
+                    <label>activity:<input class="form-control text-center" ng-model="activity"/></label>
+                    <label>paviment:<input class="form-control text-center" ng-model="paviment"/></label>
+                    <label>sportfields:<input class="form-control text-center" ng-model="sportfields"/></label>
+                </div>
+                <div class="col-xs-5" style="width: 50%;float:left;">
+                    <label class="input-lg" for="dataResponse">Data response</label>
+                    <textarea class="form-control" rows="20" ng-model="dataResponse"></textarea>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>
