@@ -261,7 +261,7 @@ function validation(newsportsCenters){
 // Load Initial Data
 
 
-    function addData() {
+    function addData(r) {
     sportsCenters.insertMany([{ 
         
         id:1,
