@@ -2,11 +2,10 @@ var app = angular.module("MiniPostmanAppCompetitionsApp");
 app.controller("MainCtrl",["$scope","$http",function($scope,$http){ 
     console.log("Retrieving $scope");
 
-    var path="https://sos1819-15.herokuapp.com";
     $scope.url="/api/v1/sports-competitions/";
 
-    $scope.sendGet = function(){
-        $http.get(path+$scope.url).then(function(response){
+    function get() {
+        $http.get($scope.url).then(function(response){
             var res = JSON.stringify(response.data,null,2);
             if (response.data.length == 0){
                 
@@ -15,9 +14,9 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
         }, function (response) {
             $scope.dataResponse=response.status+", "+response.statusText
         });
-    }
+      }
 
-    $scope.sendPost = function(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo){
+    function post(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo){
         if(typeof id!=='undefined'
         && typeof year!=='undefined'
         && typeof day!=='undefined'
@@ -47,7 +46,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             };
             console.log($scope.url);
             console.log(data);
-            $http.post(path+$scope.url, JSON.stringify(data)).then(function (response) {
+            $http.post($scope.url, JSON.stringify(data)).then(function (response) {
                 console.log("OK put method");
                 $scope.dataResponse = JSON.stringify(response.data,null,2);
             }, function (response) {
@@ -59,7 +58,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
         }      
     }
 
-    $scope.sendPut = function(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo){
+    function put(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo){
         if(typeof id!=='undefined'
         && typeof year!=='undefined'
         && typeof day!=='undefined'
@@ -90,7 +89,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             };
             console.log($scope.url);
             console.log(data);
-            $http.put(path+$scope.url, JSON.stringify(data)).then(function (response) {
+            $http.put($scope.url, JSON.stringify(data)).then(function (response) {
                 console.log("OK put method");
                 $scope.dataResponse = JSON.stringify(response.data,null,2);
             }, function (response) {
@@ -102,8 +101,8 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
         }
     }
 
-    $scope.sendDel = function(){
-        $http.delete(path+$scope.url).then(function(response){
+    function del(){
+        $http.delete($scope.url).then(function(response){
             console.log($scope.url);
             var res = JSON.stringify(response.data,null,2);
             if (response.data.length == 1){
@@ -115,6 +114,25 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
         });
     }
 
+    $scope.sendAction = function(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo){
+        switch(parseInt($scope.sel)) {
+            case 1:
+                console.log("GET petition");
+                get();
+            break;
+            case 2:
+                console.log("POST petition");
+                post(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo);
+            break;
+            case 3:
+                console.log("PUT petition");
+                put(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo);
+            break;
+            case 4:
+                console.log("DELETE petition");
+                del();
+            break;
+        }
+    }
+
 }]);
-// Modulo 1, modulo que usaremos,
-// El último parámetro es el CALLBACK.
