@@ -1,0 +1,58 @@
+<html ng-app="MiniPostmanAppEducationsCentersApp">
+<head>
+    <title>Mini Postman EducationsCenters</title>
+    <link rel="stylesheet" href="../bootstrap.min.css">
+    <script src="../bootstrap.min.js"></script>
+    <script src="../angular.min.js"></script>
+    <script src="./minipostman-app.js"></script>
+    <script src="./main-ctrl.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+<div class="container">
+    <div class="row">
+
+        <div>
+            <h1>Mini Postman Educations Centers</h1>
+            <div class="form-group">
+                <label for="urlImput">URL</label>
+                <input type="text" class="form-control" id="urlImput" ng-model="url">
+            </div>
+
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-primary" ng-click="sendGet()">GET</button>
+                <button type="button" class="btn btn-outline-secondary" ng-click="sendPost(id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart)">POST</button>
+                <button type="button" class="btn btn-outline-success" ng-click="sendPut(id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart)">PUT</button>
+                <button type="button" class="btn btn-outline-danger" ng-click="sendDel()">DEL</button>
+            </div>
+
+        </div>
+
+        <div>
+            <div class="col-xs-5" style="width: 50%;float:left;">
+                <label>ID:<input class="form-control text-center" ng-model="id"/></label>
+                <label>Country:<input class="form-control text-center" ng-model="country"/></label>
+                <label>center:<input class="form-control text-center" ng-model="center"/></label>
+                <label>name:<input class="form-control text-center" ng-model="name"/></label>
+                <label>ownership:<input class="form-control text-center" ng-model="ownership"/></label>
+                <label>domicile:<input class="form-control text-center" ng-model="domicile"/></label>
+                <label>locality:<input class="form-control text-center" ng-model="locality"/></label>
+                <label>phone:<input class="form-control text-center" ng-model="phone"/></label>
+                <label>lat:<input class="form-control text-center" ng-model="lat"/></label>
+                <label>lon:<input class="form-control text-center" ng-model="lon"/></label>
+                <label for="sports_education">Sport Education
+                <select class="custom-select w-50" id="sports_education" ng-model="sports_education">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select></label>
+                <label>monthStart:<input class="form-control text-center" ng-model="monthStart"/></label>
+            </div>
+            <div class="col-xs-5" style="width: 50%;float:left;">
+                <label class="input-lg" for="dataResponse">Data response</label>
+                <textarea class="form-control" rows="20" ng-model="dataResponse"></textarea>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
