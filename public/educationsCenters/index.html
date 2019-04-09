@@ -47,8 +47,10 @@
                 <label>monthStart:<input class="form-control text-center" ng-model="monthStart"/></label>
             </div>
             <div class="col-xs-5" style="width: 50%;float:left;">
-                <label class="input-lg" for="dataResponse">Data response</label>
-                <textarea class="form-control" rows="20" ng-model="dataResponse"></textarea>
+                <label class="input-lg" >Code: </label>
+                <label class="input-lg" >{{code}}</label>
+                <label class="input-lg" for="dataResponse" ng-model="code" >, Data response</label>
+                <textarea class="form-control" id="dataResponse" rows="20" ng-model="dataResponse"></textarea>
             </div>
 
         </div>

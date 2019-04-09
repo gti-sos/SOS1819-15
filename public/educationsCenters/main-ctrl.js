@@ -11,6 +11,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
 
             }
             $scope.dataResponse = res;
+            $scope.code = response.status;
         }, function (response) {
             $scope.dataResponse = response.status + ", " + response.statusText
         });
@@ -50,7 +51,8 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
             console.log(data);
             $http.post($scope.url, JSON.stringify(data)).then(function (response) {
                 console.log("OK put method");
-                $scope.dataResponse = JSON.stringify(response.data, null, 2);
+                $scope.dataResponse =  JSON.stringify( response.statusCode + " : " + response.data, null, 2);
+                $scope.code = response.status;
             }, function (response) {
                 console.log("Error PUT method: Code " + response.status + ", " + response.statusText);
                 $scope.dataResponse = "Code: " + response.status + "\n" + response.statusText;
@@ -94,6 +96,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
         $http.put($scope.url, JSON.stringify(data)).then(function (response) {
             console.log("OK put method");
             $scope.dataResponse = JSON.stringify(response.data, null, 2);
+            $scope.code = response.status;
         }, function (response) {
             console.log("Error PUT method: Code " + response.status + ", " + response.statusText);
             $scope.dataResponse = "Code: " + response.status + "\n" + response.statusText;
@@ -111,6 +114,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
 
             }
             $scope.dataResponse = res;
+            $scope.code = response.status;
         }, function (response) {
             $scope.dataResponse = response.status + ", " + response.statusText
         });
