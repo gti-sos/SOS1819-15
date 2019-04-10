@@ -13,9 +13,9 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             }else{
                 $scope.dataResponse = res;
             }
-            $scope.code = response.status+", "+response.statusText;           
+            $scope.code = "Code: "+response.status+"\n"+response.statusText;          
         }, function (response) {
-            $scope.dataResponse=response.status+", "+response.statusText
+            $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
         });
       }
 
