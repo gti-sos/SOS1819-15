@@ -11,7 +11,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
                 
             }
             $scope.dataResponse = res;
-            $scope.code = "Code: "+response.status+"\n"+response.statusText;
+            $scope.code = response.status;
         }, function (response) {
             $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
         });
@@ -46,7 +46,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             $http.post($scope.url, JSON.stringify(data)).then(function (response) {
                 console.log("OK put method");
                 $scope.dataResponse = JSON.stringify(response.data,null,2);
-                $scope.code = "Code: "+response.status+"\n"+response.statusText;
+                $scope.code = response.status;
             }, function (response) {
                 console.log("Error PUT method: Code "+response.status+", "+response.statusText);
                 $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
@@ -88,7 +88,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             $http.put($scope.url, JSON.stringify(data)).then(function (response) {
                 console.log("OK put method");
                 $scope.dataResponse = JSON.stringify(response.data,null,2);
-                $scope.code = "Code: "+response.status+"\n"+response.statusText;
+                $scope.code = response.status;
             }, function (response) {
                 console.log("Error PUT method: Code "+response.status+", "+response.statusText);
                 $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
@@ -99,17 +99,17 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
 
  // Elimina conjunto o recurso concreto
  
-function del(){
-        $http.delete($scope.url).then(function(response){
+$scope.sendDel = function () {
+        $http.delete($scope.url).then(function (response) {
             console.log($scope.url);
-            var res = JSON.stringify(response.data,null,2);
-            if (response.data.length == 1){
-                
+            let res = JSON.stringify(response.data, null, 2);
+            if (response.data.length === 1) {
+
             }
-            $scope.code = response.status+", "+response.statusText;
-            $scope.dataResponse = "Code: "+response.status+"\n"+response.statusText;
+            $scope.dataResponse = res;
+            $scope.code = response.status;
         }, function (response) {
-            $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
+            $scope.dataResponse = response.status + ", " + response.statusText
         });
     }
 
