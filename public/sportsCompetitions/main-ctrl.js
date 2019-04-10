@@ -25,6 +25,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
         && typeof year!=='undefined'
         && typeof day!=='undefined'
         && typeof month!=='undefined'
+        && typeof name!=='undefined'
         && typeof activity!=='undefined'
         && typeof lengthactivity!=='undefined'
         && typeof totaldistance!=='undefined'
