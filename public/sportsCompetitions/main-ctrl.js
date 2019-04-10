@@ -9,7 +9,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             var res = JSON.stringify(response.data,null,2);
             console.log("GET: "+parseInt(response.data.length));
             if (parseInt(response.data.length) === 0){
-
+                $scope.dataResponse = res;
             }else{
                 $scope.dataResponse = res;
             }
