@@ -16,6 +16,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             $scope.code = response.status+", "+response.statusText;           
         }, function (response) {
             $scope.dataResponse=response.status+", "+response.statusText
+            $scope.code = response.status+", "+response.statusText;
         });
       }
 
@@ -56,8 +57,10 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             }, function (response) {
                 console.log("Error PUT method: Code "+response.status+", "+response.statusText);
                 $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
+                $scope.code = response.status+", "+response.statusText;
             });
         }else{
+            $scope.code ="";
             $scope.dataResponse="Fields required";
         }      
     }
@@ -102,6 +105,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
                 $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
             });
         }else{
+            $scope.code ="";
             $scope.dataResponse="Fields required";
         }
     }
@@ -116,6 +120,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             $scope.code = response.status+", "+response.statusText;
             $scope.dataResponse = response.status+", "+response.statusText;
         }, function (response) {
+            $scope.code = response.status+", "+response.statusText;
             $scope.dataResponse=response.status+", "+response.statusText
         });
     }
