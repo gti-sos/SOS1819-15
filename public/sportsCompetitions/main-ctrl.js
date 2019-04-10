@@ -7,10 +7,13 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
     function get() {
         $http.get($scope.url).then(function(response){
             var res = JSON.stringify(response.data,null,2);
-            if (response.data.length == 0){
-                
+            console.log("GET: "+parseInt(response.data.length));
+            if (parseInt(response.data.length) === 0){
+
+            }else{
+                $scope.dataResponse = res;
             }
-            $scope.dataResponse = res;
+            $scope.code = response.status+", "+response.statusText;           
         }, function (response) {
             $scope.dataResponse=response.status+", "+response.statusText
         });
@@ -49,6 +52,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             $http.post($scope.url, JSON.stringify(data)).then(function (response) {
                 console.log("OK put method");
                 $scope.dataResponse = JSON.stringify(response.data,null,2);
+                $scope.code = response.status+", "+response.statusText;
             }, function (response) {
                 console.log("Error PUT method: Code "+response.status+", "+response.statusText);
                 $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
@@ -92,6 +96,7 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             $http.put($scope.url, JSON.stringify(data)).then(function (response) {
                 console.log("OK put method");
                 $scope.dataResponse = JSON.stringify(response.data,null,2);
+                $scope.code = response.status+", "+response.statusText;
             }, function (response) {
                 console.log("Error PUT method: Code "+response.status+", "+response.statusText);
                 $scope.dataResponse="Code: "+response.status+"\n"+response.statusText;
@@ -108,7 +113,8 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
             if (response.data.length == 1){
                 
             }
-            $scope.dataResponse = res;
+            $scope.code = response.status+", "+response.statusText;
+            $scope.dataResponse = response.status+", "+response.statusText;
         }, function (response) {
             $scope.dataResponse=response.status+", "+response.statusText
         });
