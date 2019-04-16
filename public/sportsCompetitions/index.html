@@ -1,51 +1,259 @@
 <html ng-app="MiniPostmanAppCompetitionsApp">
-    <head>
-        <title>Mini Postman SportsCompetitions</title>
-        <link rel="stylesheet" href="../bootstrap.min.css" >
-        <script src="../bootstrap.min.js"></script>
-        <script src="../angular.min.js"></script>
-        <script src="./minipostman-app.js"></script>
-        <script src="./main-ctrl.js"></script>
-    </head>
-    <body ng-controller="MainCtrl">
-        <div class="container-fluid">
-            <h1>Mini Postman SportsCompetitions</h1>
-            <div class="input-group mb-3 col-xs-10 col-md-5">
-                <div class="input-group-prepend">
+
+<head>
+    <title>Mini Postman SportsCompetitions</title>
+    <link rel="stylesheet" href="../bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="../bootstrap.min.js"></script>
+    <script src="../angular.min.js"></script>
+    <script src="./minipostman-app.js"></script>
+    <script src="./main-ctrl.js"></script>
+    <style>
+        main>.container {
+            padding: 60px 15px 0;
+        }
+
+        .footer {
+            background-color: #f5f5f5;
+        }
+
+        .footer>.container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        code {
+            font-size: 80%;
+        }
+
+        .collapse td {
+            border-top: 0;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100" ng-controller="MainCtrl">
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/sportsCompetitions/">Seville Sports Competitions APP</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
                     <select class="form-control" id="selector" ng-model="sel">
-                        <option value="1" selected>GET</option>
-                        <option value="2">POST</option>
-                        <option value="3">PUT</option>
-                        <option value="4">DELETE</option>
+                        <option value="1" selected>Id</option>
+                        <option value="2">Name</option>
+                        <option value="3">Year</option>
+                        <option value="4">Month</option>
                     </select>
-                </div>
-                <input type="text" class="form-control" placeholder="/api/" aria-label="Recipient's username" aria-describedby="button-addon2" ng-model="url">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="btnSend" ng-click="sendAction(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo)">Send!</button>
-                    <label ng-model="code">{{code}}</label>
-                </div>
-            </div>           
-            <div class="row">
-                <div class="col-xs-10 col-md-5">
-                    <label>ID*:<input class="form-control text-center" ng-model="id"/></label>
-                    <label>Year*:<input class="form-control text-center" ng-model="year"/></label>
-                    <label>day*:<input class="form-control text-center" ng-model="day"/></label>
-                    <label>month*:<input class="form-control text-center" ng-model="month"/></label>
-                    <label>name*:<input class="form-control text-center" ng-model="name"/></label>
-                    <label>sportcenter:<input class="form-control text-center" ng-model="sportcenter"/></label>
-                    <label>schoolcenter:<input class="form-control text-center" ng-model="schoolcenter"/></label>
-                    <label>activity*:<input class="form-control text-center" ng-model="activity"/></label>
-                    <label>lengthactivity*:<input class="form-control text-center" ng-model="lengthactivity"/></label>
-                    <label>totaldistance*:<input class="form-control text-center" ng-model="totaldistance"/></label>
-                    <label>inscriptionprice*:<input class="form-control text-center" ng-model="inscriptionprice"/></label>
-                    <label>additionalinfo:<input class="form-control text-center" ng-model="additionalinfo"/></label>
-                </div>
-                <div class="col-xs-10 col-md-5">
-                    <label class="input-lg" for="dataResponse">Data response</label>
-                    <textarea class="form-control" rows="20" ng-model="dataResponse"></textarea>
-                </div>
-                
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"
+                        ng-click="search()">Search</button>
+                </form>
             </div>
+        </nav>
+    </header>
+    <main role="main" class="flex-shrink-0">
+        <div class="container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Year</th>
+                        <th>Day</th>
+                        <th>Month</th>
+                        <th>Name</th>
+                        <th>Sport center</th>
+                        <th>School center</th>
+                        <th>Activity</th>
+                        <th>Length activity</th>
+                        <th>Total distance</th>
+                        <th>Inscription price</th>
+                        <th>Additional Info</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="comp in competitions">
+                    <tr>
+                        <td>{{comp.id}}</td>
+                        <td>{{comp.year}}</td>
+                        <td>{{comp.day}}</td>
+                        <td>{{comp.month}}</td>
+                        <td>{{comp.name}}</td>
+                        <td>{{comp.sportcenter}}</td>
+                        <td>{{comp.schoolcenter}}</td>
+                        <td>{{comp.activity}}</td>
+                        <td>{{comp.lengthactivity}}</td>
+                        <td>{{comp.totaldistance}}</td>
+                        <td>{{comp.inscriptionprice}}</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-primary" data-toggle="collapse"
+                                data-target="#collapse{{comp.id}}">Edit</button>
+                            <button class="btn btn-danger" ng-click="delCompetition(comp.id)">Delete</button>
+                        </td>
+                    </tr>
+                    <tr id="collapse{{comp.id}}" class="collapse out">
+                        <td colspan="13">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">ID</span>
+                                </div>
+                                <input value="{{comp.id}}" autocomplete="off" readonly type="number"
+                                    class="form-control" ng-model="editCompetition.id" placeholder="{{comp.id}}" />
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Year</span>
+                                </div>
+                                <input value="{{comp.year}}" autocomplete="off" type="number" class="form-control"
+                                    ng-model="editCompetition.year" />
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Day</span>
+                                </div>
+                                <input value="{{comp.day}}" autocomplete="off" type="number" class="form-control"
+                                    ng-model="editCompetition.day" />
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Month</span>
+                                </div>
+                                <input value="{{comp.month}}" autocomplete="off" type="number" class="form-control"
+                                    ng-model="editCompetition.month" />
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Name</span>
+                                </div>
+                                <input type="text" ng-model="editCompetition.name" ng-init="editCompetition.name='{{comp.name}}'" >
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Sport Center</span>
+                                </div>
+                                <input autocomplete="off" type="text" value="{{comp.sportcenter}}" class="form-control"
+                                    ng-model="editCompetition.sportcenter" />
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">School Center</span>
+                                </div>
+                                <input autocomplete="off" type="text" value="{{comp.schoolcenter}}" class="form-control"
+                                    ng-model="editCompetition.schoolcenter" />
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Activity</span>
+                                </div>
+                                <input autocomplete="off" type="text" value="{{comp.activity}}" class="form-control"
+                                    ng-model="editCompetition.activity" />
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Length Activity</span>
+                                </div>
+                                <input autocomplete="off" type="number" value="{{comp.lengthactivity}}"
+                                    class="form-control" ng-model="editCompetition.lengthactivity" />
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Total Distance</span>
+                                </div>
+                                <input autocomplete="off" type="number" value="{{comp.totaldistance}}"
+                                    class="form-control" ng-model="editCompetition.totaldistance" />
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Inscription Price</span>
+                                </div>
+                                <input autocomplete="off" type="number" value="{{comp.inscriptionprice}}"
+                                    class="form-control" ng-model="editCompetition.inscriptionprice" />
+                            </div>
+                            <div class="input-group mb-3">                                
+                                <button class="btn btn-primary" ng-click="editCompetition(comp.id)">Edit</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <td colspan="14">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">ID</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.id"
+                                placeholder="999" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Year</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.year"
+                                placeholder="2019" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Day</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.day"
+                                placeholder="1" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Month</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.month"
+                                placeholder="1" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Name</span>
+                            </div>
+                            <input autocomplete="off" type="text" value="" class="form-control"
+                                ng-model="newCompetition.name" placeholder="Example Name" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Sport Center</span>
+                            </div>
+                            <input autocomplete="off" type="text" value="" class="form-control"
+                                ng-model="newCompetition.sportcenter" placeholder="Example center" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">School Center</span>
+                            </div>
+                            <input autocomplete="off" type="text" value="" class="form-control"
+                                ng-model="newCompetition.schoolcenter" placeholder="Example center" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Activity</span>
+                            </div>
+                            <input autocomplete="off" value="" type="text" class="form-control"
+                                ng-model="newCompetition.activity" placeholder="Sport" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Length Activity</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control"
+                                ng-model="newCompetition.lengthactivity" placeholder="0" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Total Distance</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control"
+                                ng-model="newCompetition.totaldistance" placeholder="0" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Inscription Price</span>
+                            </div>
+                            <input autocomplete="off" type="number" value="{{comp.inscriptionprice}}"
+                                class="form-control" ng-model="newCompetition.inscriptionprice" placeholder="0" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <button class="btn btn-primary" ng-click="addCompetition()">Add the new one</button>
+                        </div>
+                    </td>
+                </tfoot>
+            </table>
         </div>
-    </body>
+    </main>
+    <footer class="footer mt-auto py-3">
+        <div class="container">
+            <span class="text-muted">Seville Sports Competitions APP | pabfersan5 @ SOS1819-15</span>
+        </div>
+    </footer>
+</body>
+
 </html>
