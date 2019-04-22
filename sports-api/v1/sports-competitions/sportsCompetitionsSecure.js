@@ -303,7 +303,8 @@ function validation(newCompetitions){
     newCompetitions.hasOwnProperty("activity") &&
     newCompetitions.hasOwnProperty("lengthactivity") &&
     newCompetitions.hasOwnProperty("totaldistance") &&
-    newCompetitions.hasOwnProperty("inscriptionprice")){
+    newCompetitions.hasOwnProperty("inscriptionprice") &&
+    newCompetitions.hasOwnProperty("additionalinfo")){
         if (typeof newCompetitions.year !== 'undefined' &&
         typeof newCompetitions.year !== 'month' &&
         typeof newCompetitions.year !== 'day') {
@@ -325,7 +326,8 @@ function addData() {
         activity: "Escolar",
         lengthactivity: 6,
         totaldistance: 0,
-        inscriptionprice: 0},
+        inscriptionprice: 0,
+        additionalinfo: "Actividad de promoción deportiva en la que participan los ceip de los distritos Macarena y Norte."},
     {
         id: 2,
         year: 2019,
@@ -337,7 +339,8 @@ function addData() {
         activity: "Artes marciales",
         lengthactivity: 6,
         totaldistance: 0,
-        inscriptionprice: 0},
+        inscriptionprice: 0,
+        additionalinfo: "Hora: 20:30"},
     {
         id: 3,
         year: 2019,
@@ -349,7 +352,8 @@ function addData() {
         activity: "Escolar",
         lengthactivity: 6,
         totaldistance: 0,
-        inscriptionprice: 0},
+        inscriptionprice: 0,
+        additionalinfo: "Impulsar y fomentar el interés por conocer diversas modalidades deportivas entre los alumnos de Educación Primaria de los colegios pertenecientes al Distrito Cerro-Amate."},
     {
         id: 4,
         year: 2019,
@@ -361,7 +365,8 @@ function addData() {
         activity: "Escolar",
         lengthactivity: 6,
         totaldistance: 0,
-        inscriptionprice: 0},
+        inscriptionprice: 0,
+        additionalinfo: "Actividad de promoción deportiva en la que participan los CEIP de los distritos Macarena y Norte."},
     {
         id: 5,
         year: 2019,
@@ -373,7 +378,8 @@ function addData() {
         activity: "Atletismo",
         lengthactivity: 3,
         totaldistance: 10,
-        inscriptionprice: 0}
+        inscriptionprice: 0,
+        additionalinfo: "Salida 10Kms: 9:30 horas"}
     ], function(){
         r.sendStatus(201);
     });
