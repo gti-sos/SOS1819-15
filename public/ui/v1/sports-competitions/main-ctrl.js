@@ -3,37 +3,44 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
     var API = "/api/v2/sports-competitions";
-    refresh(10, 0);
-    $scope.limit = 10;
-    $scope.offset = 0;
-    $scope.numCompetitions = 0;
 
-    $scope.showInfoComp = false;
-    $scope.showInfoNone = true;
+    initializeApp();
 
-    $scope.showAlertSuccessNone = true;
-    $scope.showAlertWarningNone = true;
-    $scope.showAlertErrorNone = true;
-    $scope.showAlertInfoNone = true;
+    function initializeApp() {
+        refresh(10, 0);
+        $scope.limit = 10;
+        $scope.offset = 0;
+        $scope.numCompetitions = 0;
 
+        $scope.showInfoComp = false;
+        $scope.showInfoNone = true;
+
+        $scope.showAlertSuccessNone = true;
+        $scope.showAlertWarningNone = true;
+        $scope.showAlertErrorNone = true;
+        $scope.showAlertInfoNone = true;
+
+        
+    }
 
     function refresh(limit, offset) {
         $scope.showInfoComp = false;
-        console.log("Requesting competitions to <" + API + "?fromMonth=" + $scope.fromMonth + "&toMonth=" + $scope.toMonth + ">");
+        $scope.showInfoNone = true;
+        //console.log("Requesting competitions to <" + API + "?fromMonth=" + $scope.fromMonth + "&toMonth=" + $scope.toMonth + ">");
         let url = API +
             "?fromMonth=" + parseInt($scope.fromMonth) +
             "&toMonth=" + parseInt($scope.toMonth) +
             "&limit=" + parseInt(limit) +
             "&offset=" + parseInt($scope.offset);
-        console.log(url);
+        console.log("Requesting competitions to <" + url + ">");
         $http.get(url).then(function (response) {
             console.log("Data received: " + JSON.stringify(response.data, null, 2));
             $scope.competitions = response.data;
-            
-            if (JSON.stringify(response.data, null, 2).length === 2) {
+            $scope.numCompetitions = Object.keys(response.data).length;
+            if (Object.keys(response.data).length === 0) {
                 $scope.showInfoComp = true;
                 $scope.showInfoNone = false;
-            }else{
+            } else {
 
             }
         }, function (response) {
@@ -71,10 +78,12 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
         clearAlerts();
         console.log("Paginating sports competitions");
         if (isNaN(page)) {
-            if (page.localeCompare("x") == 0) {
-                refresh($scope.limit, $scope.offset);
-                $scope.offset += $scope.limit;
-            } else if (page.localeCompare("z") == 0) {
+            if (page.localeCompare("forward") == 0) {
+                if ($scope.numCompetitions >= $scope.limit) {
+                    refresh($scope.limit, $scope.offset);
+                    $scope.offset += $scope.limit;
+                }
+            } else if (page.localeCompare("back") == 0) {
                 if ($scope.offset > 0) {
                     $scope.offset -= $scope.limit;
                 }
@@ -84,7 +93,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
                 refresh($scope.limit, $scope.offset);
             }
         } else {
-            $scope.offset = page*$scope.limit;
+            $scope.offset = page * $scope.limit;
             refresh($scope.limit, $scope.offset);
         }
     }
@@ -111,7 +120,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
                 $http.post(API, JSON.stringify(newCompetition)).then(function (response) {
                     console.log("POST response " + response.status + " " +
                         response.data);
-                    $scope.msgSuccess = "Se ha añadido la nueva competición con ID: "+newCompetition.id;
+                    $scope.msgSuccess = "Se ha añadido la nueva competición con ID: " + newCompetition.id;
                     $scope.showAlertSuccess = true;
                     $scope.showAlertSuccessNone = false;
                     refresh(undefined, undefined);
