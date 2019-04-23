@@ -1,8 +1,50 @@
-var app = angular.module("MiniPostmanAppEducationsCentersApp");
+var app = angular.module("UIEducationsCentersApp");
 app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
-    $scope.url = "/api/v1/educations-centers/";
+    $scope.url = "/api/v1/educations-centers";
+    $scope.success = false;
+    $scope.showError= false;
+    $scope.errorMsg = "";
+    $scope.successMsg = "Cargado Correctamente";
+
+    refresh();
+
+    function refresh(){
+        $http.get($scope.url).then(function (response) {
+            let res = JSON.stringify(response.data, null, 2);
+            if (response.data.length === 0) {
+
+            }
+            console.log(response.data);
+            $scope.educations = response.data;
+            $scope.code = response.status;
+        }, function (response) {
+            $scope.dataResponse = response.status + ", " + response.statusText
+        });
+    }
+
+    $scope.sendInitialData = function () {
+        $http.get($scope.url + "/loadInitialData").then(function (response) {
+            let res = JSON.stringify(response.data, null, 2);
+            if (response.data.length === 0) {
+
+            }
+            $scope.success = true;
+            $scope.showError= false;
+            $scope.successMsg = "Añadido todos los datos iniciales";
+            refresh();
+            $scope.dataResponse = res;
+            $scope.code = response.status;
+        }, function (response) {
+            $scope.dataResponse = response.status + ", " + response.statusText;
+            $scope.success = false;
+            $scope.showError = true;
+            if(response.status === 409){
+                $scope.errorMsg = "Ya hay datos cargados";
+            }
+        });
+    };
 
     $scope.sendGet = function () {
         $http.get($scope.url).then(function (response) {
@@ -12,6 +54,27 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
             }
             $scope.dataResponse = res;
             $scope.code = response.status;
+        }, function (response) {
+            $scope.dataResponse = response.status + ", " + response.statusText
+        });
+    };
+
+    $scope.sendSearchOwnership = function (ownershipSearch) {
+        let query = "";
+        if(ownershipSearch !== undefined && ownershipSearch !== ""){
+            query = "?ownership=" + ownershipSearch;
+        }
+        $http.get($scope.url + query).then(function (response) {
+            let res = JSON.stringify(response.data, null, 2);
+            if (response.data.length === 0) {
+
+            }
+            console.log(response.data);
+            $scope.educations = response.data;
+            $scope.code = response.status;
+            $scope.success = true;
+            $scope.showError= false;
+            $scope.successMsg = "Mostrando los centros con titularidad: " + ownershipSearch;
         }, function (response) {
             $scope.dataResponse = response.status + ", " + response.statusText
         });
@@ -67,9 +130,18 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
                 console.log("OK put method");
                 $scope.dataResponse =  JSON.stringify( response.statusCode + " : " + response.data, null, 2);
                 $scope.code = response.status;
+                $scope.success = true;
+                $scope.showError= false;
+                $scope.successMsg = "Creado correctamente"
+                refresh();
             }, function (response) {
                 console.log("Error PUT method: Code " + response.status + ", " + response.statusText);
                 $scope.dataResponse = "Code: " + response.status + "\n" + response.statusText;
+                $scope.success = false;
+                $scope.showError= true;
+                if(response.status === 409){
+                    $scope.errorMsg = "Ya existe un recurso con id = " + id;
+                }
             });
 
         }
@@ -114,6 +186,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
         }, function (response) {
             console.log("Error PUT method: Code " + response.status + ", " + response.statusText);
             $scope.dataResponse = "Code: " + response.status + "\n" + response.statusText;
+
         });
 
     };
@@ -129,6 +202,10 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
             }
             $scope.dataResponse = res;
             $scope.code = response.status;
+            $scope.success = true;
+            $scope.showError= false;
+            $scope.successMsg = "Borrado todos los recursos";
+            refresh();
         }, function (response) {
             $scope.dataResponse = response.status + ", " + response.statusText
         });
@@ -136,14 +213,18 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.sendDelOne = function (id) {
         console.log("delOne");
-        $http.delete($scope.url + id).then(function (response) {
+        $http.delete($scope.url + "/" + id).then(function (response) {
             console.log($scope.url);
             let res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 1) {
 
             }
+            refresh();
             $scope.dataResponse = res;
             $scope.code = response.status;
+            $scope.success = true;
+            $scope.showError= false;
+            $scope.successMsg = "Borrado Correctamente";
         }, function (response) {
             $scope.dataResponse = response.status + ", " + response.statusText
         });

@@ -19,8 +19,7 @@ module.exports = function (app, BASE_PATH) {
             if (contactsArray.length > 0) {
                 res.sendStatus(409);
             } else {
-                addData();
-                res.sendStatus(201);
+                addData(res);
             }
         });
     });
@@ -113,9 +112,14 @@ module.exports = function (app, BASE_PATH) {
         educationsCenters.find({"id": parseInt(id)}).toArray((err, contactsArray) => {
 
             if (contactsArray.length == 0) {
-                educationsCenters.insertOne(newEducationCenter);
+                educationsCenters.insertOne(newEducationCenter, function (error, response) {
+                    if(error) {
+                        res.sendStatus(409);
+                    } else {
+                        res.sendStatus(201);
+                    }
+                });
 
-                res.sendStatus(201);
             } else {
                 res.sendStatus(409);
             }
@@ -126,9 +130,13 @@ module.exports = function (app, BASE_PATH) {
 
     path = BASE_PATH + "/educations-centers";
     app.delete(path, (req, res) => {
-        educationsCenters.deleteMany();
-
-        res.sendStatus(200);
+        educationsCenters.deleteMany(function (error, response) {
+            if(error) {
+                res.sendStatus(409);
+            } else {
+                res.sendStatus(200);
+            }
+        });
     });
 
     path = BASE_PATH + "/educations-centers/:id";
@@ -234,75 +242,431 @@ function validation(newCompetitions) {
     return r;
 }
 
-function addData() {
+function addData(res) {
 
     educationsCenters.deleteMany();
 
     educationsCenters.insertMany([{
-        id: 1,
-        country: "spain",
-        center: "Centro Docente Privado",
-        name: "Virgen Milagrosa",
-        ownership: "Concertado",
-        domicile: "Avda. Pino Montano  21-A",
-        locality: "Sevilla",
-        phone: 954355020,
-        lat: 37.407326554,
-        lon: -5.973891668,
-        sports_education: 0,
-        monthStart: 2
-    }, {
-        id: 2,
-        country: "spain",
-        center: "Colegio de Educación Infantil y Primaria",
-        name: "Manuel Siurot",
-        ownership: "Publico",
-        domicile: "C/ El Real de la Jara  s/n. Bda. Villegas",
-        locality: "Sevilla",
-        phone: 955623540,
-        lat: 37.411005222102375,
-        lon: -5.974888801574707,
-        sports_education: 0,
-        monthStart: 6
-    }, {
-        id: 3,
-        country: "spain",
-        center: "Centro Docente Privado",
-        name: "El Tobogán",
-        ownership: "Privado",
-        domicile: "C/ Virgen del Valle  38",
-        locality: "Sevilla",
-        phone: 954276212,
-        lat: 37.37596064,
-        lon: -5.998167749,
-        sports_education: 1,
-        monthStart: 1
-    }, {
-        id: 4,
-        country: "spain",
-        center: "Colegio de Educación Infantil y Primaria",
-        name: "Centro de Estudios Sanitarios  Dr. Arduán",
-        ownership: "Privado",
-        domicile: "Avda. de Jerez  46",
-        locality: "Sevilla",
-        phone: 955623540,
-        lat: 37.325442656,
-        lon: -5.965175402,
-        sports_education: 1,
-        monthStart: 4
-    }, {
-        id: 5,
-        country: "spain",
-        center: "Centro de Educación Infantil",
-        name: "Snoopy 8",
-        ownership: "Privado",
-        domicile: "C/ San Roque  6 y 8",
-        locality: "Sevilla",
-        phone: 954210595,
-        lat: 37.3913194325946,
-        lon: -5.99841846498611,
-        sports_education: 0,
-        monthStart: 9
-    }
-    ]);
+        id: 1
+        , center: "Centro Docente Privado"
+        , name: "El Tobogán"
+        , ownership: "Privado"
+        , domicilie: "C/ Virgen del Valle  38"
+        , locality: "Sevilla"
+        , phone: 954276212
+        , lat: 37.37596064
+        , lon: -5.998167749
+        , sports_education: 0
+        , country: "Spain"
+        , monthStart: 3
+    },
+        {
+            id: 2
+            , center: "Centro Docente Privado"
+            , name: "Centro de Estudios Sanitarios  Dr. Arduán"
+            , ownership: "Privado"
+            , domicilie: "Avda. de Jerez  46"
+            , locality: "Sevilla"
+            , phone: 954693300
+            , lat: 37.325442656
+            , lon: -5.965175402
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 4
+        },
+        {
+            id: 3
+            , center: "Centro Docente Privado"
+            , name: "Arenal Centro de Formación Profesional"
+            , ownership: "Concertado"
+            , domicilie: "C/ Federico Sánchez Bedoya  14"
+            , locality: "Sevilla"
+            , phone: 954224354
+            , lat: 37.386048965747804
+            , lon: -5.99528431892395
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 1
+        },
+        {
+            id: 4
+            , center: "Centro Docente Privado"
+            , name: "System  Centros de Formación I"
+            , ownership: "Privado"
+            , domicilie: "C/ O'Donell  10"
+            , locality: "Sevilla"
+            , phone: 954502550
+            , lat: 37.392222855
+            , lon: -5.995382915
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 2
+        },
+        {
+            id: 5
+            , center: "Centro de Educación Infantil"
+            , name: "Snoopy 8"
+            , ownership: "Privado"
+            , domicilie: "C/ San Roque  6 y 8"
+            , locality: "Sevilla"
+            , phone: 954210595
+            , lat: 37.3913194325946
+            , lon: -5.99841846498611
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 6
+        },
+        {
+            id: 6
+            , center: "Centro Docente Privado"
+            , name: "Escuelas Profesionales de la Sagrada Familia-Nuestra Señora de los Reyes"
+            , ownership: "Concertado"
+            , domicilie: "C/ Calatrava  38"
+            , locality: "Sevilla"
+            , phone: 954370550
+            , lat: 37.402487106403115
+            , lon: -5.994517207145691
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 10
+        },
+        {
+            id: 7
+            , center: "Centro Docente Privado"
+            , name: "María Inmaculada"
+            , ownership: "Concertado"
+            , domicilie: "C/ Santa Vicenta María  7"
+            , locality: "Sevilla"
+            , phone: 954224148
+            , lat: 37.393466097
+            , lon: -5.99752161
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 12
+        },
+        {
+            id: 8
+            , center: "Centro Docente Privado"
+            , name: "Ntra. Sra. de la Merced"
+            , ownership: "Concertado"
+            , domicilie: "C/ San Vicente  104"
+            , locality: "Sevilla"
+            , phone: 954387109
+            , lat: 37.399998405
+            , lon: -5.997883649
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 6
+        },
+        {
+            id: 9
+            , center: "Centro Docente Privado"
+            , name: "Julio César"
+            , ownership: "Privado"
+            , domicilie: "C/ Dalia  1"
+            , locality: "Sevilla"
+            , phone: 954384911
+            , lat: 37.399469242
+            , lon: -5.996721881
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 3
+        },
+        {
+            id: 10
+            , center: "Centro Docente Privado"
+            , name: "María Auxiliadora"
+            , ownership: "Concertado"
+            , domicilie: "C/ San Vicente  95"
+            , locality: "Sevilla"
+            , phone: 954902121
+            , lat: 37.39891168077023
+            , lon: -5.998760461807251
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 6
+        },
+        {
+            id: 11
+            , center: "Centro Docente Privado"
+            , name: "Sagrado Corazón"
+            , ownership: "Concertado"
+            , domicilie: "C/ Virgen de los Buenos Libros  2"
+            , locality: "Sevilla"
+            , phone: 954220994
+            , lat: 37.394084033
+            , lon: -5.997670461
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 8
+        },
+        {
+            id: 12
+            , center: "Centro de Educación Infantil"
+            , name: "Petits 2"
+            , ownership: "Privado"
+            , domicilie: "C/ Juan Rabadán  s/n. Plaza del Bajondillo  locales 1  2  3 y 4"
+            , locality: "Sevilla"
+            , phone: 647802795
+            , lat: 37.39735330225255
+            , lon: -5.998249027710017
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 11
+        },
+        {
+            id: 13
+            , center: "Centro de Educación Infantil"
+            , name: "Dino"
+            , ownership: "Privado"
+            , domicilie: "C/ Miguel Cid  70"
+            , locality: "Sevilla"
+            , phone: 954902022
+            , lat: 37.3973700001
+            , lon: -5.99828600002
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 2
+        },
+        {
+            id: 14
+            , center: "Centro de Educación Infantil"
+            , name: "San Gil"
+            , ownership: "Privado"
+            , domicilie: "C/ Parras  17"
+            , locality: "Sevilla"
+            , phone: 955289886
+            , lat: 37.401490627273
+            , lon: -5.9904104270658
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 7
+        },
+        {
+            id: 15
+            , center: "Centro de Educación Infantil"
+            , name: "Nemomarlin Torneo"
+            , ownership: "Privado"
+            , domicilie: "C/ Torneo  21 Ac"
+            , locality: "Sevilla"
+            , phone: 661137300
+            , lat: 37.47242
+            , lon: -4.42523
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 3
+        },
+        {
+            id: 16
+            , center: "Centro de Educación Infantil"
+            , name: "Élite College"
+            , ownership: "Privado"
+            , domicilie: "C/ Cardenal Spínola  18"
+            , locality: "Sevilla"
+            , phone: 618811901
+            , lat: 37.3963896734066
+            , lon: -5.99684707332385
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 2
+        },
+        {
+            id: 17
+            , center: "Colegio de Educación Infantil y Primaria"
+            , name: "Altos Colegios Macarena"
+            , ownership: "Público"
+            , domicilie: "C/ Feria  167"
+            , locality: "Sevilla"
+            , phone: 955624785
+            , lat: 37.4030794429259
+            , lon: -5.9920334815979
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 9
+        },
+        {
+            id: 18
+            , center: "Conservatorio Profesional de Música"
+            , name: "Cristóbal de Morales"
+            , ownership: "Público"
+            , domicilie: "C/ Jesús del Gran Poder  49"
+            , locality: "Sevilla"
+            , phone: 955623358
+            , lat: 37.3969385182526
+            , lon: -5.99540501832962
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 10
+        },
+        {
+            id: 19
+            , center: "Conservatorio Superior de Música"
+            , name: "Manuel Castillo"
+            , ownership: "Público"
+            , domicilie: "C/ Baños  48"
+            , locality: "Sevilla"
+            , phone: 677903762
+            , lat: 37.395493772365015
+            , lon: -6.000123023986816
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 4
+        },
+        {
+            id: 20
+            , center: "Escuela Superior de Arte Dramático"
+            , name: ""
+            , ownership: "Público"
+            , domicilie: "C/ Pascual de Gayangos  33"
+            , locality: "Sevilla"
+            , phone: 954915974
+            , lat: 37.396594394
+            , lon: -5.999938847
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 6
+        },
+        {
+            id: 21
+            , center: "Instituto de Educación Secundaria"
+            , name: "San Isidoro"
+            , ownership: "Público"
+            , domicilie: "C/ Amor de Dios  28"
+            , locality: "Sevilla"
+            , phone: 954383411
+            , lat: 37.39556645762636
+            , lon: -5.994017934333833
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 1
+        },
+        {
+            id: 22
+            , center: "Centro Docente Privado"
+            , name: "Instituto Técnico Superior de Informática Studium II"
+            , ownership: "Privado"
+            , domicilie: "C/ Sol  20"
+            , locality: "Sevilla"
+            , phone: 954211283
+            , lat: 37.3946178
+            , lon: -5.986556788
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 9
+        },
+        {
+            id: 23
+            , center: "Centro Docente Privado"
+            , name: "Luisa de Marillac"
+            , ownership: "Concertado"
+            , domicilie: "C/ Socorro  18"
+            , locality: "Sevilla"
+            , phone: 954228636
+            , lat: 37.39578328
+            , lon: -5.987145148
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 2
+        },
+        {
+            id: 24
+            , center: "Centro Docente Privado"
+            , name: "Sopeña"
+            , ownership: "Concertado"
+            , domicilie: "C/ Juan de Vera  2"
+            , locality: "Sevilla"
+            , phone: 954423155
+            , lat: 37.390526689
+            , lon: -5.983006602
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 4
+        },
+        {
+            id: 25
+            , center: "Centro Docente Privado"
+            , name: "Ángela Guerrero"
+            , ownership: "Concertado"
+            , domicilie: "C/ Doña María Coronel  13"
+            , locality: "Sevilla"
+            , phone: 954293241
+            , lat: 37.393985069943675
+            , lon: -5.989426374435425
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 6
+        },
+        {
+            id: 26
+            , center: "Centro Docente Privado"
+            , name: "Santo Tomás de Aquino"
+            , ownership: "Privado"
+            , domicilie: "C/ Recaredo  31"
+            , locality: "Sevilla"
+            , phone: 954419155
+            , lat: 37.391571639
+            , lon: -5.984086965
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 5
+        },
+        {
+            id: 27
+            , center: "Centro Docente Privado"
+            , name: "Calderón de la Barca"
+            , ownership: "Concertado"
+            , domicilie: "C/ Castellar  52"
+            , locality: "Sevilla"
+            , phone: 954223332
+            , lat: 37.396351842
+            , lon: -5.988534225
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 11
+        },
+        {
+            id: 28
+            , center: "Centro Docente Privado"
+            , name: "Itálica"
+            , ownership: "Concertado"
+            , domicilie: "C/ Arguijo  5"
+            , locality: "Sevilla"
+            , phone: 954213166
+            , lat: 37.39326575
+            , lon: -5.992985196
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 5
+        },
+        {
+            id: 29
+            , center: "Centro Docente Privado"
+            , name: "Santa Isabel"
+            , ownership: "Concertado"
+            , domicilie: "C/ Hiniesta  2"
+            , locality: "Sevilla"
+            , phone: 954216463
+            , lat: 37.39693212563302
+            , lon: -5.986840724945068
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 12
+        },
+        {
+            id: 30
+            , center: "Centro Docente Privado"
+            , name: "Beaterio de la Santísima Trinidad"
+            , ownership: "Concertado"
+            , domicilie: "C/ Santa Lucía  2"
+            , locality: "Sevilla"
+            , phone: 954410254
+            , lat: 37.397338484
+            , lon: -5.982294261
+            , sports_education: 0
+            , country: "Spain"
+            , monthStart: 3
+        }
+    ],function(err,docsInserted){
+        res.sendStatus(201);
+    });
 }
