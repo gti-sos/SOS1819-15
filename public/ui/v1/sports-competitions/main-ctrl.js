@@ -1,4 +1,4 @@
-var app = angular.module("SportsCompetitionsApp");
+var app = angular.module("SportsCentersAPP");
 app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 

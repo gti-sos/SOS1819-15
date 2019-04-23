@@ -25,5 +25,5 @@ module.exports = {
     },
     sportsCompetitionsSecurev2 : function(app, BASE_PATH){
         apiV2.sportsCompetitionsSecure(app,BASE_PATH+"/v2");
-    }    
+    }
 }
