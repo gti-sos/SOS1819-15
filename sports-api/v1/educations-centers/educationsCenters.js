@@ -251,7 +251,7 @@ function addData(res) {
         , center: "Centro Docente Privado"
         , name: "El Tobogán"
         , ownership: "Privado"
-        , domicilie: "C/ Virgen del Valle  38"
+        , domicile: "C/ Virgen del Valle  38"
         , locality: "Sevilla"
         , phone: 954276212
         , lat: 37.37596064
@@ -265,7 +265,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Centro de Estudios Sanitarios  Dr. Arduán"
             , ownership: "Privado"
-            , domicilie: "Avda. de Jerez  46"
+            , domicile: "Avda. de Jerez  46"
             , locality: "Sevilla"
             , phone: 954693300
             , lat: 37.325442656
@@ -279,7 +279,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Arenal Centro de Formación Profesional"
             , ownership: "Concertado"
-            , domicilie: "C/ Federico Sánchez Bedoya  14"
+            , domicile: "C/ Federico Sánchez Bedoya  14"
             , locality: "Sevilla"
             , phone: 954224354
             , lat: 37.386048965747804
@@ -293,7 +293,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "System  Centros de Formación I"
             , ownership: "Privado"
-            , domicilie: "C/ O'Donell  10"
+            , domicile: "C/ O'Donell  10"
             , locality: "Sevilla"
             , phone: 954502550
             , lat: 37.392222855
@@ -307,7 +307,7 @@ function addData(res) {
             , center: "Centro de Educación Infantil"
             , name: "Snoopy 8"
             , ownership: "Privado"
-            , domicilie: "C/ San Roque  6 y 8"
+            , domicile: "C/ San Roque  6 y 8"
             , locality: "Sevilla"
             , phone: 954210595
             , lat: 37.3913194325946
@@ -321,7 +321,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Escuelas Profesionales de la Sagrada Familia-Nuestra Señora de los Reyes"
             , ownership: "Concertado"
-            , domicilie: "C/ Calatrava  38"
+            , domicile: "C/ Calatrava  38"
             , locality: "Sevilla"
             , phone: 954370550
             , lat: 37.402487106403115
@@ -335,7 +335,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "María Inmaculada"
             , ownership: "Concertado"
-            , domicilie: "C/ Santa Vicenta María  7"
+            , domicile: "C/ Santa Vicenta María  7"
             , locality: "Sevilla"
             , phone: 954224148
             , lat: 37.393466097
@@ -349,7 +349,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Ntra. Sra. de la Merced"
             , ownership: "Concertado"
-            , domicilie: "C/ San Vicente  104"
+            , domicile: "C/ San Vicente  104"
             , locality: "Sevilla"
             , phone: 954387109
             , lat: 37.399998405
@@ -363,7 +363,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Julio César"
             , ownership: "Privado"
-            , domicilie: "C/ Dalia  1"
+            , domicile: "C/ Dalia  1"
             , locality: "Sevilla"
             , phone: 954384911
             , lat: 37.399469242
@@ -377,7 +377,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "María Auxiliadora"
             , ownership: "Concertado"
-            , domicilie: "C/ San Vicente  95"
+            , domicile: "C/ San Vicente  95"
             , locality: "Sevilla"
             , phone: 954902121
             , lat: 37.39891168077023
@@ -391,7 +391,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Sagrado Corazón"
             , ownership: "Concertado"
-            , domicilie: "C/ Virgen de los Buenos Libros  2"
+            , domicile: "C/ Virgen de los Buenos Libros  2"
             , locality: "Sevilla"
             , phone: 954220994
             , lat: 37.394084033
@@ -405,7 +405,7 @@ function addData(res) {
             , center: "Centro de Educación Infantil"
             , name: "Petits 2"
             , ownership: "Privado"
-            , domicilie: "C/ Juan Rabadán  s/n. Plaza del Bajondillo  locales 1  2  3 y 4"
+            , domicile: "C/ Juan Rabadán  s/n. Plaza del Bajondillo  locales 1  2  3 y 4"
             , locality: "Sevilla"
             , phone: 647802795
             , lat: 37.39735330225255
@@ -419,7 +419,7 @@ function addData(res) {
             , center: "Centro de Educación Infantil"
             , name: "Dino"
             , ownership: "Privado"
-            , domicilie: "C/ Miguel Cid  70"
+            , domicile: "C/ Miguel Cid  70"
             , locality: "Sevilla"
             , phone: 954902022
             , lat: 37.3973700001
@@ -433,7 +433,7 @@ function addData(res) {
             , center: "Centro de Educación Infantil"
             , name: "San Gil"
             , ownership: "Privado"
-            , domicilie: "C/ Parras  17"
+            , domicile: "C/ Parras  17"
             , locality: "Sevilla"
             , phone: 955289886
             , lat: 37.401490627273
@@ -447,7 +447,7 @@ function addData(res) {
             , center: "Centro de Educación Infantil"
             , name: "Nemomarlin Torneo"
             , ownership: "Privado"
-            , domicilie: "C/ Torneo  21 Ac"
+            , domicile: "C/ Torneo  21 Ac"
             , locality: "Sevilla"
             , phone: 661137300
             , lat: 37.47242
@@ -461,7 +461,7 @@ function addData(res) {
             , center: "Centro de Educación Infantil"
             , name: "Élite College"
             , ownership: "Privado"
-            , domicilie: "C/ Cardenal Spínola  18"
+            , domicile: "C/ Cardenal Spínola  18"
             , locality: "Sevilla"
             , phone: 618811901
             , lat: 37.3963896734066
@@ -475,7 +475,7 @@ function addData(res) {
             , center: "Colegio de Educación Infantil y Primaria"
             , name: "Altos Colegios Macarena"
             , ownership: "Público"
-            , domicilie: "C/ Feria  167"
+            , domicile: "C/ Feria  167"
             , locality: "Sevilla"
             , phone: 955624785
             , lat: 37.4030794429259
@@ -489,7 +489,7 @@ function addData(res) {
             , center: "Conservatorio Profesional de Música"
             , name: "Cristóbal de Morales"
             , ownership: "Público"
-            , domicilie: "C/ Jesús del Gran Poder  49"
+            , domicile: "C/ Jesús del Gran Poder  49"
             , locality: "Sevilla"
             , phone: 955623358
             , lat: 37.3969385182526
@@ -503,7 +503,7 @@ function addData(res) {
             , center: "Conservatorio Superior de Música"
             , name: "Manuel Castillo"
             , ownership: "Público"
-            , domicilie: "C/ Baños  48"
+            , domicile: "C/ Baños  48"
             , locality: "Sevilla"
             , phone: 677903762
             , lat: 37.395493772365015
@@ -517,7 +517,7 @@ function addData(res) {
             , center: "Escuela Superior de Arte Dramático"
             , name: ""
             , ownership: "Público"
-            , domicilie: "C/ Pascual de Gayangos  33"
+            , domicile: "C/ Pascual de Gayangos  33"
             , locality: "Sevilla"
             , phone: 954915974
             , lat: 37.396594394
@@ -531,7 +531,7 @@ function addData(res) {
             , center: "Instituto de Educación Secundaria"
             , name: "San Isidoro"
             , ownership: "Público"
-            , domicilie: "C/ Amor de Dios  28"
+            , domicile: "C/ Amor de Dios  28"
             , locality: "Sevilla"
             , phone: 954383411
             , lat: 37.39556645762636
@@ -545,7 +545,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Instituto Técnico Superior de Informática Studium II"
             , ownership: "Privado"
-            , domicilie: "C/ Sol  20"
+            , domicile: "C/ Sol  20"
             , locality: "Sevilla"
             , phone: 954211283
             , lat: 37.3946178
@@ -559,7 +559,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Luisa de Marillac"
             , ownership: "Concertado"
-            , domicilie: "C/ Socorro  18"
+            , domicile: "C/ Socorro  18"
             , locality: "Sevilla"
             , phone: 954228636
             , lat: 37.39578328
@@ -573,7 +573,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Sopeña"
             , ownership: "Concertado"
-            , domicilie: "C/ Juan de Vera  2"
+            , domicile: "C/ Juan de Vera  2"
             , locality: "Sevilla"
             , phone: 954423155
             , lat: 37.390526689
@@ -587,7 +587,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Ángela Guerrero"
             , ownership: "Concertado"
-            , domicilie: "C/ Doña María Coronel  13"
+            , domicile: "C/ Doña María Coronel  13"
             , locality: "Sevilla"
             , phone: 954293241
             , lat: 37.393985069943675
@@ -601,7 +601,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Santo Tomás de Aquino"
             , ownership: "Privado"
-            , domicilie: "C/ Recaredo  31"
+            , domicile: "C/ Recaredo  31"
             , locality: "Sevilla"
             , phone: 954419155
             , lat: 37.391571639
@@ -615,7 +615,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Calderón de la Barca"
             , ownership: "Concertado"
-            , domicilie: "C/ Castellar  52"
+            , domicile: "C/ Castellar  52"
             , locality: "Sevilla"
             , phone: 954223332
             , lat: 37.396351842
@@ -629,7 +629,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Itálica"
             , ownership: "Concertado"
-            , domicilie: "C/ Arguijo  5"
+            , domicile: "C/ Arguijo  5"
             , locality: "Sevilla"
             , phone: 954213166
             , lat: 37.39326575
@@ -643,7 +643,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Santa Isabel"
             , ownership: "Concertado"
-            , domicilie: "C/ Hiniesta  2"
+            , domicile: "C/ Hiniesta  2"
             , locality: "Sevilla"
             , phone: 954216463
             , lat: 37.39693212563302
@@ -657,7 +657,7 @@ function addData(res) {
             , center: "Centro Docente Privado"
             , name: "Beaterio de la Santísima Trinidad"
             , ownership: "Concertado"
-            , domicilie: "C/ Santa Lucía  2"
+            , domicile: "C/ Santa Lucía  2"
             , locality: "Sevilla"
             , phone: 954410254
             , lat: 37.397338484
