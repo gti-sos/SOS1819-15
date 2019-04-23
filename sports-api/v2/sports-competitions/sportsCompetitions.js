@@ -321,8 +321,111 @@ function addData(r) {
         lengthactivity: 3,
         totaldistance: 10,
         inscriptionprice: 0
+    },
+    {
+        id: 6,
+        year: 2019,
+        day: 23,
+        month: 3,
+        name: "Campeonato de andalucía de taekwondo, categoría promesas",
+        sportcenter: "C.D. Hytasa",
+        schoolcenter: "",
+        activity: "Artes marciales",
+        lengthactivity: 6,
+        totaldistance: 0,
+        inscriptionprice: 0
+    },
+    {
+        id: 7,
+        year: 2019,
+        day: 4,
+        month: 4,
+        name: "Mini olimpiada escolar distrito Cerro-Amate",
+        sportcenter: "C.D. Hytasa",
+        schoolcenter: "",
+        activity: "Escolar",
+        lengthactivity: 6,
+        totaldistance: 0,
+        inscriptionprice: 0
+    },
+    {
+        id: 8,
+        year: 2019,
+        day: 4,
+        month: 4,
+        name: "Encuentro Escolar y Deportivo (Programa Distrito: Macarena - Norte)",
+        sportcenter: "",
+        schoolcenter: "CEIP Manuel Siurot",
+        activity: "Escolar",
+        lengthactivity: 6,
+        totaldistance: 0,
+        inscriptionprice: 0
+    },
+    {
+        id: 9,
+        year: 2019,
+        day: 19,
+        month: 5,
+        name: "Carrera popular y escolar Paque de Miraflores",
+        sportcenter: "Parque de Miraflores",
+        schoolcenter: "",
+        activity: "Atletismo",
+        lengthactivity: 3,
+        totaldistance: 10,
+        inscriptionprice: 0
+    },
+    {
+        id: 10,
+        year: 2019,
+        day: 23,
+        month: 3,
+        name: "Campeonato de andalucía de taekwondo, categoría promesas",
+        sportcenter: "C.D. Hytasa",
+        schoolcenter: "",
+        activity: "Artes marciales",
+        lengthactivity: 6,
+        totaldistance: 0,
+        inscriptionprice: 0
+    },
+    {
+        id: 11,
+        year: 2019,
+        day: 4,
+        month: 4,
+        name: "Mini olimpiada escolar distrito Cerro-Amate",
+        sportcenter: "C.D. Hytasa",
+        schoolcenter: "",
+        activity: "Escolar",
+        lengthactivity: 6,
+        totaldistance: 0,
+        inscriptionprice: 0
+    },
+    {
+        id: 12,
+        year: 2019,
+        day: 4,
+        month: 4,
+        name: "Encuentro Escolar y Deportivo (Programa Distrito: Macarena - Norte)",
+        sportcenter: "",
+        schoolcenter: "CEIP Manuel Siurot",
+        activity: "Escolar",
+        lengthactivity: 6,
+        totaldistance: 0,
+        inscriptionprice: 0
+    },
+    {
+        id: 13,
+        year: 2019,
+        day: 19,
+        month: 5,
+        name: "Carrera popular y escolar Paque de Miraflores",
+        sportcenter: "Parque de Miraflores",
+        schoolcenter: "",
+        activity: "Atletismo",
+        lengthactivity: 3,
+        totaldistance: 10,
+        inscriptionprice: 0
     }
-
     ], function () {
         r.sendStatus(201);
     });

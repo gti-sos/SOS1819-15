@@ -1,7 +1,7 @@
 <html ng-app="SportsCompetitionsApp">
 
 <head>
-    <title>Mini Postman SportsCompetitions</title>
+    <title>Seville Sports Competitions APP</title>
     <link rel="stylesheet" href="../bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -36,7 +36,7 @@
 <body class="d-flex flex-column h-100" ng-controller="MainCtrl">
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/sportsCompetitions/">Seville Sports Competitions APP</a>
+            <a class="navbar-brand" href="/ui/v1/sports-competitions/">Seville Sports Competitions APP</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -108,9 +108,8 @@
                         </td>
                     </tr>
                     <tr id="collapse{{comp.id}}" class="collapse out">
-                        <td colspan="13">
+                        <td colspan="11">
                             <div class="input-group mb-3">
-
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">ID</span>
                                 </div>
@@ -175,6 +174,9 @@
                                 <input autocomplete="off" type="number" value="" class="form-control"
                                     ng-model="editCompetition.inscriptionprice" />
                             </div>
+                        </td>
+
+                        <td>
                             <div class="input-group mb-3">
                                 <button class="btn btn-primary"
                                     ng-click="editCompetition(comp.id, editCompetition.year, editCompetition.day, editCompetition.month, editCompetitionName, editCompetitionSportcenter, editCompetitionSchoolcenter, editCompetitionActivity, editCompetition.lengthactivity, editCompetition.totaldistance, editCompetition.inscriptionprice)">Editar</button>
@@ -182,13 +184,17 @@
                         </td>
                     </tr>
                 </tbody>
-                <tbody class="fade" ng-class="{show: showInfoComp}">
+                <tbody class="fade" ng-class="{'d-none':showInfoNone,'show': showInfoComp}">
                     <tr>
                         <td colspan="13">
-                            <div class="alert alert-info text-right" role="alert">
-                                <span class="font-weight-bold text-center">No se encuentran competiciones.</span>
-                                <button class="btn btn btn-outline-secondary right"
-                                    ng-click="closeAlertComp()">X</button>
+                            <div class="alert alert-info" role="alert">
+                                <div class="text-right">
+                                    <button class="btn btn btn-outline-secondary right"
+                                        ng-click="clearAlerts()">X</button>
+                                </div>
+                                <div class="text-center">
+                                    <span class="font-weight-bold">No se encuentran competiciones.</span>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -204,7 +210,7 @@
                                 <button type="button" class="btn btn-outline-primary"
                                     ng-click="pagination('z')">&larr;</button>
                                 <button type="button" class="btn btn-outline-secondary"
-                                    ng-click="pagination(1)">1</button>
+                                    ng-click="pagination(0)">1</button>
                                 <button type="button" class="btn btn-outline-secondary"
                                     ng-click="pagination(1)">2</button>
                                 <button type="button" class="btn btn-outline-secondary"
@@ -218,6 +224,51 @@
                     </tr>
                     <tr>
                         <td colspan="13">
+
+                            <div class="alert alert-info fade" role="alert"
+                                ng-class="{'d-none':showAlertInfoNone,'show': showAlertInfo}">
+                                <div class="text-right">
+                                    <button class="btn btn btn-outline-secondary right"
+                                        ng-click="clearAlerts()">X</button>
+                                </div>
+                                <div class="text-center">
+                                    <span class="font-weight-bold">{{msgInfo}}</span>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info fade" role="alert"
+                            ng-class="{'d-none':showAlertErrorNone,'show': showAlertError}">
+                                <div class="text-right">
+                                    <button class="btn btn btn-outline-secondary right"
+                                        ng-click="clearAlerts()">X</button>
+                                </div>
+                                <div class="text-center">
+                                    <span class="font-weight-bold">{{msgError}}</span>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info fade" role="alert"
+                            ng-class="{'d-none':showAlertWarningNone,'show': showAlertWarning}">
+                                <div class="text-right">
+                                    <button class="btn btn btn-outline-secondary right"
+                                        ng-click="clearAlerts()">X</button>
+                                </div>
+                                <div class="text-center">
+                                    <span class="font-weight-bold">{{msgWarning}}</span>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info fade" role="alert"
+                            ng-class="{'d-none':showAlertSuccessNone,'show': showAlertSuccess}">
+                                <div class="text-right">
+                                    <button class="btn btn btn-outline-secondary right"
+                                        ng-click="clearAlerts()">X</button>
+                                </div>
+                                <div class="text-center">
+                                    <span class="font-weight-bold">{{msgSuccess}}</span>
+                                </div>
+                            </div>
+
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">ID</span>
@@ -281,25 +332,10 @@
                                 <input autocomplete="off" type="number" value="" class="form-control"
                                     ng-model="newCompetition.inscriptionprice" placeholder="0" />
                             </div>
-                            <div class="input-group mb-3" style="vertical-align: center;">
+                            <div class="input-group mb-3 float-left text-center">
                                 <button class="btn btn-primary" ng-click="addCompetition()">Añadir nueva</button>
-                                <div class="alert alert-info fade" role="alert" ng-class="{show: showInfo}">
-                                    <span>Faltan campos por completar.</span>
-                                    <button class="btn btn btn-outline-secondary" ng-click="closeAlertI()">X</button>
-                                </div>
-                                <div class="alert alert-danger fade" role="alert" ng-class="{show: showError}">
-                                    <span>{{msgError}}</span>
-                                    <button class="btn btn btn-outline-secondary" ng-click="closeAlertError()">X</button>
-                                </div>
-                                <div class="alert alert-warning fade" role="alert" ng-class="{show: showWarning}">
-                                    <span>No se puede añadir una competición vacía.</span>
-                                    <button class="btn btn btn-outline-secondary" ng-click="closeAlertW()">X</button>
-                                </div>
-                                <div class="alert alert-success fade" role="alert" ng-class="{show: showSuccess}">
-                                    <span>Se ha añadido la nueva competición.</span>
-                                    <button class="btn btn btn-outline-secondary" ng-click="closeAlertA()">X</button>
-                                </div>
                             </div>
+
                         </td>
                     </tr>
                 </tfoot>

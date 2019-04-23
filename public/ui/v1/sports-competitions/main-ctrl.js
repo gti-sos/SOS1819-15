@@ -3,10 +3,19 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
     var API = "/api/v2/sports-competitions";
-    refresh(undefined, undefined);
+    refresh(10, 0);
     $scope.limit = 10;
     $scope.offset = 0;
+    $scope.numCompetitions = 0;
+
     $scope.showInfoComp = false;
+    $scope.showInfoNone = true;
+
+    $scope.showAlertSuccessNone = true;
+    $scope.showAlertWarningNone = true;
+    $scope.showAlertErrorNone = true;
+    $scope.showAlertInfoNone = true;
+
 
     function refresh(limit, offset) {
         $scope.showInfoComp = false;
@@ -20,44 +29,68 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
         $http.get(url).then(function (response) {
             console.log("Data received: " + JSON.stringify(response.data, null, 2));
             $scope.competitions = response.data;
-            if (JSON.stringify(response.data, null, 2).length===2){
+            
+            if (JSON.stringify(response.data, null, 2).length === 2) {
                 $scope.showInfoComp = true;
+                $scope.showInfoNone = false;
+            }else{
+
             }
-        },function(response){
+        }, function (response) {
             console.log("Data received: " + JSON.stringify(response.data, null, 2));
         });
     }
 
+    $scope.clearAlerts = function () {
+        clearAlerts();
+    }
+
+    function clearAlerts() {
+        $scope.showAlertWarning = false;
+        $scope.showAlertWarningNone = true;
+
+        $scope.showAlertSuccess = false;
+        $scope.showAlertSuccessNone = true;
+
+        $scope.showAlertError = false;
+        $scope.showAlertErrorNone = true;
+
+        $scope.showInfoComp = false;
+        $scope.showInfoNone = true;
+
+        $scope.showAlertInfo = false;
+        $scope.showAlertInfoNone = true;
+    }
+
     $scope.search = function () {
-        refresh(undefined, undefined);
+        clearAlerts();
+        refresh(10, 0);
     }
 
     $scope.pagination = function (page) {
+        clearAlerts();
         console.log("Paginating sports competitions");
         if (isNaN(page)) {
-            if (page.localeCompare("x")==0) {
+            if (page.localeCompare("x") == 0) {
                 refresh($scope.limit, $scope.offset);
-                $scope.offset += 1;
-            } else if (page.localeCompare("z")==0) {
+                $scope.offset += $scope.limit;
+            } else if (page.localeCompare("z") == 0) {
                 if ($scope.offset > 0) {
-                    $scope.offset -= 1;
+                    $scope.offset -= $scope.limit;
                 }
                 refresh($scope.limit, $scope.offset);
             } else {
                 $scope.offset = 0;
-                refresh(0, $scope.offset);
+                refresh($scope.limit, $scope.offset);
             }
         } else {
-            $scope.offset = page;
+            $scope.offset = page*$scope.limit;
             refresh($scope.limit, $scope.offset);
         }
     }
 
     $scope.addCompetition = function () {
-        $scope.showWarning = false;
-        $scope.showSuccess = false;
-        $scope.showInfo = false;
-        $scope.showError = false;
+        clearAlerts();
         var newCompetition = $scope.newCompetition;
 
         console.log("Adding a new competition. " + JSON.stringify(newCompetition));
@@ -70,6 +103,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
                 && !isNaN(newCompetition.lengthactivity)
                 && !isNaN(newCompetition.totaldistance)
                 && !isNaN(newCompetition.inscriptionprice)) {
+
                 if (typeof newCompetition.sportcenter === 'undefined') newCompetition.sportcenter = "";
                 if (typeof newCompetition.schoolcenter === 'undefined') newCompetition.schoolcenter = "";
                 if (typeof newCompetition.activity === 'undefined') newCompetition.activity = "";
@@ -77,15 +111,18 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
                 $http.post(API, JSON.stringify(newCompetition)).then(function (response) {
                     console.log("POST response " + response.status + " " +
                         response.data);
-                    $scope.showSuccess = true
-                    refresh();
+                    $scope.msgSuccess = "Se ha añadido la nueva competición con ID: "+newCompetition.id;
+                    $scope.showAlertSuccess = true;
+                    $scope.showAlertSuccessNone = false;
+                    refresh(undefined, undefined);
                 }, function (response) {
-                    switch (response.status){
+                    switch (response.status) {
                         case 409:
-                        $scope.msgError="No se ha podido añadir la competitición, el ID introducido ya existe. (409)";
-                        break;
-                    }                    
-                    $scope.showError = true;
+                            $scope.msgError = "No se ha podido añadir la competitición, el ID introducido ya existe. (409)";
+                            break;
+                    }
+                    $scope.showAlertError = true;
+                    $scope.showAlertErrorNone = false;
                     console.log("Add new competition response ERROR: " + response.status + " " +
                         response.data);
                 });
@@ -102,34 +139,21 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
                 $scope.newCompetition.inscriptionprice = "";
                 delete $scope.newCompetition;
             } else {
-                $scope.showWarning = true;
+                $scope.msgWarning = "Error en los campos, comprueba que son correctos.";
+                $scope.showAlertWarning = true;
+                $scope.showAlertWarningNone = false;
                 console.log("Add new competition; ERROR; Can't add a void Competition.")
             }
         } else {
-            $scope.showInfo = true;
+            $scope.msgInfo = "Faltan campos por completar, NO se puede añadir una competición vacía.";
+            $scope.showAlertInfo = true;
+            $scope.showAlertInfoNone = false;
             console.log("Add new competition; ERROR; Fields missings.")
         }
     }
 
-    $scope.closeAlertA = function () {
-        $scope.showSuccess = false;
-    }
-    $scope.closeAlertW = function () {
-        $scope.showWarning = false;
-    }
-    $scope.closeAlertI = function () {
-        $scope.showInfo = false;
-    }
-    $scope.closeAlertComp = function () {
-        $scope.showInfoComp = false;
-    }
-    $scope.closeAlertError = function () {
-        $scope.showError = false;
-    }
-    
-
-
     $scope.delCompetition = function (id) {
+        clearAlerts();
         console.log("Deleting competition " + id);
         $http.delete(API + "/" + id).then(function (response) {
             console.log("DELETE response " + response.status + " " +
@@ -139,12 +163,15 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
     }
 
     $scope.delAllCompetition = function () {
+        clearAlerts();
         console.log("Deleting competitions from <" + API + ">");
         $http.delete(API).then(function (response) {
             console.log("Successfully delete all competitions: Code " + response.status + ", " + response.statusText);
             refresh(undefined, undefined);
         }, function (response) {
             console.log("Error in delete all competitions: Code " + response.status + ", " + response.statusText);
+            $scope.msgError = "No se ha podido eliminar la competitición";
+            $scope.showError = true;
         });
     }
 
