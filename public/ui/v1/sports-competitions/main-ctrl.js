@@ -1,8 +1,8 @@
-var app = angular.module("SportsCompetitionsApp");
+var app = angular.module("SportsCentersAPP");
 app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
-    var API = "/api/v2/sports-competitions";
+    var API = "/api/v2/sports-centers";
     refresh(undefined, undefined);
     $scope.limit = 10;
     $scope.offset = 0;
