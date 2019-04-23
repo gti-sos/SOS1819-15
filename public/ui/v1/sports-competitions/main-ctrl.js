@@ -1,9 +1,8 @@
-var app = angular.module("MiniPostmanCompetitionsApp");
+var app = angular.module("SportsCompetitionsApp");
 app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
     var API = "/api/v2/sports-competitions";
-    console.log("Requesting competitions to <" + API + ">");
     refresh(undefined, undefined);
     $scope.limit = 10;
     $scope.offset = 0;
@@ -11,7 +10,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
 
     function refresh(limit, offset) {
         $scope.showInfoComp = false;
-        console.log("Searching competitions from <" + API + "?fromMonth=" + $scope.fromMonth + "&toMonth=" + $scope.toMonth + ">");
+        console.log("Requesting competitions to <" + API + "?fromMonth=" + $scope.fromMonth + "&toMonth=" + $scope.toMonth + ">");
         let url = API +
             "?fromMonth=" + parseInt($scope.fromMonth) +
             "&toMonth=" + parseInt($scope.toMonth) +
@@ -21,9 +20,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
         $http.get(url).then(function (response) {
             console.log("Data received: " + JSON.stringify(response.data, null, 2));
             $scope.competitions = response.data;
-            console.log(JSON.stringify(response.data, null, 2).length);
             if (JSON.stringify(response.data, null, 2).length===2){
-                console.log("VACIOOOO");
                 $scope.showInfoComp = true;
             }
         },function(response){

@@ -3,11 +3,12 @@ var sportsAPI = require("./sports-api");
 let bodyParse = require("body-parser");
 
 var app = express();
-
+var port = process.env.PORT || 8080;
 const BASE_PATH = "/api"
 
 app.use(bodyParse.json());
 
+// API v1
 sportsAPI.sportsCompetitions(app, BASE_PATH);
 sportsAPI.sportsCompetitionsSecure(app, BASE_PATH);
 
@@ -17,10 +18,11 @@ sportsAPI.educationsCentersSecure(app, BASE_PATH);
 sportsAPI.sportsCenters(app, BASE_PATH);
 sportsAPI.sportsCentersSecure(app, BASE_PATH);
 
-var port = process.env.PORT || 8080;
+// API V2
+sportsAPI.sportsCompetitionsv2(app, BASE_PATH);
+sportsAPI.sportsCompetitionsSecurev2(app, BASE_PATH);
 
 app.use("/", express.static(__dirname + "/public"));
-
 /*
 /* MongoDB connections
 */

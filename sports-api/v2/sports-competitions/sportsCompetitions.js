@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dbPablo:sossos@cluster0-s3eqj.mongodb.net/test?retryWrites=true";
-const client = new MongoClient(uri, {useNewUrlParser: true});
+const client = new MongoClient(uri, { useNewUrlParser: true });
 
 var sportsCompetitions = [];
 
@@ -9,34 +9,37 @@ client.connect(err => {
     console.log("Connected!");
 });
 
-module.exports = function(app, BASE_PATH){
-    console.log("Registering sportsAPI (v1): sports-competitions.");
+module.exports = function (app, BASE_PATH) {
+    console.log("Registering sportsAPI (v2): sports-competitions.");
     var path = "";
-    
+
     console.log("Registering redirection to docs");
     path = BASE_PATH + "/sports-competitions/docs";
     app.get(path, (req, res) => {
         res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
     });
-    
+
     console.log("Registering get /sports-competitions/loadInitialData");
     path = BASE_PATH + "/sports-competitions/loadInitialData";
-    app.get(path, (req,res) =>{
+    app.get(path, (req, res) => {
         sportsCompetitions.find().toArray((err, competitionArray) => {
             if (competitionArray.length > 0) {
                 res.sendStatus(409);
-            } else {   
-                addData(res);             
+            } else {
+                addData(res);
             }
         });
     });
     console.log("Resource /sports-competitions/loadInitialData registered");
-    
+
     console.log("Registering get /sports-competitions/");
     path = BASE_PATH + "/sports-competitions";
-    app.get(path, (req,res) =>{
+    app.get(path, (req, res) => {
         let limit = parseInt(req.query.limit, 10);
         let offset = parseInt(req.query.offset, 10);
+        let fromMonth = req.query.fromMonth;
+        let toMonth = req.query.toMonth;
+
         let myquery = {};
 
         let year = req.query.year;
@@ -51,13 +54,13 @@ module.exports = function(app, BASE_PATH){
         let inscriptionprice = req.query.inscriptionprice;
 
         if (typeof year !== 'undefined') {
-            myquery.year = parseInt(year,10);
+            myquery.year = parseInt(year, 10);
         }
         if (typeof month !== 'undefined') {
-            myquery.month = parseInt(month,10);
+            myquery.month = parseInt(month, 10);
         }
         if (typeof day !== 'undefined') {
-            myquery.day = parseInt(year,10);
+            myquery.day = parseInt(day, 10);
         }
         if (typeof name !== 'undefined') {
             myquery.name = name;
@@ -72,13 +75,13 @@ module.exports = function(app, BASE_PATH){
             myquery.activity = activity;
         }
         if (typeof lengthactivity !== 'undefined') {
-            myquery.lengthactivity = parseInt(lengthactivity,10);
+            myquery.lengthactivity = parseInt(lengthactivity, 10);
         }
         if (typeof totaldistance !== 'undefined') {
-            myquery.totaldistance = parseInt(totaldistance,10);
+            myquery.totaldistance = parseInt(totaldistance, 10);
         }
         if (typeof inscriptionprice !== 'undefined') {
-            myquery.inscriptionprice = parseInt(inscriptionprice,10);
+            myquery.inscriptionprice = parseInt(inscriptionprice, 10);
         }
         if (typeof limit === 'undefined') {
             limit = 10000;
@@ -86,33 +89,47 @@ module.exports = function(app, BASE_PATH){
         if (typeof offset === 'undefined') {
             offset = 0;
         }
-
-        sportsCompetitions.find(myquery, {projection:{_id: 0 }}).skip(offset).limit(limit).toArray((err, competitionArray) => {
+        sportsCompetitions.find(myquery, { projection: { _id: 0 } }).skip(offset).limit(limit).toArray((err, competitionArray) => {
             if (err) console.log("Error: " + err);
-            res.send(competitionArray);
+            var filteredCompetitions = competitionArray;
+            if (!isNaN(fromMonth) && typeof fromMonth !== 'undefined' && typeof fromMonth !== 'null') {
+                fromMonth = parseInt(fromMonth, 10);
+                filteredCompetitions = competitionArray
+                .filter((comp) => {
+                    return (comp.month >= fromMonth);
+                });
+            }
+            if (toMonth>=fromMonth && !isNaN(toMonth) && typeof toMonth !== 'undefined' && typeof toMonth !== 'null') {
+                toMonth = parseInt(toMonth, 10);
+                filteredCompetitions = filteredCompetitions
+                .filter((comp) => {
+                    return (comp.month <= toMonth);
+                });
+            }
+            res.send(filteredCompetitions);
         });
     });
     console.log("Resource /sports-competitions/ registered");
-   
+
     path = BASE_PATH + "/sports-competitions";
     app.post(path, (req, res) => {
         let newCompetitions = req.body;
 
-        if (validation(newCompetitions)){
-            sportsCompetitions.find({"id": parseInt(newCompetitions.id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
-    
-            if (competitionArray.length < 1) {
-                sportsCompetitions.insert(newCompetitions);
-                res.sendStatus(201);
-            } else {
-                res.sendStatus(409);
-            }
+        if (validation(newCompetitions)) {
+            sportsCompetitions.find({ "id": parseInt(newCompetitions.id) }, { projection: { _id: 0 } }).toArray((err, competitionArray) => {
+
+                if (competitionArray.length < 1) {
+                    sportsCompetitions.insert(newCompetitions);
+                    res.sendStatus(201);
+                } else {
+                    res.sendStatus(409);
+                }
             });
-        }else{
+        } else {
             res.sendStatus(400);
         }
     });
-    
+
     console.log("Registering delete to /sports-competitions");
     path = BASE_PATH + "/sports-competitions";
     app.delete(path, (req, res) => {
@@ -124,8 +141,8 @@ module.exports = function(app, BASE_PATH){
     path = BASE_PATH + "/sports-competitions/:id";
     app.get(path, (req, res) => {
         let id = req.params.id;
-    
-        sportsCompetitions.find({"id": parseInt(id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
+
+        sportsCompetitions.find({ "id": parseInt(id) }, { projection: { _id: 0 } }).toArray((err, competitionArray) => {
             if (competitionArray.length == 1) {
                 res.send(competitionArray[0]);
             } else {
@@ -139,9 +156,9 @@ module.exports = function(app, BASE_PATH){
     app.get(path, (req, res) => {
         var year = req.params.year;
         var month = req.params.month;
-        
-        sportsCompetitions.find({"year": parseInt(year),"month": parseInt(month)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
-    
+
+        sportsCompetitions.find({ "year": parseInt(year), "month": parseInt(month) }, { projection: { _id: 0 } }).toArray((err, competitionArray) => {
+
             if (competitionArray.length > 0) {
                 if (competitionArray.length == 1) {
                     res.send(competitionArray[0]);
@@ -159,17 +176,17 @@ module.exports = function(app, BASE_PATH){
     app.put(path, (req, res) => {
         let id = req.params.id;
         let updatedCompetition = req.body;
-        
-        var myquery = {id: parseInt(id, 10)};
-        
+
+        var myquery = { id: parseInt(id, 10) };
+
         if (!validation(updatedCompetition)) {
             res.sendStatus(400);
-            return ;
+            return;
         }
-    
-        sportsCompetitions.find({"id": parseInt(id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
+
+        sportsCompetitions.find({ "id": parseInt(id) }, { projection: { _id: 0 } }).toArray((err, competitionArray) => {
             if (competitionArray.length == 1) {
-                if (competitionArray[0].id==parseInt(updatedCompetition.id)){
+                if (competitionArray[0].id == parseInt(updatedCompetition.id)) {
                     sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
                         if (err) {
                             console.log("error: " + err);
@@ -178,7 +195,7 @@ module.exports = function(app, BASE_PATH){
                             res.sendStatus(200);
                         }
                     });
-                } else{
+                } else {
                     res.sendStatus(400)
                 }
             } else {
@@ -191,8 +208,8 @@ module.exports = function(app, BASE_PATH){
     path = BASE_PATH + "/sports-competitions/:id";
     app.delete(path, (req, res) => {
         let id = req.params.id;
-        var myquery = {id: parseInt(id, 10)};
-    
+        var myquery = { id: parseInt(id, 10) };
+
         sportsCompetitions.deleteOne(myquery, function (err, obj) {
             if (err) {
                 res.sendStatus(404);
@@ -201,112 +218,112 @@ module.exports = function(app, BASE_PATH){
             }
         });
     });
-    
+
     console.log("Registering post to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
     app.post(path, (req, res) => {
         res.sendStatus(405);
     });
-    
+
     console.log("Registering put to /sports-competitions");
     path = BASE_PATH + "/sports-competitions";
     app.put(path, (req, res) => {
         res.sendStatus(405);
     });
-    
-    console.log("sports-competitions (v1) registered");
+
+    console.log("sports-competitions (v2) registered");
 }
 
-function validation(newCompetitions){
+function validation(newCompetitions) {
     let r = false;
     if (newCompetitions.hasOwnProperty("id") &&
-    newCompetitions.hasOwnProperty("day") &&
-    newCompetitions.hasOwnProperty("year") &&
-    newCompetitions.hasOwnProperty("month") &&
-    newCompetitions.hasOwnProperty("name") &&
-    newCompetitions.hasOwnProperty("sportcenter") &&
-    newCompetitions.hasOwnProperty("schoolcenter") &&
-    newCompetitions.hasOwnProperty("activity") &&
-    newCompetitions.hasOwnProperty("lengthactivity") &&
-    newCompetitions.hasOwnProperty("totaldistance") &&
-    newCompetitions.hasOwnProperty("inscriptionprice") &&
-    newCompetitions.hasOwnProperty("additionalinfo")){
+        newCompetitions.hasOwnProperty("day") &&
+        newCompetitions.hasOwnProperty("year") &&
+        newCompetitions.hasOwnProperty("month") &&
+        newCompetitions.hasOwnProperty("name") &&
+        newCompetitions.hasOwnProperty("sportcenter") &&
+        newCompetitions.hasOwnProperty("schoolcenter") &&
+        newCompetitions.hasOwnProperty("activity") &&
+        newCompetitions.hasOwnProperty("lengthactivity") &&
+        newCompetitions.hasOwnProperty("totaldistance") &&
+        newCompetitions.hasOwnProperty("inscriptionprice")) {
         if (typeof newCompetitions.year !== 'undefined' &&
-        typeof newCompetitions.year !== 'month' &&
-        typeof newCompetitions.year !== 'day') {
-            r = true; 
-        }         
+            typeof newCompetitions.year !== 'month' &&
+            typeof newCompetitions.year !== 'day') {
+            r = true;
+        }
     }
     return r;
 }
 
 function addData(r) {
-    sportsCompetitions.insertMany([{ 
+    sportsCompetitions.insertMany([{
         id: 1,
         year: 2019,
         day: 4,
-        month : 4,
+        month: 4,
         name: "V encuentro escolar y deportivo (programa distrito: macarena - norte)",
         sportcenter: "",
         schoolcenter: "Centro virgen milagrosa",
         activity: "Escolar",
         lengthactivity: 6,
         totaldistance: 0,
-        inscriptionprice: 0,
-        additionalinfo: "Actividad de promoción deportiva en la que participan los ceip de los distritos Macarena y Norte."},
+        inscriptionprice: 0
+    },
     {
         id: 2,
         year: 2019,
         day: 23,
-        month : 3,
+        month: 3,
         name: "Campeonato de andalucía de taekwondo, categoría promesas",
         sportcenter: "C.D. Hytasa",
         schoolcenter: "",
         activity: "Artes marciales",
         lengthactivity: 6,
         totaldistance: 0,
-        inscriptionprice: 0,
-        additionalinfo: "Hora: 20:30"},
+        inscriptionprice: 0
+    },
     {
         id: 3,
         year: 2019,
         day: 4,
-        month : 4,
+        month: 4,
         name: "Mini olimpiada escolar distrito Cerro-Amate",
         sportcenter: "C.D. Hytasa",
         schoolcenter: "",
         activity: "Escolar",
         lengthactivity: 6,
         totaldistance: 0,
-        inscriptionprice: 0,
-        additionalinfo: "Impulsar y fomentar el interés por conocer diversas modalidades deportivas entre los alumnos de Educación Primaria de los colegios pertenecientes al Distrito Cerro-Amate."},
+        inscriptionprice: 0
+    },
     {
         id: 4,
         year: 2019,
         day: 4,
-        month : 4,
+        month: 4,
         name: "Encuentro Escolar y Deportivo (Programa Distrito: Macarena - Norte)",
         sportcenter: "",
         schoolcenter: "CEIP Manuel Siurot",
         activity: "Escolar",
         lengthactivity: 6,
         totaldistance: 0,
-        inscriptionprice: 0,
-        additionalinfo: "Actividad de promoción deportiva en la que participan los CEIP de los distritos Macarena y Norte."},
+        inscriptionprice: 0
+    },
     {
         id: 5,
         year: 2019,
         day: 19,
-        month : 5,
+        month: 5,
         name: "Carrera popular y escolar Paque de Miraflores",
         sportcenter: "Parque de Miraflores",
         schoolcenter: "",
         activity: "Atletismo",
         lengthactivity: 3,
         totaldistance: 10,
-        inscriptionprice: 0,
-        additionalinfo: "Salida 10Kms: 9:30 horas"}
-    ], function(){
+        inscriptionprice: 0
+    }
+
+    ], function () {
         r.sendStatus(201);
     });
 }
