@@ -97,7 +97,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
                 refresh($scope.limit, $scope.offset);
             } else {
                 $scope.offset = 0;
-                refresh($scope.limit, $scope.offset);
+                refresh(undefined, undefined);
             }
         } else {
             $scope.offset = page * $scope.limit;
