@@ -7,7 +7,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
     initializeApp();
 
     function initializeApp() {
-        refresh(10, 0);
+        refresh(undefined, undefined);
         $scope.limit = 10;
         $scope.offset = 0;
         $scope.numCompetitions = 0;
@@ -22,6 +22,13 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
 
         
     }
+
+    $scope.loadInitialData = function(){
+        $http.get(API+"/loadInitialData").then(function (response) {
+            refresh(undefined, undefined);
+        });
+    }
+    http://localhost:8080/api/v2/sports-competitions
 
     function refresh(limit, offset) {
         $scope.showInfoComp = false;
@@ -71,7 +78,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.search = function () {
         clearAlerts();
-        refresh(10, 0);
+        refresh(undefined, undefined);
     }
 
     $scope.pagination = function (page) {

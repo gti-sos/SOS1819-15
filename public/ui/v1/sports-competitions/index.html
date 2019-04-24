@@ -236,7 +236,7 @@
                                 </div>
                             </div>
 
-                            <div class="alert alert-info fade" role="alert"
+                            <div class="alert alert-danger fade" role="alert"
                             ng-class="{'d-none':showAlertErrorNone,'show': showAlertError}">
                                 <div class="text-right">
                                     <button class="btn btn btn-outline-secondary right"
@@ -247,7 +247,7 @@
                                 </div>
                             </div>
 
-                            <div class="alert alert-info fade" role="alert"
+                            <div class="alert alert-warning fade" role="alert"
                             ng-class="{'d-none':showAlertWarningNone,'show': showAlertWarning}">
                                 <div class="text-right">
                                     <button class="btn btn btn-outline-secondary right"
@@ -258,7 +258,7 @@
                                 </div>
                             </div>
 
-                            <div class="alert alert-info fade" role="alert"
+                            <div class="alert alert-success fade" role="alert"
                             ng-class="{'d-none':showAlertSuccessNone,'show': showAlertSuccess}">
                                 <div class="text-right">
                                     <button class="btn btn btn-outline-secondary right"
@@ -345,6 +345,12 @@
                     <span class="input-group-text" id="basic-addon1">Eliminar todas las competiciones:</span>
                 </div>
                 <button class="btn btn-danger" ng-click="delAllCompetition()">¿Estás seguro?</button>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Restablecer competiciones:</span>
+                </div>
+                <button class="btn btn-primary" ng-click="loadInitialData()">¿Estás seguro?</button>
             </div>
         </div>
     </main>
