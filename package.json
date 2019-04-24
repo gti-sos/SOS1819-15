@@ -1,13 +1,13 @@
 {
   "name": "sos1819-15",
   "version": "0.0.1",
-  "description": "",
+  "description": "- **Team**\r   - [Juan Luis Gómez Durán](https://github.com/juagomdur1)\r   - [Pablo Fernández Sánchez](https://github.com/pabfersan5)\r   - [Daniel José Ramírez Otero](https://github.com/danramirez)\r - **Project description**: Studying of sport activity upon Seville furthermore the relationship between sports centers, schools institutions and sports competitions.\r - **Repository**: [gti-sos/SOS1819-15](https://github.com/gti-sos/SOS1819-15)\r - **URL**: http://sos1819-15.herokuapp.com/\r -  **APIs**:\r     - [https://sos1819-15.herokuapp.com/api/v1/sports-centers/docs](https://sos1819-15.herokuapp.com/api/v1/sports-centers/docs) (developed by [Juan Luis Gómez Durán](https://github.com/juagomdur1))\r     - [https://sos1819-15.herokuapp.com/api/v1/sports-competitions/docs](https://sos1819-15.herokuapp.com/api/v1/sports-competitions/docs) (developed by [Pablo Fernández Sánchez](https://github.com/pabfersan5))\r     - [https://sos1819-15.herokuapp.com/api/v1/educations-centers/docs](https://sos1819-15.herokuapp.com/api/v1/educations-centers/docs) (developed by [Daniel José Ramírez Otero](https://github.com/danramirez))",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
-    "mongodb": "^3.2.2"
+    "mongodb": "^3.2.3"
   },
   "devDependencies": {},
   "scripts": {
