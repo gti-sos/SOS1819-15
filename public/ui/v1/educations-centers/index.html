@@ -5,176 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Title</title>
     <link rel="stylesheet" href="../../../bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="../../../bootstrap.min.js"></script>
-    <script src="../../../angular.min.js"></script>
-    <script src="ui-app.js"></script>
-    <script src="main-ctrl.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../angular.min.js"></script>
+    <script type="text/javascript" src="../../../bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="ui-app.js"></script>
+    <script type="text/javascript" src="list/list-ctrl.js"></script>
+    <script type="text/javascript" src="edit/edit-ctrl.js"></script>
 </head>
-<body ng-controller="MainCtrl">
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Centros educativos</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" ng-click="sendInitialData()">Cargar Datos Inciales</a>
-                </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-danger" ng-click="sendDel()">Borrar todo</button>
-                </li>
-            </ul>
-            <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Propiedad Centro" ng-model="ownershipSearch">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" ng-click="sendSearchOwnership(ownershipSearch)">Buscar</button>
-            </form>
-        </div>
-    </nav>
-</header>
-<main role="main">
-    <h1 class="mt-5">Lista Centros Educativos</h1>
-    <div class="alert alert-success" role="alert" ng-if="success">
-        {{successMsg}}
-    </div>
-    <div class="alert btn-danger" role="alert" ng-if="showError">
-        Error: {{errorMsg}}
-    </div>
+<body>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar Centro</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                        <th scope="row"><input class="form-control form-control-lg" type="text" ng-model="id_edit" readonly></th>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="pais" ng-model="country_edit"></td>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="center" ng-model="center_edit"></td>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="name" ng-model="name_edit"></td>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="ownership" ng-model="ownership_edit"></td>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="domicile" ng-model="domicile_edit"></td>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="locality" ng-model="locality_edit"></td>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="phone" ng-model="phone_edit"></td>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="lat" ng-model="lat_edit"></td>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="lon" ng-model="lon_edit"></td>
-                        <td>
-                            <select class="form-control form-control-lg w-100" ng-model="sports_education_edit" >
-                                <option value="1">Si</option>
-                                <option value="0" selected >No</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="form-control form-control-lg w-100" ng-model="monthStart_edit">
-                                <option value="1" selected >Enero</option>
-                                <option value="2">Febrero</option>
-                                <option value="3">Marzo</option>
-                                <option value="4">Abril</option>
-                                <option value="5">Mayo</option>
-                                <option value="6">Junio</option>
-                                <option value="7">Julio</option>
-                                <option value="8">Agosto</option>
-                                <option value="9">Septiembre</option>
-                                <option value="10">Octubre</option>
-                                <option value="11">Noviembre</option>
-                                <option value="12">Diciembre</option>
-                            </select>
-                        </td>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="sendPut(id_edit, country_edit, center_edit, name_edit, ownership_edit, domicile_edit, locality_edit, phone_edit, lat_edit, lon_edit, sports_education_edit, monthStart_edit)" data-dismiss="modal">Guardar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Pais</th>
-            <th scope="col">Tipo Centro</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Propiedad</th>
-            <th scope="col">Dirección</th>
-            <th scope="col">Localidad</th>
-            <th scope="col">Teléfono</th>
-            <th scope="col">Lat</th>
-            <th scope="col">Lon</th>
-            <th scope="col">Educación deportiva</th>
-            <th scope="col">Mes inicial</th>
-            <th scope="col">Borrar</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row"><input class="form-control form-control-lg" type="text" placeholder="id" ng-model="id"></th>
-            <td><input class="form-control form-control-lg" type="text" placeholder="country" ng-model="country"></td>
-            <td><input class="form-control form-control-lg" type="text" placeholder="center" ng-model="center"></td>
-            <td><input class="form-control form-control-lg" type="text" placeholder="name" ng-model="name"></td>
-            <td><input class="form-control form-control-lg" type="text" placeholder="ownership" ng-model="ownership"></td>
-            <td><input class="form-control form-control-lg" type="text" placeholder="domicile" ng-model="domicile"></td>
-            <td><input class="form-control form-control-lg" type="text" placeholder="locality" ng-model="locality"></td>
-            <td><input class="form-control form-control-lg" type="text" placeholder="phone" ng-model="phone"></td>
-            <td><input class="form-control form-control-lg" type="text" placeholder="lat" ng-model="lat"></td>
-            <td><input class="form-control form-control-lg" type="text" placeholder="lon" ng-model="lon"></td>
-            <td>
-                <select class="form-control form-control-lg w-100" id="sports_education" ng-model="sports_education" >
-                    <option value="1">Si</option>
-                    <option value="0" selected >No</option>
-                </select>
-            </td>
-            <td>
-                <select class="form-control form-control-lg w-100" id="monthStart" ng-model="monthStart">
-                    <option value="1" selected >January</option>
-                    <option value="2">February</option>
-                    <option value="3">March</option>
-                    <option value="4">April</option>
-                    <option value="5">May</option>
-                    <option value="6">June</option>
-                    <option value="7">July</option>
-                    <option value="8">August</option>
-                    <option value="9">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                </select>
-            </td>
-            <td><button type="button" class="btn btn-outline-success" ng-click="sendPost(id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart)">Guardar</button></td>
-        </tr>
-        <tr ng-repeat="education in educations">
-            <th scope="row"><a href="#" data-toggle="modal" data-target="#myModal" ng-click="sendGetForEdit(education.id)">{{education.id}}</a></th>
-            <td>{{education.country}}</td>
-            <td>{{education.center}}</td>
-            <td>{{education.name}}</td>
-            <td>{{education.ownership}}</td>
-            <td>{{education.domicile}}</td>
-            <td>{{education.locality}}</td>
-            <td>{{education.phone}}</td>
-            <td>{{education.lat}}</td>
-            <td>{{education.lon}}</td>
-            <td>{{education.sports_education}}</td>
-            <td>{{education.monthStart}}</td>
-            <td><button type="button" class="btn btn-outline-danger" ng-click="sendDelOne(education.id)">Borrar</button></td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group mr-2" role="group" aria-label="First group">
-            <button type="button" class="btn btn-secondary" ng-click="plusOffset(1)">1</button>
-            <button type="button" class="btn btn-secondary" ng-click="plusOffset(2)">2</button>
-            <button type="button" class="btn btn-secondary" ng-click="plusOffset(3)">3</button>
-            <button type="button" class="btn btn-secondary" ng-click="plusOffset(4)">4</button>
-        </div>
-    </div>
+<main role="main" ng-view>
 </main>
 
 <footer class="footer">

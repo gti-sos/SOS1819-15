@@ -1,0 +1,114 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Centros educativos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="col-md-12">
+    <h4 class="mb-3" id="titleweb">Edición de centro con id: {{id_edit}}</h4>
+    <form class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="nombre">Nombre</label>
+                <input class="form-control" type="text" placeholder="nombre" id="nombre" ng-model="name_edit" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="centro">Centro</label>
+                <input id="centro" class="form-control" type="text" placeholder="center" ng-model="center_edit">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="pais">País</label>
+                <input id="pais" class="form-control" type="text" placeholder="pais" ng-model="country_edit">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="titu">Titularidad</label>
+                <input id="titu" class="form-control" type="text" placeholder="center" ng-model="ownership_edit">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="domicilio">Domicílio</label>
+                <input id="domicilio" class="form-control" type="text" placeholder="domicilio" ng-model="domicile_edit">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="Localidad">Localidad</label>
+                <input id="Localidad" class="form-control" type="text" placeholder="Localidad" ng-model="locality_edit">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <label for="tel">Teléfono</label>
+                <input id="tel" class="form-control" type="text" placeholder="Lat" ng-model="phone_edit">
+            </div>
+            <div class="col-md-4 mb-2">
+                <label for="Lat">Lat</label>
+                <input id="Lat" class="form-control" type="text" placeholder="Lat" ng-model="lat_edit">
+            </div>
+            <div class="col-md-4 mb-2">
+                <label for="Lon">Lon</label>
+                <input id="Lon" class="form-control" type="text" placeholder="Lon" ng-model="lon_edit">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="sports_education_edit">¿Educación deportiva?</label>
+
+                <select class="custom-select d-block w-100" id="sports_education_edit" ng-model="sports_education_edit">
+                    <option value="1" >Si</option>
+                    <option value="0" selected>No</option>
+                </select>
+
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="monthStart_edit">Mes de inicio</label>
+                <select class="custom-select d-block w-100" id="monthStart_edit" ng-model="monthStart_edit">
+                    <option value="1" selected>Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+                <div class="invalid-feedback">
+                    Please provide a valid state.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <a href="/ui/v1/educations-centers/" class="btn btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Cerrar</a>
+            </div>
+            <div class="col-md-6 mb-3">
+                <button type="button" class="btn btn-primary btn-lg btn-block"
+                        ng-click="sendPut(id_edit, country_edit, center_edit, name_edit, ownership_edit, domicile_edit, locality_edit, phone_edit, lat_edit, lon_edit, sports_education_edit, monthStart_edit)"
+                        data-dismiss="modal">Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
