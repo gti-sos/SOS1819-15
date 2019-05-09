@@ -1,12 +1,11 @@
+var fs = require('fs');
 describe("Data is loaded", function(){
     it("should show a bunch of data", function (){
-        browser.get("http://localhost:8080/ui/v1/educations-centers/#!/edit/1");
-        //browser.driver.sleep(2000);
-        var elm = element(by.model("name_edit"));
-        elm.getAttribute('value').then(function (value) {
-            console.log("test");
-            console.log(value);
-        });
-        expect(browser.getTitle()).toEqual('Title');
+        var until = protractor.ExpectedConditions;
+        browser.get("http://localhost:8080/ui/v1/educations-centers/#!/");
+        browser.wait(until.urlIs("http://localhost:8080/ui/v1/educations-centers/#!/"), 5000);
+
+        var centers = element.all(by.repeater("education in educations"));
+        expect(centers.count()).toBeGreaterThan(0);
     });
 });
