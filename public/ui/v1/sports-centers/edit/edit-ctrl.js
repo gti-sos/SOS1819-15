@@ -1,5 +1,5 @@
 var app = angular.module("SportsCentersAPP");
-app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
+app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
     $scope.url = "/api/v1/sports-centers";
@@ -65,17 +65,6 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
         });
     };
 
-    $http.get($scope.url + "?offset=0&limit=10").then(function (response) {
-        let res = JSON.stringify(response.data, null, 2);
-        if (response.data.length === 0) {
-
-        }
-        console.log(response.data);
-        $scope.sportscenters = response.data;
-        $scope.code = response.status;
-    }, function (response) {
-        $scope.dataResponse = response.status + ", " + response.statusText
-    });
 
     $scope.sendGetForEdit = function (id_edit) {
         $http.get($scope.url + "/" + id_edit).then(function (response) {
@@ -133,55 +122,7 @@ app.controller("MainCtrl", ["$scope", "$http", function ($scope, $http) {
             $scope.dataResponse = response.status + ", " + response.statusText
         });
     };
-
-    // POST sobre el conjunto
-
-    $scope.sendPost = function(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields){
-        if(typeof id!=='undefined'
-        && typeof street!=='undefined'
-        && typeof name!=='undefined'
-        && typeof postalcode!=='undefined'
-        && typeof startingyear!=='undefined'
-        && typeof surface!=='undefined'
-        && typeof activity!=='undefined'
-        && typeof paviment!=='undefined'
-        && typeof sportfields!=='undefined'){
-
-            var data = {
-                id: parseInt(id),
-                street:street,
-                name:name,
-                postalcode:parseInt(postalcode),
-                startingyear:parseInt(startingyear),
-                surface:parseInt(surface),
-                activity:activity,
-                paviment:paviment,
-                sportfields:parseInt(sportfields)
-            };
-
-            console.log($scope.url);
-            console.log(data);
-            $http.post($scope.url, JSON.stringify(data)).then(function (response) {
-                console.log("OK put method");
-                $scope.dataResponse =  JSON.stringify( response.statusCode + " : " + response.data, null, 2);
-                $scope.code = response.status;
-                $scope.success = true;
-                $scope.showError= false;
-                $scope.successMsg = "Creado correctamente";
-                refresh();
-            }, function (response) {
-                console.log("Error PUT method: Code " + response.status + ", " + response.statusText);
-                $scope.dataResponse = "Code: " + response.status + "\n" + response.statusText;
-                $scope.success = false;
-                $scope.showError= true;
-                if(response.status === 409){
-                    $scope.errorMsg = "Ya existe un recurso con id = " + id;
-                }
-            });
-
-        }
-    };
-
+    
     // PUT sobre recurso concreto
 
     $scope.sendPut = function(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields){

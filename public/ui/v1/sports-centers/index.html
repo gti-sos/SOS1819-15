@@ -1,192 +1,26 @@
 <!doctype html>
-<html lang="es" ng-app="SportsCentersAPP">
-
+<html lang="en" ng-app="SportsCentersAPP">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Title</title>
-    <link rel="stylesheet" href="../../../bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="../../../bootstrap.min.js"></script>
-    <script src="../../../angular.min.js"></script>
-    <script src="sportscenters-app.js"></script>
-    <script src="main-ctrl.js"></script>
+    <link rel="stylesheet" href="../../../bootstrap.min.css" type="text/css" >
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../angular.min.js"></script>
+    <script type="text/javascript" src="../../../bower_components/angular-route/angular-route.min.js"></script>
+    <script type="text/javascript" src="sportscenters-app.js"></script>
+    <script type="text/javascript" src="list/list-ctrl.js"></script>
+    <script type="text/javascript" src="edit/edit-ctrl.js"></script>
 </head>
-
-<body ng-controller="MainCtrl">
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">Centros Deportivos</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <button type="button" data-toggle="modal" class="btn btn-success" data-target="#myModal2">Crear
-                            Centro</button>
-                        
-                        <button type="button" class="btn btn-danger" ng-click="sendDel()">Borrar todo</button>
-                        <button type="button" ng-click="sendInitialData()" class="btn btn-primary">Restablecer Datos
-                        </button>
+<body ng-view>
 
 
-                    </li>
-
-
-                </ul>
-                <form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Codigo Postal"
-                        ng-model="postalcodesearch">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-                        ng-click="sendSearchPostalcode(postalcodesearch)">Buscar</button>
-                </form>
-            </div>
-        </nav>
-    </header>
-    <main role="main">
-        <h1 class="mt-5"></h1>
-        <div class="alert alert-success" role="alert" ng-if="success">
-            {{successMsg}}
-        </div>
-        <div class="alert btn-danger" role="alert" ng-if="showError">
-            Error: {{errorMsg}}
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Editar Centro</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <th scope="row"><input class="form-control form-control-lg" type="text" ng-model="id_edit"
-                                readonly></th><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Calle"
-                                ng-model="street_edit"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Nombre"
-                                ng-model="name_edit"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Codigo Postal"
-                                ng-model="postalcode_edit"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Año Apertura"
-                                ng-model="startingyear_edit"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Superficie"
-                                ng-model="surface_edit"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Actividad"
-                                ng-model="activity_edit"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Pavimento"
-                                ng-model="paviment_edit"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Campos Deportivos"
-                                ng-model="sportfields_edit"></td><br>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary"
-                            ng-click="sendPut(id_edit,street_edit,name_edit,postalcode_edit,startingyear_edit,surface_edit,activity_edit,paviment_edit,sportfields_edit)"
-                            data-dismiss="modal">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Crear Centro</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <th scope="row"><input class="form-control form-control-lg" type="text" placeholder="id"
-                                ng-model="id"></th><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Calle"
-                                ng-model="street"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Nombre"
-                                ng-model="name"></td><br>
-                        <td><input class="form-control form-control-lg" type="number" placeholder="Codigo Postal"
-                                ng-model="postalcode"></td><br>
-                        <td><input class="form-control form-control-lg" type="number" placeholder="Año Comienzo"
-                                ng-model="startingyear"></td><br>
-                        <td><input class="form-control form-control-lg" type="number" placeholder="Superficie"
-                                ng-model="surface"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Actividad"
-                                ng-model="activity"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Pavimento"
-                                ng-model="paviment"></td><br>
-                        <td><input class="form-control form-control-lg" type="number" placeholder="Campos Deportivos"
-                                ng-model="sportfields"></td><br>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary"
-                            ng-click="sendPost(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields)"
-                            data-dismiss="modal">Guardar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Calle</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Codigo Postal</th>
-                    <th scope="col">Año Comienzo</th>
-                    <th scope="col">Superficie</th>
-                    <th scope="col">Actividad</th>
-                    <th scope="col">Pavimento</th>
-                    <th scope="col">Campos Deportivos</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="sptc in sportscenters">
-                    <td>{{sptc.id}}</td>
-                    <td>{{sptc.street}}</td>
-                    <td>{{sptc.name}}</td>
-                    <td>{{sptc.postalcode}}</td>
-                    <td>{{sptc.startingyear}}</td>
-                    <td>{{sptc.surface}}</td>
-                    <td>{{sptc.activity}}</td>
-                    <td>{{sptc.paviment}}</td>
-                    <td>{{sptc.sportfields}}</td>
-                    <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"
-                            ng-click="sendGetForEdit(sptc.id)">Editar</button>
-                        <button type="button" class="btn btn-danger" ng-click="sendDelOne(sptc.id)">Borrar</button></td>
-
-                </tr>
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation ">
-            <ul class="pagination justify-content-center">
-             
-              <li class="page-item"><a class="page-link" ng-click="plusOffset(1)">1</a></li>
-              <li class="page-item"><a class="page-link" ng-click="plusOffset(2)">2</a></li>
-              <li class="page-item"><a class="page-link" ng-click="plusOffset(3)">3</a></li>
-                
-            </ul>
-          </nav>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <span class="text-muted"></span>
-        </div>
-    </footer>
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted"></span>
+    </div>
+</footer>
 
 </body>
-
 </html>
