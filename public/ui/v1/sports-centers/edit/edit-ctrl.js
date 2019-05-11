@@ -19,7 +19,7 @@ app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
 
     function refresh(){
         $http.get($scope.url + "?limit=10&offset=" + $scope.offset).then(function (response) {
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 0) {
 
             }
@@ -45,7 +45,7 @@ app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.sendInitialData = function () {
         $http.get($scope.url + "/loadInitialData").then(function (response) {
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 0) {
 
             }
@@ -68,7 +68,7 @@ app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.sendGetForEdit = function (id_edit) {
         $http.get($scope.url + "/" + id_edit).then(function (response) {
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 0) {
 
             }
@@ -89,12 +89,12 @@ app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
     };
 
     $scope.sendSearchPostalcode = function (postalcodesearch) {
-        let query = "";
+        var query = "";
         if(postalcodesearch !== undefined && postalcodesearch !== ""){
             query = "?postalcode=" + postalcodesearch;
         }
         $http.get($scope.url + query).then(function (response) {
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 0) {
 
             }
@@ -111,7 +111,7 @@ app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.sendGetNew = function () {
         $http.get($scope.url).then(function (response) {
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 0) {
 
             }
@@ -168,9 +168,9 @@ app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
     // Elimina conjunto o recurso concreto
 
     $scope.sendDel = function () {
-        $http.delete($scope.url).then(function (response) {
+        $http.devare($scope.url).then(function (response) {
             console.log($scope.url);
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 1) {
 
             }
@@ -187,9 +187,9 @@ app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.sendDelOne = function (id) {
         console.log("delOne");
-        $http.delete($scope.url + "/" + id).then(function (response) {
+        $http.devare($scope.url + "/" + id).then(function (response) {
             console.log($scope.url);
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 1) {
 
             }

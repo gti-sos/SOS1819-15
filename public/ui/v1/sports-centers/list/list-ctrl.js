@@ -19,7 +19,7 @@ app.controller("ListCtrl", ["$scope", "$http", function ($scope, $http) {
 
     function refresh(){
         $http.get($scope.url + "?limit=10&offset=" + $scope.offset).then(function (response) {
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 0) {
 
             }
@@ -45,12 +45,12 @@ app.controller("ListCtrl", ["$scope", "$http", function ($scope, $http) {
 
 
     $scope.sendSearchPostalcode = function (postalcodesearch) {
-        let query = "";
+        var query = "";
         if(postalcodesearch !== undefined && postalcodesearch !== ""){
             query = "?postalcode=" + postalcodesearch;
         }
         $http.get($scope.url + query).then(function (response) {
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 0) {
 
             }
@@ -67,7 +67,7 @@ app.controller("ListCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.sendGetNew = function () {
         $http.get($scope.url).then(function (response) {
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 0) {
 
             }
