@@ -100,9 +100,9 @@ app.controller("MainCtrl",["$scope","$http",function($scope,$http){
  // Elimina conjunto o recurso concreto
  
 $scope.sendDel = function () {
-        $http.delete($scope.url).then(function (response) {
+        $http.devare($scope.url).then(function (response) {
             console.log($scope.url);
-            let res = JSON.stringify(response.data, null, 2);
+            var res = JSON.stringify(response.data, null, 2);
             if (response.data.length === 1) {
 
             }

@@ -5,15 +5,15 @@ describe("Check if a new contact can be created",function () {
             .all(by.repeater("sptc in sportscenters"))
             .then( function (initialsportsCenters) {
                 
-                element(by.model('sptc.id')).sendKeys('20');
-                element(by.model('sptc.street')).sendKeys('Tarfia');
-                element(by.model('sptc.name')).sendKeys('C.D. Tarfia');
-                element(by.model('sptc.postalcode')).sendKeys('41012');
-                element(by.model('sptc.startingyear')).sendKeys('1989');
-                element(by.model('sptc.surface')).sendKeys('4000');
-                element(by.model('sptc.activity')).sendKeys('Tenis');
-                element(by.model('sptc.paviment')).sendKeys('Cesped Artifical');
-                element(by.model('sptc.sportfields')).sendKeys('4');
+                element(by.model('id')).sendKeys('20');
+                element(by.model('street')).sendKeys('Tarfia');
+                element(by.model('name')).sendKeys('C.D. Tarfia');
+                element(by.model('postalcode')).sendKeys('41012');
+                element(by.model('startingyear')).sendKeys('1989');
+                element(by.model('surface')).sendKeys('4000');
+                element(by.model('activity')).sendKeys('Tenis');
+                element(by.model('paviment')).sendKeys('Cesped Artifical');
+                element(by.model('sportfields')).sendKeys('4');
                 element(by.css('[value="env"]')).click();
                 
                 element
@@ -23,4 +23,5 @@ describe("Check if a new contact can be created",function () {
                     });
             });
     });
+
 });
