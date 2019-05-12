@@ -1,5 +1,5 @@
 <h1 class="mt-5" id="titleweb">Lista Centros Educativos</h1>
-<div class="alert alert-success" role="alert" ng-if="success">
+<div id="alert-success" class="alert alert-success" role="alert" ng-if="success">
     {{successMsg}}
 </div>
 <div class="alert btn-danger" role="alert" ng-if="showError">
@@ -149,10 +149,8 @@
             </select>
         </td>
         <td>
-            <button type="button" class="btn btn-outline-success"
-                    ng-click="sendPost(id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart)">
-                Guardar
-            </button>
+            <button type="button" class="btn btn-outline-success boton-guardar"
+                    ng-click="sendPost(id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart)">Guardar</button>
         </td>
     </tr>
     <tr ng-repeat="education in educations">
@@ -169,7 +167,7 @@
         <td>{{education.sports_education}}</td>
         <td>{{education.monthStart}}</td>
         <td>
-            <button type="button" class="btn btn-outline-danger" ng-click="sendDelOne(education.id)">Borrar</button>
+            <button type="button" class="btn btn-outline-danger borrar{{education.id}}" ng-click="sendDelOne(education.id)">Borrar</button>
         </td>
     </tr>
     </tbody>
