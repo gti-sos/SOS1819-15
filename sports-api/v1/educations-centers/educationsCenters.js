@@ -26,7 +26,7 @@ module.exports = function (app, BASE_PATH) {
 
     path = BASE_PATH + "/educations-centers/docs";
     app.get(path, (req, res) => {
-        res.redirect('https://documenter.getpostman.com/view/6901186/S17tS8XH');
+        res.redirect('https://documenter.getpostman.com/view/6901186/S1LyUTGF?version=latest');
     });
 
     path = BASE_PATH + "/educations-centers";
