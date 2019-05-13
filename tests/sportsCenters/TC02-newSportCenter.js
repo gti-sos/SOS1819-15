@@ -1,11 +1,8 @@
-describe("Check if a new contact can be created",function () {
+describe("Check if a new sport center can be created",function () {
     it("List should grow after the contact creation", function (){
-        browser.get("http://localhost:8080/ui/v1/sports-centers/");
-        element
-            .all(by.repeater("sptc in sportscenters"))
-            .then( function (initialsportsCenters) {
-                
-                element(by.model('id')).sendKeys('20');
+        browser.get("http://localhost:8080/ui/v1/sports-centers/#!/");
+        
+                element(by.model('id')).sendKeys('21');
                 element(by.model('street')).sendKeys('Tarfia');
                 element(by.model('name')).sendKeys('C.D. Tarfia');
                 element(by.model('postalcode')).sendKeys('41012');
@@ -14,14 +11,10 @@ describe("Check if a new contact can be created",function () {
                 element(by.model('activity')).sendKeys('Tenis');
                 element(by.model('paviment')).sendKeys('Cesped Artifical');
                 element(by.model('sportfields')).sendKeys('4');
-                element(by.css('[value="env"]')).click();
+                element(by.css(".boton-crear")).click();
                 
-                element
-                    .all(by.repeater("sptc in sportscenters"))
-                    .then( function (finalsportsCenters) {
-                        expect(finalsportsCenters.length).toEqual(initialsportsCenters.length+1);
-                    });
+                var resultModal = element(by.css(".alert-success"));
+                expect(resultModal.getText()).toContain('Creado correctamente');
+
             });
     });
-
-});
