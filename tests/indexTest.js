@@ -5,6 +5,6 @@ exports.config = {
         'browserName': 'phantomjs',
     },
     specs: [
-        'TC01-loadData.js'
+        'educationsCenters/TC01-loadData.js'
     ]
 };

@@ -13,7 +13,7 @@
   "scripts": {
     "pretest": "tests/runPhantom.sh",
     "start": "node index.js",
-    "test": "newman run https://www.getpostman.com/collections/52d0f90f1c62099c749a; newman run https://www.getpostman.com/collections/7c14b58b4687aa24028e; newman run https://www.getpostman.com/collections/eac4325634ae3ff2dbbd",
+    "test": "newman run https://www.getpostman.com/collections/52d0f90f1c62099c749a; newman run https://www.getpostman.com/collections/7c14b58b4687aa24028e; newman run https://www.getpostman.com/collections/eac4325634ae3ff2dbbd; protractor ./tests/indexTest.js",
     "test-sportsCenters": "newman run https://www.getpostman.com/collections/eac4325634ae3ff2dbbd && protractor tests/sportsCenters/tests.js",
     "test-sportsCompetitions-api": "newman run https://www.getpostman.com/collections/7c14b58b4687aa24028e",
     "test-schoolCenters-api": "newman run https://www.getpostman.com/collections/52d0f90f1c62099c749a",
