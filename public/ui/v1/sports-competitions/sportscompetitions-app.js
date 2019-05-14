@@ -1,5 +1,5 @@
 angular
-    .module("SportsCompetitionsApp", ["ngRoute"])
+    .module("SOS1819-15App", ["ngRoute"])
     .config(function ($routeProvider) {
         $routeProvider.
             when("/", {
@@ -21,4 +21,4 @@ angular
                 templateUrl: "edit/edit.html"
             });
     });
-console.log("App initialized!");
+console.log("SportsCompetitions initialized!");

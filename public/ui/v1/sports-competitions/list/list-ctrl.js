@@ -1,5 +1,5 @@
 angular
-    .module("SportsCompetitionsApp")
+    .module("SOS1819-15App")
     .controller("ListCtrl", function ($scope, $http, $rootScope, autoLoad) {
         console.log("Retrieving $scope");
         var API = "/api/v2/sports-competitions";
@@ -7,7 +7,8 @@ angular
         initializeApp();
 
         function initializeApp() {
-            refresh(undefined, undefined);
+            $scope.competitions = autoLoad;
+            //refresh(undefined, undefined);
             $scope.limit = 10;
             $scope.offset = 0;
             $scope.numCompetitions = 0;
