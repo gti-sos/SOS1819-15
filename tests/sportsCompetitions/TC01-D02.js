@@ -1,13 +1,13 @@
 describe("Automatization test from sportsCompetitions UI - D02 - ",function () {
     
     it("List shows more than 1 items", function (){
-        browser.get("http://localhost:8080/ui/v1/sports-competitions/");
+        browser.get("http://localhost:8080/#!/ui/v1/sports-competitions/");
         var competitions = element.all(by.repeater("comp in competitions"));
         expect(competitions.count()).toBeGreaterThan(1);
     });
     
     it("List should grow after the contact creation", function (){
-        browser.get("http://localhost:8080/ui/v1/sports-competitions/#!/");
+        browser.get("http://localhost:8080/#!/ui/v1/sports-competitions/#!/");
         
                 element(by.model('newCompetition.id')).sendKeys('14');
                 element(by.model('newCompetition.year')).sendKeys('2019');
@@ -28,7 +28,7 @@ describe("Automatization test from sportsCompetitions UI - D02 - ",function () {
             });
             
     it("delete one element ", function () {
-        browser.get("http://localhost:8080/ui/v1/sports-competitions/#!/");
+        browser.get("http://localhost:8080/#!/ui/v1/sports-competitions/#!/");
 
         element.all(by.css(".btn-eliminar")).last().click();
         

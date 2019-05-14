@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="/ui/v1/sports-competitions/">Seville Sports Competitions APP</a>
+        <a class="navbar-brand" href="#!/ui/v1/sports-competitions/">Seville Sports Competitions APP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -64,7 +64,7 @@
                     <td>{{comp.totaldistance}}</td>
                     <td>{{comp.inscriptionprice}}</td>
                     <td>
-                        <a href="#!/edit/{{comp.id}}" id="idComp"><button type="button" class="btn btn-outline-primary"
+                        <a href="#!/ui/v1/sports-competitions/edit/{{comp.id}}" id="idComp"><button type="button" class="btn btn-outline-primary"
                                 data-toggle="collapse" data-target="#collapse{{comp.id}}"
                                 ng-click="showEdit(comp.id, comp.year, comp.day, comp.month, comp.name, comp.sportcenter, comp.schoolcenter, comp.activity, comp.lengthactivity, comp.totaldistance, comp.inscriptionprice)">Modificar</button>
                         </a>

@@ -5,8 +5,13 @@ angular
             .when("/", {
                 templateUrl: "./index.html"
             })
-            .when("/ui/v1/sports-competitions", {
-                templateUrl: "ui/v1/sports-competitions"
+            .when("/ui/v1/sports-competitions/", {
+                controller: "ListCtrlSportsCompetitions" ,
+                templateUrl: "ui/v1/sports-competitions/list/list.html"
+            })
+            .when("/ui/v1/sports-competitions/edit/:id", {
+                controller : "EditCtrlSportsCompetitions" ,
+                templateUrl: "ui/v1/sports-competitions/edit/edit.html"
             })
             .when("/ui/v1/sports-centers/", {
                 controller: "ListCtrlsportsCenters" ,

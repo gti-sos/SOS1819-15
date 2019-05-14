@@ -1,7 +1,7 @@
 angular
     .module("SOS1819-15App")
-    .controller("ListCtrl", function ($scope, $http, $rootScope, autoLoad) {
-        console.log("Retrieving $scope");
+    .controller("ListCtrlSportsCompetitions", function ($scope, $http, $rootScope) {
+        console.log("ListCtrlSportsCompetitions loaded.");
         var API = "/api/v2/sports-competitions";
 
         initializeApp();
@@ -166,13 +166,14 @@ angular
         }
 
         $scope.delCompetition = function (id) {
-            clearAlerts();
+            //clearAlerts();
             console.log("Deleting competition " + id);
             $http.delete(API + "/" + id).then(function (response) {
                 console.log("DELETE response " + response.status + " " +
                     response.data);
+                refresh(undefined, undefined);
             });
-            refresh(undefined, undefined);
+            
         }
 
         $scope.delAllCompetition = function () {
