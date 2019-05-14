@@ -8,8 +8,13 @@ angular
             .when("/ui/v1/sports-competitions", {
                 templateUrl: "ui/v1/sports-competitions"
             })
-            .when("/ui/v1/sports-centers", {
-                templateUrl: "ui/v1/sports-centers"
+            .when("/ui/v1/sports-centers/", {
+                controller: "ListCtrlsportsCenters" ,
+                templateUrl: "ui/v1/sports-centers/list/list.html"
+            })
+            .when("/ui/v1/sports-centers/edit/", {
+                controller : "EditCtrlsportsCenters" ,
+                templateUrl: "ui/v1/sports-centers/edit/edit.html"
             })
             .when("/ui/v1/educations-centers/", {
                 controller: "ListCtrlEducations" ,

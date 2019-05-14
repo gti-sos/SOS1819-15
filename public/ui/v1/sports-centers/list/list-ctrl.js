@@ -1,5 +1,5 @@
 var app = angular.module("SOS1819-15App");
-app.controller("ListCtrl", ["$scope", "$http", function ($scope, $http) {
+app.controller("ListCtrlsportsCenters", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
     $scope.url = "/api/v1/sports-centers";
@@ -60,6 +60,7 @@ app.controller("ListCtrl", ["$scope", "$http", function ($scope, $http) {
             $scope.success = true;
             $scope.showError= false;
             $scope.successMsg = "Mostrando los centros con codigo postal: " + postalcode;
+            
         }, function (response) {
             $scope.dataResponse = response.status + ", " + response.statusText
         });
