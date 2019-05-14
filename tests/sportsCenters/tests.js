@@ -1,5 +1,5 @@
 exports.config = {
     seleniumAddress: "http://localhost:4444/wd/hub",
     chromeOnly: true,
-    specs: [ "TC02-newSportCenter.js" ]
+    specs: [ "TC01-D02e2e.js"]
 };

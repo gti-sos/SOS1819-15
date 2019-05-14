@@ -1,5 +1,12 @@
-describe("Check if a new sport center can be created",function () {
-    it("List should grow after the contact creation", function (){
+describe("Comprobar si se cumple las pruebas automatizadas e2e - D02 - ",function () {
+    
+    it("List shows more than 1 items", function (){
+        browser.get("http://localhost:8080/ui/v1/sports-centers/");
+        var contacts = element.all(by.repeater("sptc in sportscenters"));
+        expect(contacts.count()).toBeGreaterThan(1);
+    });
+    
+     it("List should grow after the contact creation", function (){
         browser.get("http://localhost:8080/ui/v1/sports-centers/#!/");
         
                 element(by.model('id')).sendKeys('21');
@@ -17,4 +24,16 @@ describe("Check if a new sport center can be created",function () {
                 expect(resultModal.getText()).toContain('Creado correctamente');
 
             });
+    
+      it("delete one element ", function () {
+        browser.get("http://localhost:8080/ui/v1/sports-centers/#!/edit");
+
+        element(by.css(".paginacion")).click();
+        element.all(by.css(".boton-eliminar")).last().click();
+
+        var resultModal = element(by.css(".alert-success"));
+        expect(resultModal.getText()).toContain('Borrado Correctamente');
+
     });
+});
+    
