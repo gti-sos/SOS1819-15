@@ -31,7 +31,7 @@ angular
             $scope.showInfoComp = false;
             $scope.showInfoNone = true;
             //console.log("Requesting competitions to <" + API + "?fromMonth=" + $scope.fromMonth + "&toMonth=" + $scope.toMonth + ">");
-            let url = API +
+            var url = API +
                 "?fromMonth=" + parseInt($scope.fromMonth) +
                 "&toMonth=" + parseInt($scope.toMonth) +
                 "&limit=" + parseInt(limit) +
@@ -124,7 +124,7 @@ angular
                     $http.post(API, JSON.stringify(newCompetition)).then(function (response) {
                         console.log("POST response " + response.status + " " +
                             response.data);
-                        $scope.msgSuccess = "Se ha añadido la nueva competición con ID: " + newCompetition.id;
+                        $scope.msgSuccess = "Se ha añadido la nueva competición.";
                         $scope.showAlertSuccess = true;
                         $scope.showAlertSuccessNone = false;
                         refresh(undefined, undefined);
