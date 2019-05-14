@@ -1,0 +1,171 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="/ui/v1/sports-competitions/">Seville Sports Competitions APP</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">An sport competitions
+                        management app.</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main role="main" class="flex-shrink-0">
+    <div class="container">
+        <table class="table">
+            <tbody>
+                <tr class="">
+                    <td colspan="11">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">ID</span>
+                            </div>
+                            <input value="" autocomplete="off" readonly type="number" class="form-control"
+                                ng-model="id" placeholder="" />
+
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Año</span>
+                            </div>
+                            <input value="" autocomplete="off" type="number" class="form-control"
+                                ng-model="year" />
+
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Día</span>
+                            </div>
+                            <input value="" autocomplete="off" type="number" class="form-control"
+                                ng-model="day" />
+
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Mes</span>
+                            </div>
+                            <input value="" autocomplete="off" type="number" class="form-control"
+                                ng-model="month" />
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Nombre</span>
+                            </div>
+                            <input type="text" class="form-control" ng-model="name" value="" />
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Centro Deportivo</span>
+                            </div>
+                            <input type="text" class="form-control" ng-model="sportcenter" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Centro Educativo</span>
+                            </div>
+                            <input type="text" class="form-control" ng-model="schoolcenter" />
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Actividad</span>
+                            </div>
+                            <input type="text" class="form-control" ng-model="activity" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Duración</span>
+                            </div>
+                            <input autocomplete="off" type="number" value="" class="form-control"
+                                ng-model="lengthactivity" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Distancia total</span>
+                            </div>
+                            <input autocomplete="off" type="number" value="" class="form-control"
+                                ng-model="totaldistance" />
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Precio entrada</span>
+                            </div>
+                            <input autocomplete="off" type="number" value="" class="form-control"
+                                ng-model="inscriptionprice" />
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-3">
+                            <button class="btn btn-primary"
+                                ng-click="editCompetition(id, year, day, month, name, sportcenter, schoolcenter, activity, lengthactivity, totaldistance, inscriptionprice)">Editar</button>
+                            <a href="./"><button class="btn btn-secondary">Atrás</button></a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody class="fade" ng-class="{'d-none':showInfoNone,'show': showInfoComp}">
+                <tr>
+                    <td colspan="13">
+                        <div class="alert alert-info" role="alert">
+                            <div class="text-right">
+                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
+                            </div>
+                            <div class="text-center">
+                                <span class="font-weight-bold">No se encuentran competiciones.</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="13">
+                        <div class="alert alert-info fade" role="alert"
+                            ng-class="{'d-none':showAlertInfoNone,'show': showAlertInfo}">
+                            <div class="text-right">
+                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
+                            </div>
+                            <div class="text-center">
+                                <span class="font-weight-bold">{{msgInfo}}</span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-danger fade" role="alert"
+                            ng-class="{'d-none':showAlertErrorNone,'show': showAlertError}">
+                            <div class="text-right">
+                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
+                            </div>
+                            <div class="text-center">
+                                <span class="font-weight-bold">{{msgError}}</span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning fade" role="alert"
+                            ng-class="{'d-none':showAlertWarningNone,'show': showAlertWarning}">
+                            <div class="text-right">
+                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
+                            </div>
+                            <div class="text-center">
+                                <span class="font-weight-bold">{{msgWarning}}</span>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-success fade" role="alert"
+                            ng-class="{'d-none':showAlertSuccessNone,'show': showAlertSuccess}">
+                            <div class="text-right">
+                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
+                            </div>
+                            <div class="text-center">
+                                <span class="font-weight-bold">{{msgSuccess}}</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</main>
+<footer class="footer mt-auto py-3">
+    <div class="container">
+        <span class="text-muted">Competiciones Deportivas Sevilla APP | pabfersan5 @ SOS1819-15</span>
+    </div>
+</footer>
+</body>
+
+</html>
