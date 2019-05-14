@@ -1,5 +1,5 @@
 angular
-    .module("SportsCompetitionsApp")
+    .module("SOS1819-15App")
     .controller("EditCtrl", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function ($scope, $http, $routeParams, $location, $rootScope) {
         console.log("EditCtrl: Retrieving $scope");
 

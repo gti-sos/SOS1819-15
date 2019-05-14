@@ -7,8 +7,7 @@ angular
         initializeApp();
 
         function initializeApp() {
-            $scope.competitions = autoLoad;
-            //refresh(undefined, undefined);
+            refresh(undefined, undefined);
             $scope.limit = 10;
             $scope.offset = 0;
             $scope.numCompetitions = 0;
