@@ -1,7 +1,7 @@
 
 
 angular
-    .module("SportsCentersAPP",["ngRoute"])
+    .module("SOS1819-15App",["ngRoute"])
     .config(function ($routeProvider){
         $routeProvider.
             when("/",{

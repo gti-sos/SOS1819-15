@@ -1,4 +1,4 @@
-var app = angular.module("SportsCentersAPP");
+var app = angular.module("SOS1819-15App");
 app.controller("EditCtrl", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
