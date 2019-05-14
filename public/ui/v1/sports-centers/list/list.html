@@ -10,8 +10,6 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <button type="button" data-toggle="modal" class="btn btn-success" data-target="#myModal2">Crear
-                            Centro</button>
                             
                         <button onclick="location.href='#!/edit'" type="button" class="btn btn-primary">Editar</button>
                         
@@ -40,43 +38,7 @@
         </div>
 
 
-        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Crear Centro</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <th scope="row"><input class="form-control form-control-lg" type="text" placeholder="id"
-                                ng-model="id"></th><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Calle"
-                                ng-model="street"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Nombre"
-                                ng-model="name"></td><br>
-                        <td><input class="form-control form-control-lg" type="number" placeholder="Codigo Postal"
-                                ng-model="postalcode"></td><br>
-                        <td><input class="form-control form-control-lg" type="number" placeholder="Año Comienzo"
-                                ng-model="startingyear"></td><br>
-                        <td><input class="form-control form-control-lg" type="number" placeholder="Superficie"
-                                ng-model="surface"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Actividad"
-                                ng-model="activity"></td><br>
-                        <td><input class="form-control form-control-lg" type="text" placeholder="Pavimento"
-                                ng-model="paviment"></td><br>
-                        <td><input class="form-control form-control-lg" type="number" placeholder="Campos Deportivos"
-                                ng-model="sportfields"></td><br>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary"
-                            ng-click="sendPost(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields)"
-                            data-dismiss="modal" value="env">Guardar</button>
-                    </div>
+               
                 </div>
             </div>
         </div>
@@ -118,6 +80,80 @@
                 
             </ul>
           </nav>
+          <br><br>
+          
+           <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">ID</span>
+                                </div>
+                                <input autocomplete="off" type="number" class="form-control"
+                                    ng-model="id" placeholder="16" />
+                                    
+                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Calle</span>
+                                </div>
+                                <input autocomplete="off" type="text" class="form-control"
+                                    ng-model="street" placeholder="Avda Virgen De La Esperanza" />
+                                    
+                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Nombre</span>
+                                </div>
+                                <input autocomplete="off" type="Text" class="form-control"
+                                    ng-model="name" placeholder="C.D. Bermejales" />
+                                <div class="input-group-prepend">
+                                    
+                                    
+                                    <span class="input-group-text">Codigo Postal</span>
+                                </div>
+                                <input autocomplete="off" type="number" class="form-control"
+                                    ng-model="postalcode" placeholder="410xx" />
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Año Comienzo</span>
+                                
+                                <input autocomplete="off" type="number" class="form-control"
+                                    ng-model="startingyear" placeholder="Año comienzo" />
+                                <span class="input-group-text">Superficie</span>
+                                </div>
+                                <input autocomplete="off" type="number" class="form-control"
+                                    ng-model="surface" placeholder="Superficie en m^2"/>
+                            
+                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Actividad</span>
+                                </div>
+                                <input autocomplete="off" type="text"  class="form-control"
+                                    ng-model="activity" placeholder="Futbol,Baloncesto..." />
+                            </div>
+                            
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Pavimento</span>
+                                </div>
+                                <input autocomplete="off" value="" type="text" class="form-control"
+                                    ng-model="paviment" placeholder="Cesped,Hormigon..." />
+                                    
+                                    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Campos Deportivos</span>
+                                </div>
+                                <input autocomplete="off" type="number" class="form-control"
+                                    ng-model="sportfields" placeholder="0" />
+                               
+                            </div>
+                            
+                         <div align="center">
+                         <button type="button" class="btn btn-primary boton-crear" 
+                            ng-click="sendPost(id,street,name,postalcode,startingyear,surface,activity,paviment,sportfields)"
+                             >Crear Centro</button>
+                        </div>
+                        </td>
+  
     </main>
 
     <footer class="footer">

@@ -26,7 +26,7 @@ module.exports = function (app, BASE_PATH) {
 
     path = BASE_PATH + "/educations-centers/docs";
     app.get(path, (req, res) => {
-        res.redirect('https://documenter.getpostman.com/view/6901186/S17tS8XH');
+        res.redirect('https://documenter.getpostman.com/view/6901186/S1LyUTGF?version=latest');
     });
 
     path = BASE_PATH + "/educations-centers";
@@ -89,11 +89,12 @@ module.exports = function (app, BASE_PATH) {
         }
 
         console.log("Query: " + JSON.stringify(myquery));
-        educationsCenters.find(myquery).project({_id: 0}).skip(offset).limit(limit).toArray((err, contactsArray) => {
+        educationsCenters.find(myquery).sort({id: 1}).project({_id: 0}).skip(offset).limit(limit).toArray((err, contactsArray) => {
 
             if (err)
                 console.log("Error: " + err);
 
+            //contactsArray.sort(function(a,b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0);} );
             res.send(contactsArray);
         });
     });
