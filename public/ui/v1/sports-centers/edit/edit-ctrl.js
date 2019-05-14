@@ -1,5 +1,5 @@
-var app = angular.module("SOS1819-15App");
-app.controller("EditCtrlsportsCenters", ["$scope", "$http", function ($scope, $http) {
+angular.module("SOS1819-15App")
+    .controller("EditCtrlsportsCenters", ["$scope", "$http", function ($scope, $http) {
     console.log("Retrieving $scope");
 
     $scope.url = "/api/v1/sports-centers";
