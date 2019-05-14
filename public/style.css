@@ -1,5 +1,4 @@
-main {
-    /* Margin bottom by footer height */
+body.ng-scope {
     margin-bottom: 60px;
     margin-top: 90px;
 }

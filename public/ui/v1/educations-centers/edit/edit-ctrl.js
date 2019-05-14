@@ -1,6 +1,6 @@
 angular
-    .module("UIEducationsCentersApp")
-    .controller("EditCtrl", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function ($scope, $http, $routeParams, $location, $rootScope) {
+    .module("SOS1819-15App")
+    .controller("EditCtrlEducations", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function ($scope, $http, $routeParams, $location, $rootScope) {
         console.log("Retrieving $scope");
 
         var id_route = $routeParams.id;
@@ -98,7 +98,7 @@ angular
                 $rootScope.success = true;
                 $rootScope.showError = false;
                 $rootScope.successMsg = "Modificado correctamente";
-                $location.path("/");
+                $location.path("/ui/v1/educations-centers");
             }, function (response) {
                 console.log("Error PUT method: Code " + response.status + ", " + response.statusText);
                 $scope.dataResponse = "Code: " + response.status + "\n" + response.statusText;

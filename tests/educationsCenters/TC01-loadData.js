@@ -2,13 +2,13 @@ describe("Data is loaded", function(){
     var until = protractor.ExpectedConditions;
 
     it("Should show 10 centers", function (){
-        browser.get("http://localhost:8080/ui/v1/educations-centers/#!/");
+        browser.get("http://localhost:8080/#!/ui/v1/educations-centers/");
         var centers = element.all(by.repeater("education in educations"));
         expect(centers.count()).toBeGreaterThan(9);
     });
 
     it("List should show new center", function () {
-        browser.get("http://localhost:8080/ui/v1/educations-centers/#!/");
+        browser.get("http://localhost:8080/#!/ui/v1/educations-centers/");
         element(by.model('id')).sendKeys("0");
         element(by.model('country')).sendKeys('spain');
         element(by.model('center')).sendKeys('test center');
@@ -32,7 +32,7 @@ describe("Data is loaded", function(){
         expect(resultModal.getText()).toContain('Creado correctamente');
     });
     it("delete", function () {
-        browser.get("http://localhost:8080/ui/v1/educations-centers/#!/");
+        browser.get("http://localhost:8080/#!/ui/v1/educations-centers/");
         element(by.css(".borrar0")).click();
         var resultModal = element(by.id('alert-success'));
         browser.wait(until.visibilityOf(resultModal), 5000, "Message should appear within 5 seconds");

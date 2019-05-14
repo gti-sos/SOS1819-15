@@ -1,5 +1,5 @@
-angular.module("UIEducationsCentersApp")
-    .controller("ListCtrl", function ($scope, $http, $rootScope, autoLoad) {
+angular.module("SOS1819-15App")
+    .controller("ListCtrlEducations", function ($scope, $http, $rootScope) {
         console.log("Retrieving $scope");
 
         $scope.url = "/api/v1/educations-centers";
@@ -15,8 +15,7 @@ angular.module("UIEducationsCentersApp")
             return new Array(num);
         };
 
-        //refresh();
-        $scope.educations = autoLoad;
+        refresh();
         console.log();
 
 
