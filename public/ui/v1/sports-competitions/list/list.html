@@ -68,7 +68,7 @@
                                 data-toggle="collapse" data-target="#collapse{{comp.id}}"
                                 ng-click="showEdit(comp.id, comp.year, comp.day, comp.month, comp.name, comp.sportcenter, comp.schoolcenter, comp.activity, comp.lengthactivity, comp.totaldistance, comp.inscriptionprice)">Modificar</button>
                         </a>
-                        <button class="btn btn-danger" ng-click="delCompetition(comp.id)">Eliminar</button>
+                        <button class="btn btn-danger btn-eliminar" ng-click="delCompetition(comp.id)">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
@@ -143,7 +143,7 @@
                                 <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
                             </div>
                             <div class="text-center">
-                                <span class="font-weight-bold">{{msgSuccess}}</span>
+                                <span class="font-weight-bold alert-msg">{{msgSuccess}}</span>
                             </div>
                         </div>
 
@@ -211,7 +211,7 @@
                                 ng-model="newCompetition.inscriptionprice" placeholder="0" />
                         </div>
                         <div class="input-group mb-3 float-left text-center">
-                            <button class="btn btn-primary" ng-click="addCompetition()">Añadir nueva</button>
+                            <button class="btn btn-primary addCompetition" ng-click="addCompetition()">Añadir nueva</button>
                         </div>
 
                     </td>
