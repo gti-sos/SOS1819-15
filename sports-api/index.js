@@ -1,5 +1,6 @@
 var apiV1 =  require("./v1");
 var apiV2 =  require("./v2");
+var apiV3=  require("./v3");
 
 module.exports = {
     sportsCompetitions : function(app, BASE_PATH){
@@ -25,5 +26,11 @@ module.exports = {
     },
     sportsCompetitionsSecurev2 : function(app, BASE_PATH){
         apiV2.sportsCompetitionsSecure(app,BASE_PATH+"/v2");
+    },
+    sportsCompetitionsv3 : function(app, BASE_PATH){
+        apiV3.sportsCompetitions(app,BASE_PATH+"/v3");
+    },
+    sportsCompetitionsSecurev3 : function(app, BASE_PATH){
+        apiV3.sportsCompetitionsSecure(app,BASE_PATH+"/v3");
     }
 }

@@ -13,6 +13,10 @@ angular
                 controller : "EditCtrlSportsCompetitions" ,
                 templateUrl: "ui/v1/sports-competitions/edit/edit.html"
             })
+            .when("/charts/v1/sports-competitions/", {
+                controller: "ChartsCtrlSportsCompetitions" ,
+                templateUrl: "ui/v1/sports-competitions/charts/charts.html"
+            })
             .when("/ui/v1/sports-centers/", {
                 controller: "ListCtrlsportsCenters" ,
                 templateUrl: "ui/v1/sports-centers/list/list.html"
