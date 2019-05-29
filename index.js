@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require("express");
 var sportsAPI = require("./sports-api");
 let bodyParse = require("body-parser");
@@ -6,11 +7,10 @@ var app = express();
 var port = process.env.PORT || 8080;
 const BASE_PATH = "/api";
 
-const mongoURI = process.env.pabloMongoURI;
-const mongoUSER = process.env.pabloMongoUser;
-const mongoPASS = process.env.pabloMongoPass;
-const pabloDBCollection = process.env.PabloDBCollectionAPI;
-const pabloDBName = process.env.pabloDBName;
+const PABLO_MONGO_URI = process.env.PABLO_MONGO_URI;
+const PABLO_MONGO_USER = process.env.PABLO_MONGO_USER;
+const PABLO_MONGO_PASS = process.env.PABLO_MONGO_PASS;
+const URI = "mongodb+srv://" + PABLO_MONGO_USER + ":" + PABLO_MONGO_PASS + "@" + PABLO_MONGO_URI;
 
 app.use(bodyParse.json());
 
@@ -28,10 +28,6 @@ sportsAPI.sportsCentersSecure(app, BASE_PATH);
 sportsAPI.sportsCompetitionsv2(app, BASE_PATH);
 sportsAPI.sportsCompetitionsSecurev2(app, BASE_PATH);
 
-// API V3
-sportsAPI.sportsCompetitionsv3(app, BASE_PATH);
-sportsAPI.sportsCompetitionsSecurev3(app, BASE_PATH);
-
 app.use("/", express.static(__dirname + "/public"));
 /*
 /* MongoDB connections
@@ -48,7 +44,6 @@ client.connect(err => {
 
     client.connect(err => {
         console.log("2nd db Connected!");
-        const URI = "mongodb+srv://" + mongoUSER + ":" + mongoPASS + "@" + mongoURI;
         client = new MongoClient(URI, {useNewUrlParser: true});
 
         client.connect(err => {

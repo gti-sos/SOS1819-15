@@ -1,12 +1,19 @@
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://dbPablo:sossos@cluster0-s3eqj.mongodb.net/test?retryWrites=true";
-const client = new MongoClient(uri, {useNewUrlParser: true});
+const PABLO_MONGO_URI = process.env.PABLO_MONGO_URI;
+const PABLO_MONGO_USER = process.env.PABLO_MONGO_USER;
+const PABLO_MONGO_PASS = process.env.PABLO_MONGO_PASS;
+const PABLO_DB_COLLECTION_API = process.env.PABLO_DB_COLLECTION_API;
+
+const PABLO_DB_NAME = process.env.PABLO_DB_NAME;
+const URI = "mongodb+srv://" + PABLO_MONGO_USER + ":" + PABLO_MONGO_PASS + "@" + PABLO_MONGO_URI;
+
+const client = new MongoClient(URI, {useNewUrlParser: true});
 
 var sportsCompetitions = [];
 
 client.connect(err => {
-    sportsCompetitions = client.db("sos1819-pfs").collection("competitions");
-    console.log("Connected!");
+    sportsCompetitions = client.db(PABLO_DB_NAME).collection(PABLO_DB_COLLECTION_API);
+    console.log("Connected to sos1819-pfs!");
 });
 
 module.exports = function(app, BASE_PATH){
