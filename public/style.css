@@ -2,3 +2,12 @@ body.ng-scope {
     margin-bottom: 60px;
     margin-top: 90px;
 }
+
+#container {
+    min-width: 310px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+#container {
+    height: 400px;
+}
