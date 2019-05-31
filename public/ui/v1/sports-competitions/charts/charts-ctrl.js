@@ -32,6 +32,7 @@ angular
             console.log(result);
             console.log(chartData);
         }
+
         function loadPieChart(chartData) {
             console.log("Drawing Pie Chart");
             Highcharts.chart('pieChartContainer', {
@@ -57,47 +58,42 @@ angular
             });
         }
 
-        function loadGeoChartData(){
-            var array = [
-                [ "Latitude", "Longitude" ]
+        function loadGeoChartData() {
+            var geoChartData = [
+                [['Latitude', 'Longitude'], 'Competición', 'Fecha']
             ];
-            response.data.forEach(function(element) {
-                array.push([element.lat,element.lon]);
+            $scope.competitions.forEach(function (competition) {
+                [[41.151636,-8.569336,0,'tooltip']]
+                geoChartData.push([
+                    competition.latitude,
+                    competition.longitude,
+                    competition.name+" "+competition.day+"/"+competition.month+"/"+competition.year
+                ]);
             });
+            loadGeoChart(geoChartData);
         }
-        function loadGeoChart(){
-            google.charts.load('current', {
-                'packages': ['geochart'],
-                // Note: you will need to get a mapsApiKey for your project.
-                // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-                'mapsApiKey': ''
-            });
+
+        function loadGeoChart(geoData) {
             google.charts.setOnLoadCallback(drawMarkersMap);
 
             function drawMarkersMap() {
-                var data = google.visualization.arrayToDataTable([
-                    ['City',   'Population', 'Area'],
-                    ['Rome',      2761477,    1285.31],
-                    ['Milan',     1324110,    181.76],
-                    ['Naples',    959574,     117.27],
-                    ['Turin',     907563,     130.17],
-                    ['Palermo',   655875,     158.9],
-                    ['Genoa',     607906,     243.60],
-                    ['Bologna',   380181,     140.7],
-                    ['Florence',  371282,     102.41],
-                    ['Fiumicino', 67370,      213.44],
-                    ['Anzio',     52192,      43.43],
-                    ['Ciampino',  38262,      11]
-                ]);
+                google.charts.load('current', {
+                    'packages':['geochart'],
+                    // Note: you will need to get a mapsApiKey for your project.
+                    // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+                    'mapsApiKey': 'AIzaSyAA0viQhdEMAJcfUYG_mtUB6ke8Rs6XjyM'
+                });
+                google.charts.setOnLoadCallback(drawRegionsMap);
 
-                var options = {
-                    region: 'IT',
-                    displayMode: 'markers',
-                    colorAxis: {colors: ['green', 'blue']}
-                };
+                function drawRegionsMap() {
+                    var data = google.visualization.arrayToDataTable(geoData);
+                    var options = {};
+                    var chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
+                    $("#geo_chart_div").css("zoom",1);
+                    google.visualization.events.addListener(chart, 'ready', function() { $("#geo_chart_div").css("zoom",1.0); });
+                    chart.draw(data, {region:"ES", displayMode: "markers", resolution:"provinces"});
+                }
 
-                var chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
-                chart.draw(data, options);
             };
         }
 
@@ -105,21 +101,20 @@ angular
         function createAreaDataChart() {
             var chartData = $scope.competitions
                 .map(function (item) {
-                    return [item.month, item.activity,0, 0];
+                    return [item.month, item.activity, 0, 0];
                 });
 
             var chartAreaData = chartData.reduce(function (res, obj) {
-
                 if (!(obj[0] in res))
-                    if (obj[1]==="Escolar"){
-                        res.__array.push(res[obj[0]]=[obj[0],1,0]);
-                    }else{
-                        res.__array.push(res[obj[0]]=[obj[0],0,1]);
+                    if (obj[1] === "Escolar") {
+                        res.__array.push(res[obj[0]] = [obj[0], 1, 0]);
+                    } else {
+                        res.__array.push(res[obj[0]] = [obj[0], 0, 1]);
                     }
                 else {
-                    if (obj[1]==="Escolar"){
+                    if (obj[1] === "Escolar") {
                         res[obj[0]][1] += 1;
-                    }else{
+                    } else {
                         res[obj[0]][2] += 1;
                     }
                 }
@@ -128,12 +123,13 @@ angular
                 .sort(function (a, b) {
                     return a[0] - b[0];
                 });
-            chartAreaData.splice(0,0,['Month', 'Scholar', 'General']);
-            console.log(chartAreaData);
+            chartAreaData.splice(0, 0, ['Month', 'Scholar', 'General']);
+            //console.log(chartAreaData);
             loadAreaChart(chartAreaData);
         }
+
         function loadAreaChart(chartAreaData) {
-            google.charts.load('current', {'packages':['corechart']});
+            google.charts.load('current', {'packages': ['corechart']});
             google.charts.setOnLoadCallback(drawChart);
 
             function drawChart() {
@@ -141,7 +137,7 @@ angular
 
                 var options = {
                     title: 'Activities organized by month and activity type.',
-                    hAxis: {title: 'Month',  titleTextStyle: {color: '#333'}},
+                    hAxis: {title: 'Month', titleTextStyle: {color: '#333'}},
                     vAxis: {minValue: 0}
                 };
 
@@ -149,7 +145,6 @@ angular
                 chart.draw(data, options);
             }
         }
-
 
 
         function refresh(limit, offset) {
@@ -167,7 +162,7 @@ angular
                 $scope.competitions = response.data;
                 createPieDataChart();
                 createAreaDataChart();
-                loadGeoChart();
+                loadGeoChartData();
             }, function (response) {
                 console.log("Data received: " + JSON.stringify(response.data, null, 2));
             });
