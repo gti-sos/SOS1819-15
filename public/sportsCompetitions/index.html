@@ -21,7 +21,7 @@
                 </div>
                 <input type="text" class="form-control" placeholder="/api/" aria-label="Recipient's username" aria-describedby="button-addon2" ng-model="url">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="btnSend" ng-click="sendAction(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo)">Send!</button>
+                    <button class="btn btn-outline-secondary" type="button" id="btnSend" ng-click="sendAction(id,year,day,month,name,sportcenter,schoolcenter,activity,lengthactivity,totaldistance,inscriptionprice,additionalinfo,latitude,longitude)">Send!</button>
                     <label ng-model="code">{{code}}</label>
                 </div>
             </div>           
@@ -39,6 +39,8 @@
                     <label>totaldistance*:<input class="form-control text-center" ng-model="totaldistance"/></label>
                     <label>inscriptionprice*:<input class="form-control text-center" ng-model="inscriptionprice"/></label>
                     <label>additionalinfo:<input class="form-control text-center" ng-model="additionalinfo"/></label>
+                    <label>latitude*:<input class="form-control text-center" ng-model="latitude"/></label>
+                    <label>longitude:<input class="form-control text-center" ng-model="longitude"/></label>
                 </div>
                 <div class="col-xs-10 col-md-5">
                     <label class="input-lg" for="dataResponse">Data response</label>

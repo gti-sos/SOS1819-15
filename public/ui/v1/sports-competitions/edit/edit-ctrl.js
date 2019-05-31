@@ -55,12 +55,14 @@ angular
                 $scope.lengthactivity = parseInt(response.data.lengthactivity);
                 $scope.totaldistance = parseInt(response.data.totaldistance);
                 $scope.inscriptionprice = parseInt(response.data.inscriptionprice);
+                $scope.latitude = parseFloat(response.data.latitude);
+                $scope.longitude = parseFloat(response.data.longitude);
             }, function (response) {
                 $scope.dataResponse = response.status + ", " + response.statusText
             });
         };
 
-        $scope.editCompetition = function (id, year, day, month, name, sportcenter, schoolcenter, activity, lengthactivity, totaldistance, inscriptionprice) {
+        $scope.editCompetition = function (id, year, day, month, name, sportcenter, schoolcenter, activity, lengthactivity, totaldistance, inscriptionprice,latitude,longitude) {
             clearAlerts();
             if (!isNaN(id)
                 && !isNaN(year)
@@ -69,7 +71,9 @@ angular
                 && typeof name !== 'undefined'
                 && !isNaN(lengthactivity)
                 && !isNaN(totaldistance)
-                && !isNaN(inscriptionprice)) {
+                && !isNaN(inscriptionprice)
+                && !isNaN(latitude)
+                && !isNaN(longitude)) {
                 if (typeof sportcenter === 'undefined') sportcenter = "";
                 if (typeof schoolcenter === 'undefined') schoolcenter = "";
                 if (typeof activity === 'undefined') activity = "";
@@ -85,7 +89,9 @@ angular
                     activity: activity,
                     lengthactivity: parseInt(lengthactivity),
                     totaldistance: parseInt(totaldistance),
-                    inscriptionprice: parseInt(inscriptionprice)
+                    inscriptionprice: parseInt(inscriptionprice),
+                    latitude : parseFloat(latitude),
+                    longitude : parseFloat(longitude)
                 };
                 console.log("Sending competition update to <" + API + id + ">");
                 console.log(data);

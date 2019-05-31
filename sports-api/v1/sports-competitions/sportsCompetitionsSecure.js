@@ -79,6 +79,8 @@ module.exports = function(app, BASE_PATH){
         let lengthactivity = req.query.lengthactivity;
         let totaldistance = req.query.totaldistance;
         let inscriptionprice = req.query.inscriptionprice;
+        let latitude = req.query.latitude;
+        let longitude = req.query.longitude;
 
         if (typeof year !== 'undefined') {
             myquery.year = parseInt(year,10);
@@ -109,6 +111,12 @@ module.exports = function(app, BASE_PATH){
         }
         if (typeof inscriptionprice !== 'undefined') {
             myquery.inscriptionprice = parseInt(inscriptionprice,10);
+        }
+        if (typeof latitude !== 'undefined') {
+            myquery.latitude = parseFloat(latitude);
+        }
+        if (typeof longitude !== 'undefined') {
+            myquery.lon = parseFloat(longitude);
         }
         if (typeof limit === 'undefined') {
             limit = 10000;
@@ -142,7 +150,7 @@ module.exports = function(app, BASE_PATH){
             sportsCompetitions.find({"id": parseInt(newCompetitions.id)}, {projection:{_id: 0 }}).toArray((err, competitionArray) => {
     
             if (competitionArray.length < 1) {
-                sportsCompetitions.insert(newCompetitions);
+                sportsCompetitions.insertOne(newCompetitions);
                 res.sendStatus(201);
             } else {
                 res.sendStatus(409);
@@ -312,7 +320,9 @@ function validation(newCompetitions){
     newCompetitions.hasOwnProperty("lengthactivity") &&
     newCompetitions.hasOwnProperty("totaldistance") &&
     newCompetitions.hasOwnProperty("inscriptionprice") &&
-    newCompetitions.hasOwnProperty("additionalinfo")){
+    newCompetitions.hasOwnProperty("additionalinfo") &&
+    newCompetitions.hasOwnProperty("latitude") &&
+    newCompetitions.hasOwnProperty("longitude")) {
         if (typeof newCompetitions.year !== 'undefined' &&
         typeof newCompetitions.year !== 'month' &&
         typeof newCompetitions.year !== 'day') {
@@ -323,71 +333,87 @@ function validation(newCompetitions){
 }
 
 function addData() {
-    sportsCompetitions.insertMany([{ 
-        id: 1,
-        year: 2019,
-        day: 4,
-        month : 4,
-        name: "V encuentro escolar y deportivo (programa distrito: macarena - norte)",
-        sportcenter: "",
-        schoolcenter: "Centro virgen milagrosa",
-        activity: "Escolar",
-        lengthactivity: 6,
-        totaldistance: 0,
-        inscriptionprice: 0,
-        additionalinfo: "Actividad de promoción deportiva en la que participan los ceip de los distritos Macarena y Norte."},
-    {
-        id: 2,
-        year: 2019,
-        day: 23,
-        month : 3,
-        name: "Campeonato de andalucía de taekwondo, categoría promesas",
-        sportcenter: "C.D. Hytasa",
-        schoolcenter: "",
-        activity: "Artes marciales",
-        lengthactivity: 6,
-        totaldistance: 0,
-        inscriptionprice: 0,
-        additionalinfo: "Hora: 20:30"},
-    {
-        id: 3,
-        year: 2019,
-        day: 4,
-        month : 4,
-        name: "Mini olimpiada escolar distrito Cerro-Amate",
-        sportcenter: "C.D. Hytasa",
-        schoolcenter: "",
-        activity: "Escolar",
-        lengthactivity: 6,
-        totaldistance: 0,
-        inscriptionprice: 0,
-        additionalinfo: "Impulsar y fomentar el interés por conocer diversas modalidades deportivas entre los alumnos de Educación Primaria de los colegios pertenecientes al Distrito Cerro-Amate."},
-    {
-        id: 4,
-        year: 2019,
-        day: 4,
-        month : 4,
-        name: "Encuentro Escolar y Deportivo (Programa Distrito: Macarena - Norte)",
-        sportcenter: "",
-        schoolcenter: "CEIP Manuel Siurot",
-        activity: "Escolar",
-        lengthactivity: 6,
-        totaldistance: 0,
-        inscriptionprice: 0,
-        additionalinfo: "Actividad de promoción deportiva en la que participan los CEIP de los distritos Macarena y Norte."},
-    {
-        id: 5,
-        year: 2019,
-        day: 19,
-        month : 5,
-        name: "Carrera popular y escolar Paque de Miraflores",
-        sportcenter: "Parque de Miraflores",
-        schoolcenter: "",
-        activity: "Atletismo",
-        lengthactivity: 3,
-        totaldistance: 10,
-        inscriptionprice: 0,
-        additionalinfo: "Salida 10Kms: 9:30 horas"}
+    sportsCompetitions.insertMany([
+        {
+            id: 1,
+            year: 2019,
+            day: 4,
+            month: 4,
+            name: "V encuentro escolar y deportivo (programa distrito: macarena - norte)",
+            sportcenter: "",
+            schoolcenter: "Centro virgen milagrosa",
+            activity: "Escolar",
+            lengthactivity: 6,
+            totaldistance: 0,
+            inscriptionprice: 0,
+            additionalinfo: "Actividad de promoción deportiva en la que participan los ceip de los distritos Macarena y Norte.",
+            latitude: 37.407737,
+            longitude: -5.973819
+        },
+        {
+            id: 2,
+            year: 2019,
+            day: 23,
+            month: 3,
+            name: "Campeonato de andalucía de taekwondo, categoría promesas",
+            sportcenter: "C.D. Hytasa",
+            schoolcenter: "",
+            activity: "Artes marciales",
+            lengthactivity: 6,
+            totaldistance: 0,
+            inscriptionprice: 0,
+            additionalinfo: "Hora: 20:30",
+            latitude: 37.370960,
+            longitude: -5.961155
+        },
+        {
+            id: 3,
+            year: 2019,
+            day: 4,
+            month: 4,
+            name: "Mini olimpiada escolar distrito Cerro-Amate",
+            sportcenter: "C.D. Hytasa",
+            schoolcenter: "",
+            activity: "Escolar",
+            lengthactivity: 6,
+            totaldistance: 0,
+            inscriptionprice: 0,
+            additionalinfo: "Impulsar y fomentar el interés por conocer diversas modalidades deportivas entre los alumnos de Educación Primaria de los colegios pertenecientes al Distrito Cerro-Amate.",
+            latitude: 37.370960,
+            longitude: -5.961155
+        },
+        {
+            id: 4,
+            year: 2019,
+            day: 4,
+            month: 4,
+            name: "Encuentro Escolar y Deportivo (Programa Distrito: Macarena - Norte)",
+            sportcenter: "",
+            schoolcenter: "CEIP Manuel Siurot",
+            activity: "Escolar",
+            lengthactivity: 6,
+            totaldistance: 0,
+            inscriptionprice: 0,
+            additionalinfo: "Actividad de promoción deportiva en la que participan los CEIP de los distritos Macarena y Norte.",
+            latitude: 37.411400,
+            longitude: -5.974815
+        },
+        {
+            id: 5,
+            year: 2019,
+            day: 19,
+            month: 5,
+            name: "Carrera popular y escolar Paque de Miraflores",
+            sportcenter: "Parque de Miraflores",
+            schoolcenter: "",
+            activity: "Atletismo",
+            lengthactivity: 3,
+            totaldistance: 10,
+            inscriptionprice: 0,
+            additionalinfo: "Salida 10Kms: 9:30 horas",
+            latitude: 37.411110,
+            longitude: -5.963570
+        }
     ], function(){
         r.sendStatus(201);
     });

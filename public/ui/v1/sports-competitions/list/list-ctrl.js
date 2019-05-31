@@ -115,7 +115,9 @@ angular
                     && typeof newCompetition.name !== 'undefined'
                     && !isNaN(newCompetition.lengthactivity)
                     && !isNaN(newCompetition.totaldistance)
-                    && !isNaN(newCompetition.inscriptionprice)) {
+                    && !isNaN(newCompetition.inscriptionprice)
+                    && !isNaN(newCompetition.latitude)
+                    && !isNaN(newCompetition.longitude)) {
 
                     if (typeof newCompetition.sportcenter === 'undefined') newCompetition.sportcenter = "";
                     if (typeof newCompetition.schoolcenter === 'undefined') newCompetition.schoolcenter = "";
@@ -124,10 +126,10 @@ angular
                     $http.post(API, JSON.stringify(newCompetition)).then(function (response) {
                         console.log("POST response " + response.status + " " +
                             response.data);
+                        refresh(undefined, undefined);
                         $scope.msgSuccess = "Se ha añadido la nueva competición.";
                         $scope.showAlertSuccess = true;
                         $scope.showAlertSuccessNone = false;
-                        refresh(undefined, undefined);
                     }, function (response) {
                         switch (response.status) {
                             case 409:
@@ -150,6 +152,8 @@ angular
                     $scope.newCompetition.lengthactivity = "";
                     $scope.newCompetition.totaldistance = "";
                     $scope.newCompetition.inscriptionprice = "";
+                    $scope.newCompetition.latitude = "";
+                    $scope.newCompetition.longitude = "";
                     delete $scope.newCompetition;
                 } else {
                     $scope.msgWarning = "Error en los campos, comprueba que son correctos.";
@@ -173,7 +177,7 @@ angular
                     response.data);
                 refresh(undefined, undefined);
             });
-            
+
         }
 
         $scope.delAllCompetition = function () {
