@@ -70,7 +70,7 @@ angular
                 'packages': ['geochart'],
                 // Note: you will need to get a mapsApiKey for your project.
                 // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-                'mapsApiKey': 'AIzaSyAA0viQhdEMAJcfUYG_mtUB6ke8Rs6XjyM'
+                'mapsApiKey': ''
             });
             google.charts.setOnLoadCallback(drawMarkersMap);
 
