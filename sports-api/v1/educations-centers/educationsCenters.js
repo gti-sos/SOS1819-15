@@ -257,9 +257,9 @@ function addData(res) {
         , phone: 954276212
         , lat: 37.37596064
         , lon: -5.998167749
-        , sports_education: 0
+        , sports_education: 1
         , country: "Spain"
-        , monthStart: 3
+        , monthStart: 6
     },
         {
             id: 2
@@ -299,7 +299,7 @@ function addData(res) {
             , phone: 954502550
             , lat: 37.392222855
             , lon: -5.995382915
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 2
         },
@@ -313,7 +313,7 @@ function addData(res) {
             , phone: 954210595
             , lat: 37.3913194325946
             , lon: -5.99841846498611
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 6
         },
@@ -341,7 +341,7 @@ function addData(res) {
             , phone: 954224148
             , lat: 37.393466097
             , lon: -5.99752161
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 12
         },
@@ -355,7 +355,7 @@ function addData(res) {
             , phone: 954387109
             , lat: 37.399998405
             , lon: -5.997883649
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 6
         },
@@ -397,7 +397,7 @@ function addData(res) {
             , phone: 954220994
             , lat: 37.394084033
             , lon: -5.997670461
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 8
         },
@@ -439,7 +439,7 @@ function addData(res) {
             , phone: 955289886
             , lat: 37.401490627273
             , lon: -5.9904104270658
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 7
         },
@@ -467,7 +467,7 @@ function addData(res) {
             , phone: 618811901
             , lat: 37.3963896734066
             , lon: -5.99684707332385
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 2
         },
@@ -523,7 +523,7 @@ function addData(res) {
             , phone: 954915974
             , lat: 37.396594394
             , lon: -5.999938847
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 6
         },
@@ -579,7 +579,7 @@ function addData(res) {
             , phone: 954423155
             , lat: 37.390526689
             , lon: -5.983006602
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 4
         },
@@ -635,7 +635,7 @@ function addData(res) {
             , phone: 954213166
             , lat: 37.39326575
             , lon: -5.992985196
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 5
         },
@@ -663,7 +663,7 @@ function addData(res) {
             , phone: 954410254
             , lat: 37.397338484
             , lon: -5.982294261
-            , sports_education: 0
+            , sports_education: 1
             , country: "Spain"
             , monthStart: 3
         }

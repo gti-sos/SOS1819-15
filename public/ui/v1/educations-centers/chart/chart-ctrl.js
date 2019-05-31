@@ -18,6 +18,10 @@ angular
                 var concertadoCount = response.data.filter(center => center.ownership === "Concertado").length;
                 var publicoCount = response.data.filter(center => center.ownership === "Público").length;
 
+                var privadoCountSport = response.data.filter(center => center.ownership === "Privado" && center.sports_education == 1).length;
+                var concertadoCountSport = response.data.filter(center => center.ownership === "Concertado" && center.sports_education == 1).length;
+                var publicoCountSport = response.data.filter(center => center.ownership === "Público" && center.sports_education == 1).length;
+
                 Highcharts.chart('container', {
                     chart: {
                         type: 'pyramid3d',
@@ -155,6 +159,37 @@ angular
                 });
 
                 Plotly.newPlot('myDiv', data, layout);
+
+
+                var trace1 = {
+                    x: ['Privados', 'Concertado', 'Publico'],
+                    y: [privadoCountSport, concertadoCountSport, publicoCountSport],
+                    type: 'bar',
+                    text: [' centros con educación deportiva', ' centros con educación deportiva', ' centros con educación deportiva'],
+                    marker: {
+                        color: 'rgb(142,124,195)'
+                    }
+                };
+
+                var dataTwo = [trace1];
+
+                var layoutTwo = {
+                    title: 'Numeros de educación deportiva por titularidad de los centros',
+                    font:{
+                        family: 'Raleway, sans-serif'
+                    },
+                    showlegend: false,
+                    xaxis: {
+                        tickangle: -45
+                    },
+                    yaxis: {
+                        zeroline: false,
+                        gridwidth: 2
+                    },
+                    bargap :0.05
+                };
+
+                Plotly.newPlot('myDivTwo', dataTwo, layoutTwo);
 
             }, function (response) {
                 $scope.dataResponse = response.status + ", " + response.statusText
