@@ -59,8 +59,21 @@ angular
                 var array = [
                     [ "Latitude", "Longitude" ]
                 ];
+
+                var nameList = [
+                ];
+
+                var latList = [
+                ];
+
+                var lonList = [
+                ];
+
                 response.data.forEach(function(element) {
                     array.push([element.lat,element.lon]);
+                    nameList.push(element.name);
+                    latList.push(element.lat);
+                    lonList.push(element.lon);
                 });
 
 
@@ -81,6 +94,67 @@ angular
 
                     chart.draw(data, {region:"ES", displayMode: "markers"});
                 }
+
+
+                var data = [{
+                    type: 'scattermapbox',
+                    mode: 'markers+text',
+                    text: nameList,
+                    lon: lonList,
+                    lat: latList,
+                    marker: {
+                        size: 7,
+                        color: '#bebada',
+                        line: {
+                            width: 1
+                        }
+                    },
+                    name: 'europe data'
+                }];
+
+                var layout = {
+                    title: 'Meteorite Landing Locations',
+                    font: {
+                        color: 'white'
+                    },
+                    dragmode: 'zoom',
+                    mapbox: {
+                        center: {
+                            lat: 37.395,
+                            lon: -5.994
+                        },
+                        domain: {
+                            x: [0, 1],
+                            y: [0, 1]
+                        },
+                        style: 'dark',
+                        zoom: 14
+                    },
+                    margin: {
+                        r: 20,
+                        t: 40,
+                        b: 20,
+                        l: 20,
+                        pad: 0
+                    },
+                    paper_bgcolor: '#191A1A',
+                    plot_bgcolor: '#191A1A',
+                    showlegend: true,
+                    annotations: [{
+                        x: 0,
+                        y: 0,
+                        xref: 'paper',
+                        yref: 'paper',
+                        text: 'Source: <a href="https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh" style="color: rgb(255,255,255)">NASA</a>',
+                        showarrow: false
+                    }]
+                };
+
+                Plotly.setPlotConfig({
+                    mapboxAccessToken: 'pk.eyJ1IjoiZGFucmFtaXJleiIsImEiOiJjandiNnJwdWwwOTJvM3ludjJ1ZjFsNGRrIn0.4Dtx2mdBN8juQzEGD1TdEw'
+                });
+
+                Plotly.newPlot('myDiv', data, layout);
 
             }, function (response) {
                 $scope.dataResponse = response.status + ", " + response.statusText
