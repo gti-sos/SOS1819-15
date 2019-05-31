@@ -1,6 +1,6 @@
 angular
     .module("SOS1819-15App")
-    .controller("ChartsCtrlSportsCompetitions", function ($scope, $http, $rootScope) {
+    .controller("ChartsCtrlSportsCompetitions", function ($scope, $http) {
         console.log("ChartsCtrl loaded.");
         var API = "/api/v2/sports-competitions";
 
@@ -29,8 +29,6 @@ angular
                     return [item.activity, item.lengthactivity, item.inscriptionprice];
                 });
             loadPieChart(chartData);
-            console.log(result);
-            console.log(chartData);
         }
 
         function loadPieChart(chartData) {
@@ -58,6 +56,7 @@ angular
             });
         }
 
+        // 2nd Chart: geoChart through GoogleChart.
         function loadGeoChartData() {
             var geoChartData = [
                 [['Latitude', 'Longitude'], 'Competición', 'Fecha']
@@ -74,6 +73,7 @@ angular
         }
 
         function loadGeoChart(geoData) {
+            console.log("Drawing Google's geoChart.");
             google.charts.setOnLoadCallback(drawMarkersMap);
 
             function drawMarkersMap() {
@@ -87,17 +87,25 @@ angular
 
                 function drawRegionsMap() {
                     var data = google.visualization.arrayToDataTable(geoData);
-                    var options = {};
+                    var options = {
+                        region:"ES",
+                        displayMode: "markers",
+                        sizeAxis: { maxValue: 0 },
+                        resolution:"provinces",
+                        backgroundColor: '#80b3ff',
+                        datalessRegionColor: '#996633',
+                        defaultColor: '#f5f5f5',
+                    };
                     var chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
                     $("#geo_chart_div").css("zoom",1);
                     google.visualization.events.addListener(chart, 'ready', function() { $("#geo_chart_div").css("zoom",1.0); });
-                    chart.draw(data, {region:"ES", displayMode: "markers", resolution:"provinces"});
+                    chart.draw(data, options);
                 }
 
             };
         }
 
-        // 2nd Chart:
+        // 3rd Chart: areaChart through Echart.
         function createAreaDataChart() {
             var chartData = $scope.competitions
                 .map(function (item) {
@@ -129,6 +137,7 @@ angular
         }
 
         function loadAreaChart(chartAreaData) {
+            console.log("Drawing Area Chart");
             google.charts.load('current', {'packages': ['corechart']});
             google.charts.setOnLoadCallback(drawChart);
 
@@ -148,17 +157,9 @@ angular
 
 
         function refresh(limit, offset) {
-            $scope.showInfoComp = false;
-            $scope.showInfoNone = true;
-            //console.log("Requesting competitions to <" + API + "?fromMonth=" + $scope.fromMonth + "&toMonth=" + $scope.toMonth + ">");
-            var url = API +
-                "?fromMonth=" + parseInt($scope.fromMonth) +
-                "&toMonth=" + parseInt($scope.toMonth) +
-                "&limit=" + parseInt(limit) +
-                "&offset=" + parseInt($scope.offset);
+            var url = API;
             console.log("Requesting competitions to <" + url + ">");
             $http.get(url).then(function (response) {
-                console.log("Data received: " + JSON.stringify(response.data, null, 2));
                 $scope.competitions = response.data;
                 createPieDataChart();
                 createAreaDataChart();

@@ -10,6 +10,18 @@ const URI = "mongodb+srv://" + PABLO_MONGO_USER + ":" + PABLO_MONGO_PASS + "@" +
 
 const client = new MongoClient(URI, {useNewUrlParser: true});
 
+var cors = require("cors");
+var whitelist = ['https://sos1819-06.herokuapp.com/#!/', 'https://sos1819-12.herokuapp.com/#!/'];
+var corsOptionsDelegate = function (req, callback) {
+    var corsOptions;
+    if (whitelist.indexOf(req.header('Origin')) !== -1) {
+        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+    } else {
+        corsOptions = { origin: false } // disable CORS for this request
+    }
+    callback(null, corsOptions) // callback expects two parameters: error and options
+};
+
 var sportsCompetitions = [];
 
 client.connect(err => {
@@ -20,16 +32,17 @@ client.connect(err => {
 module.exports = function (app, BASE_PATH) {
     console.log("Registering sportsAPI (v2): sports-competitions.");
     var path = "";
+    app.use(cors());
 
     console.log("Registering redirection to docs");
     path = BASE_PATH + "/sports-competitions/docs";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         res.redirect('https://documenter.getpostman.com/view/6897422/S17tRoGk');
     });
 
     console.log("Registering get /sports-competitions/loadInitialData");
     path = BASE_PATH + "/sports-competitions/loadInitialData";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         sportsCompetitions.find().toArray((err, competitionArray) => {
             if (competitionArray.length > 0) {
                 res.sendStatus(409);
@@ -42,7 +55,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering get /sports-competitions/");
     path = BASE_PATH + "/sports-competitions";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         let limit = parseInt(req.query.limit, 10);
         let offset = parseInt(req.query.offset, 10);
         let fromMonth = req.query.fromMonth;
@@ -128,7 +141,7 @@ module.exports = function (app, BASE_PATH) {
     console.log("Resource /sports-competitions/ registered");
 
     path = BASE_PATH + "/sports-competitions";
-    app.post(path, (req, res) => {
+    app.post(path, cors(corsOptionsDelegate), (req, res) => {
         let newCompetitions = req.body;
 
         if (validation(newCompetitions)) {
@@ -148,14 +161,14 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering delete to /sports-competitions");
     path = BASE_PATH + "/sports-competitions";
-    app.delete(path, (req, res) => {
+    app.delete(path, cors(corsOptionsDelegate), (req, res) => {
         sportsCompetitions.deleteMany();
         res.sendStatus(200);
     });
 
     console.log("Registering get to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         let id = req.params.id;
 
         sportsCompetitions.find({"id": parseInt(id)}, {projection: {_id: 0}}).toArray((err, competitionArray) => {
@@ -169,7 +182,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering get to /sports-competitions/:year/:month");
     path = BASE_PATH + "/sports-competitions/:year/:month";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         var year = req.params.year;
         var month = req.params.month;
 
@@ -192,7 +205,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering put to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
-    app.put(path, (req, res) => {
+    app.put(path, cors(corsOptionsDelegate), (req, res) => {
         let id = req.params.id;
         let updatedCompetition = req.body;
 
@@ -225,7 +238,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering delete to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
-    app.delete(path, (req, res) => {
+    app.delete(path, cors(corsOptionsDelegate), (req, res) => {
         let id = req.params.id;
         var myquery = {id: parseInt(id, 10)};
 
@@ -240,13 +253,13 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering post to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
-    app.post(path, (req, res) => {
+    app.post(path, cors(corsOptionsDelegate), (req, res) => {
         res.sendStatus(405);
     });
 
     console.log("Registering put to /sports-competitions");
     path = BASE_PATH + "/sports-competitions";
-    app.put(path, (req, res) => {
+    app.put(path, cors(corsOptionsDelegate), (req, res) => {
         res.sendStatus(405);
     });
 

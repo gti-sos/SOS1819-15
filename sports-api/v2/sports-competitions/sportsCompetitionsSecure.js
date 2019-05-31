@@ -11,6 +11,18 @@ const URI = "mongodb+srv://" + PABLO_MONGO_USER + ":" + PABLO_MONGO_PASS + "@" +
 
 const client = new MongoClient(URI, {useNewUrlParser: true});
 
+var cors = require("cors");
+var whitelist = ['https://sos1819-06.herokuapp.com/#!/', 'https://sos1819-12.herokuapp.com/#!/'];
+var corsOptionsDelegate = function (req, callback) {
+    var corsOptions;
+    if (whitelist.indexOf(req.header('Origin')) !== -1) {
+        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+    } else {
+        corsOptions = { origin: false } // disable CORS for this request
+    }
+    callback(null, corsOptions) // callback expects two parameters: error and options
+};
+
 var sportsCompetitions = [];
 
 client.connect(err => {
@@ -25,7 +37,7 @@ module.exports = function (app, BASE_PATH) {
     console.log("Registering redirection to docs");
     path = BASE_PATH + "/sports-competitions/docs";
     console.log("LOG " + path);
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -37,7 +49,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering get /sports-competitions/loadInitialData");
     path = BASE_PATH + "/sports-competitions/loadInitialData";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -57,7 +69,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering get /sports-competitions/");
     path = BASE_PATH + "/sports-competitions";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate),(req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -151,7 +163,7 @@ module.exports = function (app, BASE_PATH) {
     console.log("Resource /sports-competitions/ registered");
 
     path = BASE_PATH + "/sports-competitions";
-    app.post(path, (req, res) => {
+    app.post(path, cors(corsOptionsDelegate), (req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -177,7 +189,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering delete to /sports-competitions");
     path = BASE_PATH + "/sports-competitions";
-    app.delete(path, (req, res) => {
+    app.delete(path, cors(corsOptionsDelegate),(req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -190,7 +202,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering get to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate),(req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -210,7 +222,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering get to /sports-competitions/:year/:month");
     path = BASE_PATH + "/sports-competitions/:year/:month";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate),(req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -239,7 +251,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering put to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
-    app.put(path, (req, res) => {
+    app.put(path, cors(corsOptionsDelegate),(req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -278,7 +290,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering delete to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
-    app.delete(path, (req, res) => {
+    app.delete(path, cors(corsOptionsDelegate),(req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -299,7 +311,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering post to /sports-competitions/:id");
     path = BASE_PATH + "/sports-competitions/:id";
-    app.post(path, (req, res) => {
+    app.post(path, cors(corsOptionsDelegate),(req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {
@@ -311,7 +323,7 @@ module.exports = function (app, BASE_PATH) {
 
     console.log("Registering put to /sports-competitions");
     path = BASE_PATH + "/sports-competitions";
-    app.put(path, (req, res) => {
+    app.put(path, cors(corsOptionsDelegate),(req, res) => {
         let apikeyReq = req.query.apikey;
 
         if (typeof apikeyReq === 'undefined' || apikeyReq !== apiKey) {

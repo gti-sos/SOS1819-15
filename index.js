@@ -1,7 +1,7 @@
 require('dotenv').config();
 var express = require("express");
 var sportsAPI = require("./sports-api");
-let bodyParse = require("body-parser");
+var bodyParse = require("body-parser");
 
 var app = express();
 var port = process.env.PORT || 8080;
