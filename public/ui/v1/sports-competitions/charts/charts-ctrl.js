@@ -57,6 +57,50 @@ angular
             });
         }
 
+        function loadGeoChartData(){
+            var array = [
+                [ "Latitude", "Longitude" ]
+            ];
+            response.data.forEach(function(element) {
+                array.push([element.lat,element.lon]);
+            });
+        }
+        function loadGeoChart(){
+            google.charts.load('current', {
+                'packages': ['geochart'],
+                // Note: you will need to get a mapsApiKey for your project.
+                // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+                'mapsApiKey': 'AIzaSyAA0viQhdEMAJcfUYG_mtUB6ke8Rs6XjyM'
+            });
+            google.charts.setOnLoadCallback(drawMarkersMap);
+
+            function drawMarkersMap() {
+                var data = google.visualization.arrayToDataTable([
+                    ['City',   'Population', 'Area'],
+                    ['Rome',      2761477,    1285.31],
+                    ['Milan',     1324110,    181.76],
+                    ['Naples',    959574,     117.27],
+                    ['Turin',     907563,     130.17],
+                    ['Palermo',   655875,     158.9],
+                    ['Genoa',     607906,     243.60],
+                    ['Bologna',   380181,     140.7],
+                    ['Florence',  371282,     102.41],
+                    ['Fiumicino', 67370,      213.44],
+                    ['Anzio',     52192,      43.43],
+                    ['Ciampino',  38262,      11]
+                ]);
+
+                var options = {
+                    region: 'IT',
+                    displayMode: 'markers',
+                    colorAxis: {colors: ['green', 'blue']}
+                };
+
+                var chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
+                chart.draw(data, options);
+            };
+        }
+
         // 2nd Chart:
         function createAreaDataChart() {
             var chartData = $scope.competitions
@@ -107,6 +151,7 @@ angular
         }
 
 
+
         function refresh(limit, offset) {
             $scope.showInfoComp = false;
             $scope.showInfoNone = true;
@@ -122,6 +167,7 @@ angular
                 $scope.competitions = response.data;
                 createPieDataChart();
                 createAreaDataChart();
+                loadGeoChart();
             }, function (response) {
                 console.log("Data received: " + JSON.stringify(response.data, null, 2));
             });

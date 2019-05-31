@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#!/ui/v1/sports-competitions/">Seville Sports Competitions APP</a>
+        <a class="navbar-brand" href="#!/ui/v1/sports-competitions/">Sports Competitions APP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,25 +26,25 @@
                     <td colspan="11">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">ID</span>
+                                <span class="input-group-text">ID</span>
                             </div>
                             <input value="" autocomplete="off" readonly type="number" class="form-control"
                                 ng-model="id" placeholder="" />
 
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Año</span>
+                                <span class="input-group-text" >Año</span>
                             </div>
                             <input value="" autocomplete="off" type="number" class="form-control"
                                 ng-model="year" />
 
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Día</span>
+                                <span class="input-group-text">Día</span>
                             </div>
                             <input value="" autocomplete="off" type="number" class="form-control"
                                 ng-model="day" />
 
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Mes</span>
+                                <span class="input-group-text">Mes</span>
                             </div>
                             <input value="" autocomplete="off" type="number" class="form-control"
                                 ng-model="month" />
@@ -52,29 +52,29 @@
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Nombre</span>
+                                <span class="input-group-text">Nombre</span>
                             </div>
                             <input type="text" class="form-control" ng-model="name" value="" />
                         </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Centro Deportivo</span>
+                                <span class="input-group-text">Centro Deportivo</span>
                             </div>
                             <input type="text" class="form-control" ng-model="sportcenter" />
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Centro Educativo</span>
+                                <span class="input-group-text">Centro Educativo</span>
                             </div>
                             <input type="text" class="form-control" ng-model="schoolcenter" />
                         </div>
 
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Actividad</span>
+                                <span class="input-group-text">Actividad</span>
                             </div>
                             <input type="text" class="form-control" ng-model="activity" />
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Duración</span>
+                                <span class="input-group-text">Duración</span>
                             </div>
                             <input autocomplete="off" type="number" value="" class="form-control"
                                 ng-model="lengthactivity" />
@@ -84,16 +84,28 @@
                             <input autocomplete="off" type="number" value="" class="form-control"
                                 ng-model="totaldistance" />
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Precio entrada</span>
+                                <span class="input-group-text">Precio entrada</span>
                             </div>
                             <input autocomplete="off" type="number" value="" class="form-control"
                                 ng-model="inscriptionprice" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Latitud</span>
+                            </div>
+                            <input autocomplete="off" value="" type="number" class="form-control"
+                                   ng-model="latitude" placeholder="1.1"/>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Longitud</span>
+                            </div>
+                            <input autocomplete="off" type="number" class="form-control"
+                                   ng-model="longitude" placeholder="0"/>
                         </div>
                     </td>
                     <td>
                         <div class="input-group mb-3">
                             <button class="btn btn-primary"
-                                ng-click="editCompetition(id, year, day, month, name, sportcenter, schoolcenter, activity, lengthactivity, totaldistance, inscriptionprice)">Editar</button>
+                                ng-click="editCompetition(id, year, day, month, name, sportcenter, schoolcenter, activity, lengthactivity, totaldistance, inscriptionprice,latitude,longitude)">Editar</button>
                             <a href="/#!/ui/v1/sports-competitions/"><button class="btn btn-secondary">Atrás</button></a>
                         </div>
                     </td>
@@ -163,7 +175,7 @@
 </main>
 <footer class="footer mt-auto py-3">
     <div class="container">
-        <span class="text-muted">Competiciones Deportivas Sevilla APP | pabfersan5 @ SOS1819-15</span>
+        <span class="text-muted">Competiciones Deportivas APP | pabfersan5 @ SOS1819-15</span>
     </div>
 </footer>
 </body>

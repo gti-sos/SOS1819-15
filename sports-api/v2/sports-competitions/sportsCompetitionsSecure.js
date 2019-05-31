@@ -79,6 +79,8 @@ module.exports = function (app, BASE_PATH) {
         let lengthactivity = req.query.lengthactivity;
         let totaldistance = req.query.totaldistance;
         let inscriptionprice = req.query.inscriptionprice;
+        let latitude = req.query.latitude;
+        let longitude = req.query.longitude;
 
         let fromMonth = req.query.fromMonth;
         let toMonth = req.query.toMonth;
@@ -113,6 +115,12 @@ module.exports = function (app, BASE_PATH) {
         if (typeof inscriptionprice !== 'undefined') {
             myquery.inscriptionprice = parseInt(inscriptionprice, 10);
         }
+        if (typeof latitude !== 'undefined') {
+            myquery.latitude = parseFloat(latitude);
+        }
+        if (typeof longitude !== 'undefined') {
+            myquery.lon = parseFloat(longitude);
+        }
         if (typeof limit === 'undefined') {
             limit = 10000;
         }
@@ -120,7 +128,7 @@ module.exports = function (app, BASE_PATH) {
             offset = 0;
         }
 
-        sportsCompetitions.find(myquery, { projection: { _id: 0 } }).skip(offset).limit(limit).toArray((err, competitionArray) => {
+        sportsCompetitions.find(myquery, {projection: {_id: 0}}).skip(offset).limit(limit).toArray((err, competitionArray) => {
             if (err) console.log("Error: " + err);
             var filteredCompetitions = competitionArray;
             if (!isNaN(fromMonth) && typeof fromMonth !== 'undefined' && typeof fromMonth !== 'null') {
@@ -153,10 +161,10 @@ module.exports = function (app, BASE_PATH) {
         let newCompetitions = req.body;
 
         if (validation(newCompetitions)) {
-            sportsCompetitions.find({ "id": parseInt(newCompetitions.id) }, { projection: { _id: 0 } }).toArray((err, competitionArray) => {
+            sportsCompetitions.find({"id": parseInt(newCompetitions.id)}, {projection: {_id: 0}}).toArray((err, competitionArray) => {
 
                 if (competitionArray.length < 1) {
-                    sportsCompetitions.insert(newCompetitions);
+                    sportsCompetitions.insertOne(newCompetitions);
                     res.sendStatus(201);
                 } else {
                     res.sendStatus(409);
@@ -191,7 +199,7 @@ module.exports = function (app, BASE_PATH) {
         }
         let id = req.params.id;
 
-        sportsCompetitions.find({ "id": parseInt(id) }, { projection: { _id: 0 } }).toArray((err, competitionArray) => {
+        sportsCompetitions.find({"id": parseInt(id)}, {projection: {_id: 0}}).toArray((err, competitionArray) => {
             if (competitionArray.length == 1) {
                 res.send(competitionArray[0]);
             } else {
@@ -212,7 +220,10 @@ module.exports = function (app, BASE_PATH) {
         var year = req.params.year;
         var month = req.params.month;
 
-        sportsCompetitions.find({ "year": parseInt(year), "month": parseInt(month) }, { projection: { _id: 0 } }).toArray((err, competitionArray) => {
+        sportsCompetitions.find({
+            "year": parseInt(year),
+            "month": parseInt(month)
+        }, {projection: {_id: 0}}).toArray((err, competitionArray) => {
 
             if (competitionArray.length > 0) {
                 if (competitionArray.length == 1) {
@@ -238,14 +249,14 @@ module.exports = function (app, BASE_PATH) {
         let id = req.params.id;
         let updatedCompetition = req.body;
 
-        var myquery = { id: parseInt(id, 10) };
+        var myquery = {id: parseInt(id, 10)};
 
         if (!validation(updatedCompetition)) {
             res.sendStatus(400);
             return;
         }
 
-        sportsCompetitions.find({ "id": parseInt(id) }, { projection: { _id: 0 } }).toArray((err, competitionArray) => {
+        sportsCompetitions.find({"id": parseInt(id)}, {projection: {_id: 0}}).toArray((err, competitionArray) => {
             if (competitionArray.length == 1) {
                 if (competitionArray[0].id == parseInt(updatedCompetition.id)) {
                     sportsCompetitions.replaceOne(myquery, updatedCompetition, function (err, obj) {
@@ -275,7 +286,7 @@ module.exports = function (app, BASE_PATH) {
             return;
         }
         let id = req.params.id;
-        var myquery = { id: parseInt(id, 10) };
+        var myquery = {id: parseInt(id, 10)};
 
         sportsCompetitions.deleteOne(myquery, function (err, obj) {
             if (err) {
@@ -325,7 +336,9 @@ function validation(newCompetitions) {
         newCompetitions.hasOwnProperty("activity") &&
         newCompetitions.hasOwnProperty("lengthactivity") &&
         newCompetitions.hasOwnProperty("totaldistance") &&
-        newCompetitions.hasOwnProperty("inscriptionprice")) {
+        newCompetitions.hasOwnProperty("inscriptionprice") &&
+        newCompetitions.hasOwnProperty("latitude") &&
+        newCompetitions.hasOwnProperty("longitude")) {
         if (typeof newCompetitions.year !== 'undefined' &&
             typeof newCompetitions.year !== 'month' &&
             typeof newCompetitions.year !== 'day') {
@@ -348,7 +361,9 @@ function addData() {
             activity: "Escolar",
             lengthactivity: 6,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.407737,
+            longitude: -5.973819
         },
         {
             id: 2,
@@ -361,7 +376,9 @@ function addData() {
             activity: "Artes marciales",
             lengthactivity: 6,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.370960,
+            longitude: -5.961155
         },
         {
             id: 3,
@@ -374,7 +391,9 @@ function addData() {
             activity: "Escolar",
             lengthactivity: 6,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.370960,
+            longitude: -5.961155
         },
         {
             id: 4,
@@ -387,7 +406,9 @@ function addData() {
             activity: "Escolar",
             lengthactivity: 6,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.411400,
+            longitude: -5.974815
         },
         {
             id: 5,
@@ -400,7 +421,9 @@ function addData() {
             activity: "Atletismo",
             lengthactivity: 3,
             totaldistance: 10,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.411110,
+            longitude: -5.963570
         },
         {
             id: 6,
@@ -413,7 +436,10 @@ function addData() {
             activity: "Escolar",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.382959,
+            longitude: -6.014996
+
         },
         {
             id: 7,
@@ -421,12 +447,14 @@ function addData() {
             day: 25,
             month: 5,
             name: "Campeonato de Andalucía de Natación de Aguas Abiertas",
-            sportcenter: "C. Esp. de Alto Rendimiento de la Isla de la Cartuja",
+            sportcenter: "CEAR Isla de la Cartuja",
             schoolcenter: "",
             activity: "Natación",
             lengthactivity: 10,
             totaldistance: 12.5,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.410954,
+            longitude: -5.993353
         },
         {
             id: 8,
@@ -439,7 +467,9 @@ function addData() {
             activity: "Escolar",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.322956,
+            longitude: -5.973466
         },
         {
             id: 9,
@@ -452,7 +482,9 @@ function addData() {
             activity: "Escolar",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.399058,
+            longitude: -5.993644
         },
         {
             id: 10,
@@ -465,7 +497,9 @@ function addData() {
             activity: "Artes Marciales",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.413987,
+            longitude: -5.928280
         },
         {
             id: 11,
@@ -478,7 +512,9 @@ function addData() {
             activity: "3era Edad",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.383631,
+            longitude: -6.007406
         },
         {
             id: 12,
@@ -491,7 +527,9 @@ function addData() {
             activity: "Atletismo",
             lengthactivity: 4,
             totaldistance: 10,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.374946,
+            longitude: -5.988715
         },
         {
             id: 13,
@@ -504,7 +542,9 @@ function addData() {
             activity: "Otros",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.380636,
+            longitude: -5.910138
         },
         {
             id: 14,
@@ -512,12 +552,14 @@ function addData() {
             day: 15,
             month: 6,
             name: "Día Del Patín (programa Distrito: Casco Antiguo)",
-            sportcenter: "",
+            sportcenter: "CD Arjona",
             schoolcenter: "",
             activity: "Skate",
             lengthactivity: 5,
             totaldistance: 20,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.390055,
+            longitude: -6.004180
         },
         {
             id: 15,
@@ -525,12 +567,14 @@ function addData() {
             day: 23,
             month: 6,
             name: "Campeonato De España De Remo: Cadete, Juvenil Y Senior",
-            sportcenter: "",
+            sportcenter: "CEAR Isla de la Cartuja",
             schoolcenter: "",
             activity: "Remo",
             lengthactivity: 12,
             totaldistance: 30,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.410954,
+            longitude: -5.993353
         },
         {
             id: 16,
@@ -542,8 +586,10 @@ function addData() {
             schoolcenter: "",
             activity: "Natación",
             lengthactivity: 10,
-            totaldistance:  0,
-            inscriptionprice: 0
+            totaldistance: 0,
+            inscriptionprice: 0,
+            latitude: 37.369310,
+            longitude: -5.973603
         },
         {
             id: 17,
@@ -554,9 +600,11 @@ function addData() {
             sportcenter: "",
             schoolcenter: "",
             activity: "Acuática",
-            lengthactivity: 5,
+            lengthactivity: 5.6,
             totaldistance: 20,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.386471,
+            longitude: -6.002250
         },
         {
             id: 18,
@@ -569,20 +617,24 @@ function addData() {
             activity: "Fútbol",
             lengthactivity: 3,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.352618,
+            longitude: -5.947605
         },
         {
             id: 19,
             year: 2019,
             day: 7,
-            month:9 ,
+            month: 9,
             name: "Torneo Internacional de Petanca Ciudad de Sevilla",
             sportcenter: "Club de Petanca Pino Montano",
             schoolcenter: "",
             activity: "Otros",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.426656,
+            longitude: -5.964473
         },
         {
             id: 20,
@@ -590,12 +642,14 @@ function addData() {
             day: 15,
             month: 9,
             name: "ATP Challenger 'Copa Sevilla' de Tenis",
-            sportcenter: "",
+            sportcenter: "FA de Tenis",
             schoolcenter: "",
             activity: "Tenis",
             lengthactivity: 4,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.396693,
+            longitude: -5.931145
         },
         {
             id: 21,
@@ -608,7 +662,9 @@ function addData() {
             activity: "Equina",
             lengthactivity: 10,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.418637,
+            longitude: -5.995275
         },
         {
             id: 22,
@@ -621,7 +677,9 @@ function addData() {
             activity: "Atletismo",
             lengthactivity: 2,
             totaldistance: 8.5,
-            inscriptionprice:0
+            inscriptionprice: 0,
+            latitude: 37.375557,
+            longitude: -5.991502
         },
         {
             id: 23,
@@ -634,7 +692,9 @@ function addData() {
             activity: "Arte marcial",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.379310,
+            longitude: -5.945320
         },
         {
             id: 24,
@@ -642,12 +702,14 @@ function addData() {
             day: 28,
             month: 9,
             name: "Ascenso a Vela del Guadalquivir",
-            sportcenter: "",
+            sportcenter: "CEAR Isla de la Cartuja",
             schoolcenter: "",
             activity: "Acuática",
             lengthactivity: 8,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.410954,
+            longitude: -5.993353
         },
         {
             id: 25,
@@ -660,7 +722,9 @@ function addData() {
             activity: "Escolar",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.373622,
+            longitude: -6.005720
         },
         {
             id: 26,
@@ -673,8 +737,11 @@ function addData() {
             activity: "Atletismo",
             lengthactivity: 4,
             totaldistance: 6,
-            inscriptionprice: 0
-        },
+            inscriptionprice: 0,
+            latitude: 37.374946,
+            longitude: -5.988715
+        }
+        ,
         {
             id: 27,
             year: 2019,
@@ -686,7 +753,9 @@ function addData() {
             activity: "Otros",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.411110,
+            longitude: -5.963570
         },
         {
             id: 28,
@@ -699,7 +768,9 @@ function addData() {
             activity: "Atletismo",
             lengthactivity: 6,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.373622,
+            longitude: -6.005720
         },
         {
             id: 29,
@@ -707,12 +778,14 @@ function addData() {
             day: 13,
             month: 10,
             name: "Torneo Internacional Tenis Femenino WTA 'Memorial Nadia'",
-            sportcenter: "",
+            sportcenter: "FA Tenis",
             schoolcenter: "",
             activity: "Tenis",
             lengthactivity: 4,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.396693,
+            longitude: -5.931145
         },
         {
             id: 30,
@@ -720,12 +793,14 @@ function addData() {
             day: 9,
             month: 11,
             name: "Regata Sevilla - Betis de Remo",
-            sportcenter: "Guadalquivir",
+            sportcenter: "Puente del Alamillo",
             schoolcenter: "",
             activity: "Acuática",
             lengthactivity: 3,
             totaldistance: 15,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.413464,
+            longitude: -5.990773
         },
         {
             id: 31,
@@ -738,7 +813,9 @@ function addData() {
             activity: "Otros",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.379310,
+            longitude: -5.945320
         },
         {
             id: 32,
@@ -746,12 +823,14 @@ function addData() {
             day: 9,
             month: 11,
             name: "VII Doñana Trail Marathon",
-            sportcenter: "",
+            sportcenter: "Puerta de Jérez",
             schoolcenter: "",
             activity: "Atletismo",
             lengthactivity: 12,
             totaldistance: 71,
-            inscriptionprice: 48
+            inscriptionprice: 48,
+            latitude: 37.381998,
+            longitude: -5.994125
         },
         {
             id: 33,
@@ -759,12 +838,14 @@ function addData() {
             day: 17,
             month: 11,
             name: "Campeonato de Andalucía de Pádel de Selecciones por Provincias",
-            sportcenter: "",
+            sportcenter: "I.D. La Cartuja",
             schoolcenter: "",
             activity: "Pádel",
             lengthactivity: 10,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.420782,
+            longitude: -6.002996
         },
         {
             id: 34,
@@ -777,7 +858,9 @@ function addData() {
             activity: "Otros",
             lengthactivity: 5,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.345363,
+            longitude: -5.984980
         },
         {
             id: 35,
@@ -790,7 +873,9 @@ function addData() {
             activity: "Fútbol",
             lengthactivity: 10,
             totaldistance: 0,
-            inscriptionprice: 0
+            inscriptionprice: 0,
+            latitude: 37.396714,
+            longitude: -5.960599
         },
         {
             id: 36,
@@ -816,7 +901,9 @@ function addData() {
             activity: "Atletismo",
             lengthactivity: 3,
             totaldistance: 5,
-            inscriptionprice:0
+            inscriptionprice: 0,
+            latitude: 37.374946,
+            longitude: -5.988715
         },
         {
             id: 38,
@@ -829,7 +916,9 @@ function addData() {
             activity: "Acuática",
             lengthactivity: 2,
             totaldistance: 0,
-            inscriptionprice:0
+            inscriptionprice: 0,
+            latitude: 37.407737,
+            longitude: -5.973819
         },
         {
             id: 39,
@@ -842,8 +931,11 @@ function addData() {
             activity: "Acuática",
             lengthactivity: 2,
             totaldistance: 0,
-            inscriptionprice:0
-        },
+            inscriptionprice: 0,
+            latitude: 37.407737,
+            longitude: -5.973819
+        }
+        ,
         {
             id: 40,
             year: 2019,
@@ -855,20 +947,25 @@ function addData() {
             activity: "Baloncesto",
             lengthactivity: 2,
             totaldistance: 0,
-            inscriptionprice:0
-        },
+            inscriptionprice: 0,
+            latitude: 37.396714,
+            longitude: -5.960599
+        }
+        ,
         {
             id: 41,
             year: 2019,
             day: 10,
             month: 2,
-            name: "Carrera 'En Marcha por la Salud",
+            name: "Carrera En Marcha por la Salud",
             sportcenter: "",
             schoolcenter: "",
             activity: "Atletismo",
             lengthactivity: 4,
             totaldistance: 5,
-            inscriptionprice:0
+            inscriptionprice: 0,
+            latitude: 37.406714,
+            longitude: -5.986744
         },
         {
             id: 42,
@@ -881,20 +978,55 @@ function addData() {
             activity: "Atletismo",
             lengthactivity: 6,
             totaldistance: 43,
-            inscriptionprice:35
-        },
+            inscriptionprice: 35,
+            latitude: 37.375557,
+            longitude: -5.991502
+        }
+        ,
         {
             id: 43,
             year: 2019,
             day: 3,
             month: 3,
             name: "Duatlón de Sevilla",
-            sportcenter: "",
+            sportcenter: "Parque del Alamillo",
             schoolcenter: "",
             activity: "Atletismo",
             lengthactivity: 4,
             totaldistance: 20,
-            inscriptionprice:0
+            inscriptionprice: 0,
+            latitude: 37.418637,
+            longitude: -5.995275
+        },
+        {
+            id: 44,
+            year: 2019,
+            day: 22,
+            month: 5,
+            name: "I Jornada Naufit",
+            sportcenter: "Playa de la Caleta",
+            schoolcenter: "",
+            activity: "Acuática",
+            lengthactivity: 3,
+            totaldistance: 0,
+            inscriptionprice: 0,
+            latitude: 36.530556,
+            longitude: -6.305694
+        },
+        {
+            id: 45,
+            year: 2019,
+            day: 27,
+            month: 4,
+            name: "VII Trihércules Cádiz",
+            sportcenter: "Glorieta Ing. La Cierva",
+            schoolcenter: "",
+            activity: "Atletismo",
+            lengthactivity: 4,
+            totaldistance: 20,
+            inscriptionprice: 0,
+            latitude: 36.505845,
+            longitude: -6.277312
         }
     ], function () {
         r.sendStatus(201);

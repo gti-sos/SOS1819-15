@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="#!/ui/v1/sports-competitions/">Seville Sports Competitions APP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -23,9 +23,9 @@
                     <option value="4">Month</option>
                 </select>
                 <input class="form-control mr-sm-2" type="number" placeholder="Desde el mes" aria-label="fromMonth"
-                    ng-model="fromMonth">
+                       ng-model="fromMonth">
                 <input class="form-control mr-sm-2" type="number" placeholder="hasta el mes" aria-label="toMonth"
-                    ng-model="toMonth">
+                       ng-model="toMonth">
                 <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" ng-click="search()">Buscar</button>
             </form>
         </div>
@@ -35,187 +35,209 @@
     <div class="container">
         <table class="table">
             <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Año</th>
-                    <th>Día</th>
-                    <th>Mes</th>
-                    <th>Nombre</th>
-                    <th>Centro Deportivo</th>
-                    <th>Centro Escolar</th>
-                    <th>Actividad</th>
-                    <th>Duración Actividad</th>
-                    <th>Distancia total</th>
-                    <th>Precio Entrada</th>
-                    <th>Acción</th>
-                </tr>
+            <tr>
+                <th>Id</th>
+                <th>Año</th>
+                <th>Día</th>
+                <th>Mes</th>
+                <th>Nombre</th>
+                <th>Centro Deportivo</th>
+                <th>Centro Escolar</th>
+                <th>Actividad</th>
+                <th>Duración Actividad</th>
+                <th>Distancia total</th>
+                <th>Precio Entrada</th>
+                <th>Longitud</th>
+                <th>Latitud</th>
+                <th>Acción</th>
+            </tr>
             </thead>
             <tbody ng-repeat="comp in competitions">
-                <tr>
-                    <td>{{comp.id}}</td>
-                    <td>{{comp.year}}</td>
-                    <td>{{comp.day}}</td>
-                    <td>{{comp.month}}</td>
-                    <td>{{comp.name}}</td>
-                    <td>{{comp.sportcenter}}</td>
-                    <td>{{comp.schoolcenter}}</td>
-                    <td>{{comp.activity}}</td>
-                    <td>{{comp.lengthactivity}}</td>
-                    <td>{{comp.totaldistance}}</td>
-                    <td>{{comp.inscriptionprice}}</td>
-                    <td>
-                        <a href="#!/ui/v1/sports-competitions/edit/{{comp.id}}" id="idComp"><button type="button" class="btn btn-outline-primary"
+            <tr>
+                <td>{{comp.id}}</td>
+                <td>{{comp.year}}</td>
+                <td>{{comp.day}}</td>
+                <td>{{comp.month}}</td>
+                <td>{{comp.name}}</td>
+                <td>{{comp.sportcenter}}</td>
+                <td>{{comp.schoolcenter}}</td>
+                <td>{{comp.activity}}</td>
+                <td>{{comp.lengthactivity}}</td>
+                <td>{{comp.totaldistance}}</td>
+                <td>{{comp.inscriptionprice}}</td>
+                <td>{{comp.latitude}}</td>
+                <td>{{comp.longitude}}</td>
+                <td>
+                    <a href="#!/ui/v1/sports-competitions/edit/{{comp.id}}" id="idComp">
+                        <button type="button" class="btn btn-outline-primary"
                                 data-toggle="collapse" data-target="#collapse{{comp.id}}"
-                                ng-click="showEdit(comp.id, comp.year, comp.day, comp.month, comp.name, comp.sportcenter, comp.schoolcenter, comp.activity, comp.lengthactivity, comp.totaldistance, comp.inscriptionprice)">Modificar</button>
-                        </a>
-                        <button class="btn btn-danger btn-eliminar" ng-click="delCompetition(comp.id)">Eliminar</button>
-                    </td>
-                </tr>
+                                ng-click="showEdit(comp.id, comp.year, comp.day, comp.month, comp.name, comp.sportcenter, comp.schoolcenter, comp.activity, comp.lengthactivity, comp.totaldistance, comp.inscriptionprice,comp.latitude,comp.longitude)">
+                            Modificar
+                        </button>
+                    </a>
+                    <button class="btn btn-danger btn-eliminar" ng-click="delCompetition(comp.id)">Eliminar</button>
+                </td>
+            </tr>
             </tbody>
             <tbody class="fade" ng-class="{'d-none':showInfoNone,'show': showInfoComp}">
-                <tr>
-                    <td colspan="13">
-                        <div class="alert alert-info" role="alert">
-                            <div class="text-right">
-                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
-                            </div>
-                            <div class="text-center">
-                                <span class="font-weight-bold">No se encuentran competiciones.</span>
-                            </div>
+            <tr>
+                <td colspan="13">
+                    <div class="alert alert-info" role="alert">
+                        <div class="text-right">
+                            <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
                         </div>
-                    </td>
-                </tr>
+                        <div class="text-center">
+                            <span class="font-weight-bold">No se encuentran competiciones.</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
             </tbody>
             <tfoot>
-                <tr>
-                    <td colspan="13">
-                        <ul class="pagination text-center form-actions">
-                            <input autocomplete="off" type="number" value="10" class="form-control" ng-model="limit" />
-                            <button type="button" class="btn btn-outline-info"
-                                ng-click="pagination('clear')">Limpiar</button>
-                            <button type="button" class="btn btn-outline-primary"
-                                ng-click="pagination('back')">&larr;</button>
-                            <button type="button" class="btn btn-outline-secondary" ng-click="pagination(0)">1</button>
-                            <button type="button" class="btn btn-outline-secondary" ng-click="pagination(1)">2</button>
-                            <button type="button" class="btn btn-outline-secondary" ng-click="pagination(2)">3</button>
-                            <button type="button" class="btn btn-outline-secondary" ng-click="pagination(3)">4</button>
-                            <button type="button" class="btn btn-outline-primary"
-                                ng-click="pagination('forward')">&rarr;</button>
-                        </ul>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="13">
+            <tr>
+                <td colspan="13">
+                    <ul class="pagination text-center form-actions">
+                        <input autocomplete="off" type="number" value="10" class="form-control" ng-model="limit"/>
+                        <button type="button" class="btn btn-outline-info"
+                                ng-click="pagination('clear')">Limpiar
+                        </button>
+                        <button type="button" class="btn btn-outline-primary"
+                                ng-click="pagination('back')">&larr;
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="pagination(0)">1</button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="pagination(1)">2</button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="pagination(2)">3</button>
+                        <button type="button" class="btn btn-outline-secondary" ng-click="pagination(3)">4</button>
+                        <button type="button" class="btn btn-outline-primary"
+                                ng-click="pagination('forward')">&rarr;
+                        </button>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="13">
 
-                        <div class="alert alert-info fade" role="alert"
-                            ng-class="{'d-none':showAlertInfoNone,'show': showAlertInfo}">
-                            <div class="text-right">
-                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
-                            </div>
-                            <div class="text-center">
-                                <span class="font-weight-bold">{{msgInfo}}</span>
-                            </div>
+                    <div class="alert alert-info fade" role="alert"
+                         ng-class="{'d-none':showAlertInfoNone,'show': showAlertInfo}">
+                        <div class="text-right">
+                            <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
                         </div>
+                        <div class="text-center">
+                            <span class="font-weight-bold">{{msgInfo}}</span>
+                        </div>
+                    </div>
 
-                        <div class="alert alert-danger fade" role="alert"
-                            ng-class="{'d-none':showAlertErrorNone,'show': showAlertError}">
-                            <div class="text-right">
-                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
-                            </div>
-                            <div class="text-center">
-                                <span class="font-weight-bold">{{msgError}}</span>
-                            </div>
+                    <div class="alert alert-danger fade" role="alert"
+                         ng-class="{'d-none':showAlertErrorNone,'show': showAlertError}">
+                        <div class="text-right">
+                            <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
                         </div>
+                        <div class="text-center">
+                            <span class="font-weight-bold">{{msgError}}</span>
+                        </div>
+                    </div>
 
-                        <div class="alert alert-warning fade" role="alert"
-                            ng-class="{'d-none':showAlertWarningNone,'show': showAlertWarning}">
-                            <div class="text-right">
-                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
-                            </div>
-                            <div class="text-center">
-                                <span class="font-weight-bold">{{msgWarning}}</span>
-                            </div>
+                    <div class="alert alert-warning fade" role="alert"
+                         ng-class="{'d-none':showAlertWarningNone,'show': showAlertWarning}">
+                        <div class="text-right">
+                            <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
                         </div>
+                        <div class="text-center">
+                            <span class="font-weight-bold">{{msgWarning}}</span>
+                        </div>
+                    </div>
 
-                        <div class="alert alert-success fade" role="alert"
-                            ng-class="{'d-none':showAlertSuccessNone,'show': showAlertSuccess}">
-                            <div class="text-right">
-                                <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
-                            </div>
-                            <div class="text-center">
-                                <span class="font-weight-bold alert-msg">{{msgSuccess}}</span>
-                            </div>
+                    <div class="alert alert-success fade" role="alert"
+                         ng-class="{'d-none':showAlertSuccessNone,'show': showAlertSuccess}">
+                        <div class="text-right">
+                            <button class="btn btn btn-outline-secondary right" ng-click="clearAlerts()">X</button>
                         </div>
+                        <div class="text-center">
+                            <span class="font-weight-bold alert-msg">{{msgSuccess}}</span>
+                        </div>
+                    </div>
 
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">ID</span>
-                            </div>
-                            <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.id"
-                                placeholder="999" />
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Año</span>
-                            </div>
-                            <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.year"
-                                placeholder="2019" />
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Día</span>
-                            </div>
-                            <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.day"
-                                placeholder="1" />
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Mes</span>
-                            </div>
-                            <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.month"
-                                placeholder="1" />
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">ID</span>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Nombre</span>
-                            </div>
-                            <input autocomplete="off" type="text" value="" class="form-control"
-                                ng-model="newCompetition.name" placeholder="Nombre" />
+                        <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.id"
+                               placeholder="999"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Año</span>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Centro Deportivo</span>
-                            </div>
-                            <input autocomplete="off" type="text" value="" class="form-control"
-                                ng-model="newCompetition.sportcenter" placeholder="Centro ejemplo" />
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Centro Educativo</span>
-                            </div>
-                            <input autocomplete="off" type="text" value="" class="form-control"
-                                ng-model="newCompetition.schoolcenter" placeholder="Centro ejemplo" />
+                        <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.year"
+                               placeholder="2019"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Día</span>
                         </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Actividad</span>
-                            </div>
-                            <input autocomplete="off" value="" type="text" class="form-control"
-                                ng-model="newCompetition.activity" placeholder="Deporte" />
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Duración de la actividad</span>
-                            </div>
-                            <input autocomplete="off" type="number" class="form-control"
-                                ng-model="newCompetition.lengthactivity" placeholder="0" />
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Distancia Total</span>
-                            </div>
-                            <input autocomplete="off" type="number" class="form-control"
-                                ng-model="newCompetition.totaldistance" placeholder="0" />
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">Precio entrada</span>
-                            </div>
-                            <input autocomplete="off" type="number" value="" class="form-control"
-                                ng-model="newCompetition.inscriptionprice" placeholder="0" />
+                        <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.day"
+                               placeholder="1"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Mes</span>
                         </div>
-                        <div class="input-group mb-3 float-left text-center">
-                            <button class="btn btn-primary addCompetition" ng-click="addCompetition()">Añadir nueva</button>
+                        <input autocomplete="off" type="number" class="form-control" ng-model="newCompetition.month"
+                               placeholder="1"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Nombre</span>
                         </div>
+                        <input autocomplete="off" type="text" value="" class="form-control"
+                               ng-model="newCompetition.name" placeholder="Nombre"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Centro Deportivo</span>
+                        </div>
+                        <input autocomplete="off" type="text" value="" class="form-control"
+                               ng-model="newCompetition.sportcenter" placeholder="Centro ejemplo"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Centro Educativo</span>
+                        </div>
+                        <input autocomplete="off" type="text" value="" class="form-control"
+                               ng-model="newCompetition.schoolcenter" placeholder="Centro ejemplo"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Actividad</span>
+                        </div>
+                        <input autocomplete="off" value="" type="text" class="form-control"
+                               ng-model="newCompetition.activity" placeholder="Deporte"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Duración de la actividad</span>
+                        </div>
+                        <input autocomplete="off" type="number" class="form-control"
+                               ng-model="newCompetition.lengthactivity" placeholder="0"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Distancia Total</span>
+                        </div>
+                        <input autocomplete="off" type="number" class="form-control"
+                               ng-model="newCompetition.totaldistance" placeholder="0"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Precio entrada</span>
+                        </div>
+                        <input autocomplete="off" type="number" value="" class="form-control"
+                               ng-model="newCompetition.inscriptionprice" placeholder="0"/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Latitud</span>
+                        </div>
+                        <input autocomplete="off" value="" type="number" class="form-control"
+                               ng-model="newCompetition.latitude" placeholder="1.1"/>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Longitud</span>
+                        </div>
+                        <input autocomplete="off" type="number" class="form-control"
+                               ng-model="newCompetition.longitude" placeholder="0"/>
+                    </div>
+                    <div class="input-group mb-3 float-left text-center">
+                        <button class="btn btn-primary addCompetition" ng-click="addCompetition()">Añadir nueva</button>
+                    </div>
 
-                    </td>
-                </tr>
+                </td>
+            </tr>
             </tfoot>
         </table>
         <div class="input-group mb-3">
