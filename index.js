@@ -28,6 +28,9 @@ sportsAPI.sportsCentersSecure(app, BASE_PATH);
 sportsAPI.sportsCompetitionsv2(app, BASE_PATH);
 sportsAPI.sportsCompetitionsSecurev2(app, BASE_PATH);
 
+sportsAPI.educationsCentersv2(app, BASE_PATH);
+sportsAPI.educationsCentersSecurev2(app, BASE_PATH);
+
 app.use("/", express.static(__dirname + "/public"));
 /*
 /* MongoDB connections
