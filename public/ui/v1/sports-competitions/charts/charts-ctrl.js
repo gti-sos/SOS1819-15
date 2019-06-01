@@ -3,7 +3,7 @@ angular
     .controller("ChartsCtrlSportsCompetitions", function ($scope, $http) {
         console.log("ChartsCtrl loaded.");
         var API = "/api/v2/sports-competitions";
-
+        var externalAPIg06 = "https://sos1819-06.herokuapp.com/api/v1/transfer-stats/";
         initializeApp();
 
         function initializeApp() {
@@ -62,11 +62,10 @@ angular
                 [['Latitude', 'Longitude'], 'Competición', 'Fecha']
             ];
             $scope.competitions.forEach(function (competition) {
-                [[41.151636,-8.569336,0,'tooltip']]
                 geoChartData.push([
                     competition.latitude,
                     competition.longitude,
-                    competition.name+" "+competition.day+"/"+competition.month+"/"+competition.year
+                    competition.name + " " + competition.day + "/" + competition.month + "/" + competition.year
                 ]);
             });
             loadGeoChart(geoChartData);
@@ -74,35 +73,32 @@ angular
 
         function loadGeoChart(geoData) {
             console.log("Drawing Google's geoChart.");
-            google.charts.setOnLoadCallback(drawMarkersMap);
+            google.charts.load('current', {
+                'packages': ['geochart'],
+                // Note: you will need to get a mapsApiKey for your project.
+                // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+                'mapsApiKey': 'AIzaSyAA0viQhdEMAJcfUYG_mtUB6ke8Rs6XjyM'
+            });
+            google.charts.setOnLoadCallback(drawRegionsMap);
 
-            function drawMarkersMap() {
-                google.charts.load('current', {
-                    'packages':['geochart'],
-                    // Note: you will need to get a mapsApiKey for your project.
-                    // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-                    'mapsApiKey': 'AIzaSyAA0viQhdEMAJcfUYG_mtUB6ke8Rs6XjyM'
+            function drawRegionsMap() {
+                var data = google.visualization.arrayToDataTable(geoData);
+                var options = {
+                    region: "ES",
+                    displayMode: "markers",
+                    sizeAxis: {maxValue: 0},
+                    resolution: "provinces",
+                    backgroundColor: '#80b3ff',
+                    datalessRegionColor: '#996633',
+                    defaultColor: '#f5f5f5',
+                };
+                var chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
+                $("#geo_chart_div").css("zoom", 1);
+                google.visualization.events.addListener(chart, 'ready', function () {
+                    $("#geo_chart_div").css("zoom", 1.0);
                 });
-                google.charts.setOnLoadCallback(drawRegionsMap);
-
-                function drawRegionsMap() {
-                    var data = google.visualization.arrayToDataTable(geoData);
-                    var options = {
-                        region:"ES",
-                        displayMode: "markers",
-                        sizeAxis: { maxValue: 0 },
-                        resolution:"provinces",
-                        backgroundColor: '#80b3ff',
-                        datalessRegionColor: '#996633',
-                        defaultColor: '#f5f5f5',
-                    };
-                    var chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
-                    $("#geo_chart_div").css("zoom",1);
-                    google.visualization.events.addListener(chart, 'ready', function() { $("#geo_chart_div").css("zoom",1.0); });
-                    chart.draw(data, options);
-                }
-
-            };
+                chart.draw(data, options);
+            }
         }
 
         // 3rd Chart: areaChart through Echart.
@@ -132,29 +128,144 @@ angular
                     return a[0] - b[0];
                 });
             chartAreaData.splice(0, 0, ['Month', 'Scholar', 'General']);
-            //console.log(chartAreaData);
-            loadAreaChart(chartAreaData);
+
+            var scholarData = [];
+            var generalData = [];
+            chartAreaData.forEach(function (data) {
+                scholarData.push(data[1]);
+                generalData.push(data[2]);
+            });
+            loadAreaChart(scholarData,generalData);
         }
 
-        function loadAreaChart(chartAreaData) {
+        function loadAreaChart(chartAreaDataScholar, chartAreaDataGeneral) {
             console.log("Drawing Area Chart");
-            google.charts.load('current', {'packages': ['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable(chartAreaData);
-
-                var options = {
-                    title: 'Activities organized by month and activity type.',
-                    hAxis: {title: 'Month', titleTextStyle: {color: '#333'}},
-                    vAxis: {minValue: 0}
-                };
-
-                var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-                chart.draw(data, options);
-            }
+            option = {
+                title: {
+                    text: 'Activities by month and type.'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                legend: {
+                    data: ['Escolar', 'General']
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: [1,2,3,4,5,6,7,8,9,10,11,12]
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: 'Escolar',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        data: chartAreaDataScholar
+                    },
+                    {
+                        name: 'General',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        data: chartAreaDataGeneral
+                    }
+                ]
+            };
+            var myChart = echarts.init(document.getElementById('areaChartContainer'));
+            myChart.setOption(option);
         }
 
+        function apiG06Charts(){
+            Highcharts.chart('highChartBar', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Historic World Population by Region'
+                },
+                subtitle: {
+                    text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
+                },
+                xAxis: {
+                    categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Population (millions)',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' millions'
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Year 1800',
+                    data: [107, 31, 635, 203, 2]
+                }, {
+                    name: 'Year 1900',
+                    data: [133, 156, 947, 408, 6]
+                }, {
+                    name: 'Year 2000',
+                    data: [814, 841, 3714, 727, 31]
+                }, {
+                    name: 'Year 2016',
+                    data: [1216, 1001, 4436, 738, 40]
+                }]
+            });
+        }
 
         function refresh(limit, offset) {
             var url = API;
@@ -162,8 +273,16 @@ angular
             $http.get(url).then(function (response) {
                 $scope.competitions = response.data;
                 createPieDataChart();
-                createAreaDataChart();
                 loadGeoChartData();
+                createAreaDataChart();
+            }, function (response) {
+                console.log("Data received: " + JSON.stringify(response.data, null, 2));
+            });
+
+            console.log("Requesting competitions to <" + externalAPIg06 + ">");
+            $http.get(externalAPIg06).then(function (response) {
+                $scope.transfers = response.data;
+                console.log($scope.transfers);
             }, function (response) {
                 console.log("Data received: " + JSON.stringify(response.data, null, 2));
             });
