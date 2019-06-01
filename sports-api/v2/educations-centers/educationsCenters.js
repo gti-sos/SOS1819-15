@@ -2,6 +2,19 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://sos:sos@sos1819-15dro-hqcpp.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, {useNewUrlParser: true});
 
+var cors = require("cors");
+var whitelist = ['https://sos1819-01.herokuapp.com/#!/', 'https://sos1819-12.herokuapp.com/#!/'];
+var corsOptionsDelegate = function (req, callback) {
+    var corsOptions;
+    if (whitelist.indexOf(req.header('Origin')) !== -1) {
+        corsOptions = {origin: true} // reflect (enable) the requested origin in the CORS response
+    } else {
+        corsOptions = {origin: false} // disable CORS for this request
+    }
+    callback(null, corsOptions) // callback expects two parameters: error and options
+};
+
+
 var educationsCenters = [];
 
 client.connect(err => {
@@ -14,7 +27,7 @@ module.exports = function (app, BASE_PATH) {
     var path;
 
     path = BASE_PATH + "/educations-centers/loadInitialData";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         educationsCenters.find().toArray((err, contactsArray) => {
             if (contactsArray.length > 0) {
                 res.sendStatus(409);
@@ -25,7 +38,7 @@ module.exports = function (app, BASE_PATH) {
     });
 
     path = BASE_PATH + "/educations-centers/docs";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
         res.redirect('https://documenter.getpostman.com/view/6901186/S1LyUTGF?version=latest');
     });
 
@@ -42,6 +55,7 @@ module.exports = function (app, BASE_PATH) {
         let lon = req.query.lon;
         let sports_education = req.query.sports_education;
         let monthStart = req.query.monthStart;
+        let yearStart = req.query.yearStart;
 
         let limit = parseInt(req.query.limit, 10);
         let offset = parseInt(req.query.offset, 10);
@@ -80,6 +94,9 @@ module.exports = function (app, BASE_PATH) {
         if (typeof monthStart !== 'undefined') {
             myquery.monthStart = parseInt(monthStart);
         }
+        if (typeof yearStart !== 'undefined') {
+            myquery.yearStart = parseInt(yearStart);
+        }
 
         if (typeof limit === 'undefined') {
             limit = 10000;
@@ -100,7 +117,7 @@ module.exports = function (app, BASE_PATH) {
     });
 
     path = BASE_PATH + "/educations-centers";
-    app.post(path, (req, res) => {
+    app.post(path, cors(corsOptionsDelegate), (req, res) => {
 
         let newEducationCenter = req.body;
         let id = parseInt(newEducationCenter.id, 10);
@@ -114,7 +131,7 @@ module.exports = function (app, BASE_PATH) {
 
             if (contactsArray.length == 0) {
                 educationsCenters.insertOne(newEducationCenter, function (error, response) {
-                    if(error) {
+                    if (error) {
                         res.sendStatus(409);
                     } else {
                         res.sendStatus(201);
@@ -130,9 +147,9 @@ module.exports = function (app, BASE_PATH) {
     });
 
     path = BASE_PATH + "/educations-centers";
-    app.delete(path, (req, res) => {
+    app.delete(path, cors(corsOptionsDelegate), (req, res) => {
         educationsCenters.deleteMany(function (error, response) {
-            if(error) {
+            if (error) {
                 res.sendStatus(409);
             } else {
                 res.sendStatus(200);
@@ -141,7 +158,7 @@ module.exports = function (app, BASE_PATH) {
     });
 
     path = BASE_PATH + "/educations-centers/:id";
-    app.get(path, (req, res) => {
+    app.get(path, cors(corsOptionsDelegate), (req, res) => {
 
         let id = req.params.id;
 
@@ -157,7 +174,7 @@ module.exports = function (app, BASE_PATH) {
     });
 
     path = BASE_PATH + "/educations-centers/:id";
-    app.put(path, (req, res) => {
+    app.put(path, cors(corsOptionsDelegate), (req, res) => {
 
         let id = req.params.id;
         let updatedCenters = req.body;
@@ -188,7 +205,7 @@ module.exports = function (app, BASE_PATH) {
     });
 
     path = BASE_PATH + "/educations-centers/:id";
-    app.delete(path, (req, res) => {
+    app.delete(path, cors(corsOptionsDelegate), (req, res) => {
 
         let id = req.params.id;
 
@@ -214,12 +231,12 @@ module.exports = function (app, BASE_PATH) {
 
 
     path = BASE_PATH + "/educations-centers/:id";
-    app.post(path, (req, res) => {
+    app.post(path, cors(corsOptionsDelegate), (req, res) => {
         res.sendStatus(405);
     });
 
     path = BASE_PATH + "/educations-centers";
-    app.put(path, (req, res) => {
+    app.put(path, cors(corsOptionsDelegate), (req, res) => {
         res.sendStatus(405);
     });
 };
@@ -698,7 +715,7 @@ function addData(res) {
             , monthStart: 3
             , yearStart: 1965
         }
-    ],function(err,docsInserted){
+    ], function (err, docsInserted) {
         res.sendStatus(201);
     });
 }

@@ -3,7 +3,7 @@ angular
     .controller("ChartCtrlEducations", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function ($scope, $http, $routeParams, $location, $rootScope) {
         // Set up the chart
 
-        $scope.url = "/api/v1/educations-centers";
+        $scope.url = "/api/v2/educations-centers";
         refresh();
 
         function refresh() {
