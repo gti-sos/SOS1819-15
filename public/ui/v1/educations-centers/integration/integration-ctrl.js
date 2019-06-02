@@ -69,7 +69,7 @@ angular
                     getPolice(response)
                 });
 
-                $http.get("http://api.citybik.es/v2/networks/sevici").then(function (response) {
+                $http.get("https://api.citybik.es/v2/networks/sevici").then(function (response) {
                     getSevici(response)
                 });
 
