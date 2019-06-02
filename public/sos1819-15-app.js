@@ -37,6 +37,10 @@ angular
                 controller: "ChartCtrlEducations" ,
                 templateUrl: "ui/v1/educations-centers/chart/chart.html"
             })
+            .when("/ui/v1/educations-centers/integration", {
+                controller: "IntegrationCtrlEducations" ,
+                templateUrl: "ui/v1/educations-centers/integration/integration.html"
+            })
             ;
     });
 console.log("SOS1819-15App initialized!");

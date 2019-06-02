@@ -6,7 +6,7 @@ angular
         var id_route = $routeParams.id;
 
 
-        $scope.url = "/api/v1/educations-centers";
+        $scope.url = "/api/v2/educations-centers";
         $scope.success = false;
         $scope.showError = false;
         $scope.numPaginas = 1;
@@ -53,6 +53,7 @@ angular
                 $scope.lon_edit = response.data.lon;
                 $scope.sports_education_edit = response.data.sports_education + "";
                 $scope.monthStart_edit = response.data.monthStart + "";
+                $scope.yearStart_edit = response.data.yearStart + "";
                 $scope.dataResponse = res;
                 $scope.code = response.status;
             }, function (response) {
@@ -61,7 +62,7 @@ angular
         };
 
 
-        $scope.sendPut = function (id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart) {
+        $scope.sendPut = function (id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart, yearStart) {
             if (typeof id !== 'undefined'
                 && typeof country !== 'undefined'
                 && typeof center !== 'undefined'
@@ -73,6 +74,7 @@ angular
                 && typeof lat !== 'undefined'
                 && typeof lon !== 'undefined'
                 && typeof sports_education !== 'undefined'
+                && typeof yearStart !== 'undefined'
                 && typeof monthStart !== 'undefined') ;
 
             var data = {
@@ -87,7 +89,8 @@ angular
                 lat: parseFloat(lat),
                 lon: parseFloat(lon),
                 sports_education: parseInt(sports_education),
-                monthStart: parseInt(monthStart)
+                monthStart: parseInt(monthStart),
+                yearStart: parseInt(yearStart)
             };
             console.log($scope.url);
             console.log(data);

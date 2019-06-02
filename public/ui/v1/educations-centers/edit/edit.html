@@ -95,6 +95,11 @@
                 </div>
             </div>
 
+            <div class="col-md-4 mb-2">
+                <label for="Lon">Año de inicio</label>
+                <input id="yearStart_edit" class="form-control" type="text" placeholder="yearStart" ng-model="yearStart_edit">
+            </div>
+
         </div>
 
         <div class="row">
@@ -103,7 +108,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <button type="button" class="btn btn-primary btn-lg btn-block"
-                        ng-click="sendPut(id_edit, country_edit, center_edit, name_edit, ownership_edit, domicile_edit, locality_edit, phone_edit, lat_edit, lon_edit, sports_education_edit, monthStart_edit)"
+                        ng-click="sendPut(id_edit, country_edit, center_edit, name_edit, ownership_edit, domicile_edit, locality_edit, phone_edit, lat_edit, lon_edit, sports_education_edit, monthStart_edit, yearStart_edit)"
                         data-dismiss="modal">Guardar
                 </button>
             </div>

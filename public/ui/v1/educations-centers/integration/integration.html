@@ -1,0 +1,84 @@
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#!/ui/v1/educations-centers/">Centros educativos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div id="sos1"></div>
+
+<div id="container-pollution" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<canvas id="oilChart" width="600" height="400"></canvas>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Porcentaje Alcohol</th>
+        <th scope="col">Unidad de Amargor</th>
+        <th scope="col">Foto</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="factor in factors">
+        <th scope="row">{{ factor.id }}</th>
+        <td>{{factor.name}}</td>
+        <td>{{factor.abv}}</td>
+        <td>{{factor.ibu}}</td>
+        <td class="text-center"><img height="8%" class="img-responsive" src="{{factor.image_url}}"/></td>
+    </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Especie</th>
+        <th scope="col">Género</th>
+        <th scope="col">Foto</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="rick in ricks">
+        <th scope="row">{{ rick.id }}</th>
+        <td>{{rick.name}}</td>
+        <td>{{rick.species}}</td>
+        <td>{{rick.gender}}</td>
+        <td class="text-center"><img height="20%" class="img-responsive" src="{{rick.image}}"/></td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="map"></div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Bicis disponibles</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Sitios libres</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="sevici in sevicis">
+        <th scope="row">{{ sevici.id }}</th>
+        <td>{{sevici.free_bikes}}</td>
+        <td>{{sevici.name}}</td>
+        <td>{{sevici.empty_slots}}</td>
+    </tr>
+    </tbody>
+</table>
+

@@ -84,6 +84,7 @@
                         <option value="12">Diciembre</option>
                     </select>
                 </td>
+                <td><input class="form-control form-control-lg" type="text" placeholder="yearStart" ng-model="yearStart_edit"></td>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -111,6 +112,7 @@
         <th scope="col">Lon</th>
         <th scope="col">Educación deportiva</th>
         <th scope="col">Mes inicial</th>
+        <th scope="col">Año inicial</th>
         <th scope="col">Borrar</th>
     </tr>
     </thead>
@@ -148,9 +150,10 @@
                 <option value="12">Diciembre</option>
             </select>
         </td>
+        <td><input class="form-control form-control-lg" type="text" placeholder="yearStart" ng-model="yearStart"></td>
         <td>
             <button type="button" class="btn btn-outline-success boton-guardar"
-                    ng-click="sendPost(id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart)">Guardar</button>
+                    ng-click="sendPost(id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart, yearStart)">Guardar</button>
         </td>
     </tr>
     <tr ng-repeat="education in educations">
@@ -166,6 +169,7 @@
         <td>{{education.lon}}</td>
         <td>{{education.sports_education}}</td>
         <td>{{education.monthStart}}</td>
+        <td>{{education.yearStart}}</td>
         <td>
             <button type="button" class="btn btn-outline-danger borrar{{education.id}}" ng-click="sendDelOne(education.id)">Borrar</button>
         </td>

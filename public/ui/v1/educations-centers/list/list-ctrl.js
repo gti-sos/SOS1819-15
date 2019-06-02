@@ -2,7 +2,7 @@ angular.module("SOS1819-15App")
     .controller("ListCtrlEducations", function ($scope, $http, $rootScope) {
         console.log("Retrieving $scope");
 
-        $scope.url = "/api/v1/educations-centers";
+        $scope.url = "/api/v2/educations-centers";
         $scope.success = $rootScope.success;
         $scope.showError = $rootScope.showError;
         $scope.numPaginas = 1;
@@ -149,7 +149,7 @@ angular.module("SOS1819-15App")
 
         // POST sobre el conjunto
 
-        $scope.sendPost = function (id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart) {
+        $scope.sendPost = function (id, country, center, name, ownership, domicile, locality, phone, lat, lon, sports_education, monthStart, yearStart) {
             if (typeof id !== 'undefined'
                 && typeof country !== 'undefined'
                 && typeof center !== 'undefined'
@@ -161,6 +161,7 @@ angular.module("SOS1819-15App")
                 && typeof lat !== 'undefined'
                 && typeof lon !== 'undefined'
                 && typeof sports_education !== 'undefined'
+                && typeof yearStart !== 'undefined'
                 && typeof monthStart !== 'undefined') {
 
                 var data = {
@@ -175,7 +176,8 @@ angular.module("SOS1819-15App")
                     lat: parseFloat(lat),
                     lon: parseFloat(lon),
                     sports_education: parseInt(sports_education),
-                    monthStart: parseInt(monthStart)
+                    monthStart: parseInt(monthStart),
+                    yearStart: parseInt(yearStart)
                 };
                 console.log($scope.url);
                 console.log(data);
