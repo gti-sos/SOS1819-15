@@ -1,84 +1,81 @@
+<div id="main">
+    <h3>Plotly, comparación de aperturas de centros con desastres por años. API SOS 01</h3>
+    <div id="sos1"></div>
 
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#!/ui/v1/educations-centers/">Centros educativos</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
+    <h3>HighChart, polución percapita por país, destacando cada año. API SOS 12</h3>
+    <div id="container-pollution" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-            </ul>
-        </div>
-    </nav>
-</header>
+    <h3>Chart.js, Comparación del valor de las principales criptomonedas. Api externa 1</h3>
+    <canvas id="oilChart" width="600" height="400"></canvas>
 
-<div id="sos1"></div>
+    <h3>Lista de cervezas. Api externa 2</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Porcentaje Alcohol</th>
+            <th scope="col">Unidad de Amargor</th>
+            <th scope="col">Foto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="factor in factors">
+            <th scope="row">{{ factor.id }}</th>
+            <td>{{factor.name}}</td>
+            <td>{{factor.abv}}</td>
+            <td>{{factor.ibu}}</td>
+            <td class="text-center"><img height="8%" class="img-responsive" src="{{factor.image_url}}"/></td>
+        </tr>
+        </tbody>
+    </table>
 
-<div id="container-pollution" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <h3>Chart.js, Cantidad de pokemon por generación. Api externa 3</h3>
+    <canvas id="radar-chart" width="800" height="600"></canvas>
 
-<canvas id="oilChart" width="600" height="400"></canvas>
+    <h3>Lista de personajes de la serie Rick & Morty. Api externa 4</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Especie</th>
+            <th scope="col">Género</th>
+            <th scope="col">Foto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="rick in ricks">
+            <th scope="row">{{ rick.id }}</th>
+            <td>{{rick.name}}</td>
+            <td>{{rick.species}}</td>
+            <td>{{rick.gender}}</td>
+            <td class="text-center"><img height="20%" class="img-responsive" src="{{rick.image}}"/></td>
+        </tr>
+        </tbody>
+    </table>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Porcentaje Alcohol</th>
-        <th scope="col">Unidad de Amargor</th>
-        <th scope="col">Foto</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="factor in factors">
-        <th scope="row">{{ factor.id }}</th>
-        <td>{{factor.name}}</td>
-        <td>{{factor.abv}}</td>
-        <td>{{factor.ibu}}</td>
-        <td class="text-center"><img height="8%" class="img-responsive" src="{{factor.image_url}}"/></td>
-    </tr>
-    </tbody>
-</table>
+    <h3>Plotly, Mapa con delitos donde ha intervenido la unidad policial de "Avon and Somerset" durante Abril de 2018. Api externa 5</h3>
+    <div id="map"></div>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Especie</th>
-        <th scope="col">Género</th>
-        <th scope="col">Foto</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="rick in ricks">
-        <th scope="row">{{ rick.id }}</th>
-        <td>{{rick.name}}</td>
-        <td>{{rick.species}}</td>
-        <td>{{rick.gender}}</td>
-        <td class="text-center"><img height="20%" class="img-responsive" src="{{rick.image}}"/></td>
-    </tr>
-    </tbody>
-</table>
+    <h3>Lista con las 10 estaciones de Sevici las cuales tienen mas bicis disponibles. Api externa 6</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Bicis disponibles</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Sitios libres</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="sevici in sevicis">
+            <th scope="row">{{ sevici.id }}</th>
+            <td>{{sevici.free_bikes}}</td>
+            <td>{{sevici.name}}</td>
+            <td>{{sevici.empty_slots}}</td>
+        </tr>
+        </tbody>
+    </table>
 
-<div id="map"></div>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Bicis disponibles</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Sitios libres</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="sevici in sevicis">
-        <th scope="row">{{ sevici.id }}</th>
-        <td>{{sevici.free_bikes}}</td>
-        <td>{{sevici.name}}</td>
-        <td>{{sevici.empty_slots}}</td>
-    </tr>
-    </tbody>
-</table>
-
+</div>

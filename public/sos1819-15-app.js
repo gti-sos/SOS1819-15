@@ -33,7 +33,7 @@ angular
                 controller : "EditCtrlEducations" ,
                 templateUrl: "ui/v1/educations-centers/edit/edit.html"
             })
-            .when("/ui/v1/educations-centers/chart", {
+            .when("/ui/v1/educations-centers/analytics", {
                 controller: "ChartCtrlEducations" ,
                 templateUrl: "ui/v1/educations-centers/chart/chart.html"
             })

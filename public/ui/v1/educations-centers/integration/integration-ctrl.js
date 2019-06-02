@@ -41,6 +41,24 @@ angular
                     getNationalGrid(response)
                 });
 
+                $http.get("https://pokeapi.co/api/v2/generation/1").then(function (response1) {
+                    $http.get("https://pokeapi.co/api/v2/generation/2").then(function (response2) {
+                        $http.get("https://pokeapi.co/api/v2/generation/3").then(function (response3) {
+                            $http.get("https://pokeapi.co/api/v2/generation/4").then(function (response4) {
+                                $http.get("https://pokeapi.co/api/v2/generation/5").then(function (response5) {
+                                    getPokemon(
+                                        response1.data.pokemon_species.length,
+                                        response2.data.pokemon_species.length,
+                                        response3.data.pokemon_species.length,
+                                        response4.data.pokemon_species.length,
+                                        response5.data.pokemon_species.length
+                                        );
+                                });
+                            });
+                        });
+                    });
+                });
+
 
                 $http.get("https://rickandmortyapi.com/api/character/").then(function (response) {
                     console.log(response.data);
@@ -54,6 +72,8 @@ angular
                 $http.get("http://api.citybik.es/v2/networks/sevici").then(function (response) {
                     getSevici(response)
                 });
+
+
 
 
             }, function (response) {
@@ -241,11 +261,10 @@ angular
                         width: 1
                     }
                 },
-                name: 'europe data'
+                name: 'Delitos'
             }];
 
             var layout = {
-                title: 'Meteorite Landing Locations',
                 font: {
                     color: 'white'
                 },
@@ -268,8 +287,6 @@ angular
                     l: 20,
                     pad: 0
                 },
-                paper_bgcolor: '#191A1A',
-                plot_bgcolor: '#191A1A',
                 showlegend: true,
                 annotations: [{
                     x: 0,
@@ -303,6 +320,41 @@ angular
             var seviciTest = response.data.network.stations.sort(compare).slice(0, 10);
 
             $scope.sevicis = seviciTest
+
+        }
+
+        function getPokemon(poke1, poke2, poke3, poke4, poke5) {
+
+            console.log(poke1);
+            console.log(poke2);
+            console.log(poke3);
+            console.log(poke4);
+            console.log(poke5);
+
+            new Chart(document.getElementById("radar-chart"), {
+                type: 'radar',
+                data: {
+                    labels: ["Generación 1", "Generación 2", "Generación 3", "Generación 4", "Generación 5"],
+                    datasets: [
+                        {
+                            label: "Cantidad de Pokemon por generación",
+                            fill: true,
+                            backgroundColor: "rgba(179,181,198,0.2)",
+                            borderColor: "rgba(179,181,198,1)",
+                            pointBorderColor: "#fff",
+                            pointBackgroundColor: "rgba(179,181,198,1)",
+                            data: [poke1,poke2,poke3,poke4,poke5]
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Cantidad de Pokemon por generación'
+                    }
+                }
+            });
+
 
         }
 

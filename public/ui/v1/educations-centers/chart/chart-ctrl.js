@@ -117,7 +117,6 @@ angular
                 }];
 
                 var layout = {
-                    title: 'Meteorite Landing Locations',
                     font: {
                         color: 'white'
                     },

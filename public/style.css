@@ -1,6 +1,7 @@
-body.ng-scope {
-    margin-bottom: 60px;
-   /* margin-top: 90px;*/
+#main {
+    margin-top: 60px;
+    align-content: center;
+    text-align: center;
 }
 
 #container {
@@ -8,6 +9,11 @@ body.ng-scope {
     max-width: 800px;
     margin: 0 auto;
 }
+
 #container {
     height: 400px;
+}
+
+h3{
+    margin-top: 50px;
 }
