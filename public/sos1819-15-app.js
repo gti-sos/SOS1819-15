@@ -5,6 +5,16 @@ angular
             .when("/", {
                 templateUrl: "./index.html"
             })
+            .when("/integrations", {
+                templateUrl: "ui/v1/integrations.html"
+            })
+            .when("/analytics", {
+                controller: "AnalyticsCtrl" ,
+                templateUrl: "ui/v1/analytics.html"
+            })
+            .when("/about", {
+                templateUrl: "ui/v1/about.html"
+            })
             .when("/ui/v1/sports-competitions/", {
                 controller: "ListCtrlSportsCompetitions" ,
                 templateUrl: "ui/v1/sports-competitions/list/list.html"
@@ -13,9 +23,13 @@ angular
                 controller : "EditCtrlSportsCompetitions" ,
                 templateUrl: "ui/v1/sports-competitions/edit/edit.html"
             })
-            .when("/charts/v1/sports-competitions/", {
+            .when("/ui/v1/sports-competitions/analytics", {
                 controller: "ChartsCtrlSportsCompetitions" ,
                 templateUrl: "ui/v1/sports-competitions/charts/charts.html"
+            })
+            .when("/ui/v1/sports-competitions/integration", {
+                controller: "IntegrationCtrlCompetitions" ,
+                templateUrl: "ui/v1/sports-competitions/integration/integration.html"
             })
             .when("/ui/v1/sports-centers/", {
                 controller: "ListCtrlsportsCenters" ,

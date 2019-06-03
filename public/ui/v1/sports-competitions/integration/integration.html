@@ -1,0 +1,46 @@
+<div id="main">
+    <h3>Lista de transferencias. Api G6</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">País</th>
+            <th scope="col">€ ganados</th>
+            <th scope="col">€ Invertido</th>
+            <th scope="col">Temporada</th>
+            <th scope="col">Equipo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="trans in transfers">
+            <th scope="row">{{ trans.country }}</th>
+            <td>{{trans.moneyentered}}</td>
+            <td>{{trans.moneyspent}}</td>
+            <td>{{trans.season}}</td>
+            <td>{{trans.team}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Lista de desempleo juvenil. Api G12</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">País</th>
+            <th scope="col">Año</th>
+            <th scope="col">Tasa desempleo juvenil</th>
+            <th scope="col">de las cuales masculinas</th>
+            <th scope="col">de las cuales femeninas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="unemploy in unemploymentsStats">
+            <th scope="row">{{ unemploy.country }}</th>
+            <td>{{unemploy.year}}</td>
+            <td>{{unemploy.youth_unemployment}}</td>
+            <td>{{unemploy.youth_unemployment_man}}</td>
+            <td>{{unemploy.youth_unemployment_woman}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

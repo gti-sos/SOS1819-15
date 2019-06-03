@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#!/charts/v1/sports-competitions/">Seville Sports Competitions APP</a>
+        <a class="navbar-brand" href="#!/ui/v1/sports-competitions/analytics">Sports Competitions APP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,14 +21,17 @@
 <main role="main" class="flex-shrink-0">
     <div class="container">
         <h1>Implementación de mi API</h1>
+        <h2>Highcharts, PieChart.</h2>
+        <h3>Comparación de las distintas actividades según su tipo y duración.</h3>
         <div id="pieChartContainer" class="pieChartContainer" style="min-width: 300px;max-width: 800px;height: 500px;margin: 1em auto;"></div>
+        <h2>GoogleChart, GeoChart.</h2>
+        <h3>Muestreo en mapa de las distintas actividades.</h3>
         <div id="container" style="overflow:hidden;min-width: 500px;max-width: 800px;height: 500px;margin: 1em auto;">
             <div id="geo_chart_div"></div>
         </div>
+        <h2>EChart, AreaChart.</h2>
+        <h3>Exposición de actividades por meses, según si es escolar o no.</h3>
         <div id="areaChartContainer" class="areaChartContainer" style="min-width: 300px;max-width: 800px;height: 500px;margin: 1em auto;"></div>
-    </div>
-    <div class="container">
-        <div id="highChartBar" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
     </div>
 </main>
 <footer class="footer mt-auto py-3">

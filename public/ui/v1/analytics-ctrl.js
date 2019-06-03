@@ -1,6 +1,6 @@
 angular
     .module("SOS1819-15App")
-    .controller("ChartsCtrlSportsCompetitions", function ($scope, $http) {
+    .controller("AnalyticsCtrl", function ($scope, $http) {
         console.log("ChartsCtrl loaded.");
         var API = "/api/v2/sports-competitions";
         initializeApp();
