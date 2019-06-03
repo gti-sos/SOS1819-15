@@ -1,8 +1,10 @@
 angular
     .module("SOS1819-15App")
     .controller("AnalyticsCtrl", function ($scope, $http) {
-        console.log("ChartsCtrl loaded.");
-        var API = "/api/v2/sports-competitions";
+        console.log("AnalyticsCtrl loaded.");
+        var sportscompetitionsAPI = "/api/v2/sports-competitions";
+        var educenterAPI = "/api/v2/educations-centers";
+        var sportcenterAPI = "/api/v1/sports-centers";
         initializeApp();
 
         function initializeApp() {
@@ -267,16 +269,98 @@ angular
         }
 
         function refresh(limit, offset) {
-            var url = API;
-            console.log("Requesting competitions to <" + url + ">");
-            $http.get(url).then(function (response) {
+            console.log("Requesting competitions to <" + sportscompetitionsAPI + ">");
+            $http.get(sportscompetitionsAPI).then(function (response) {
                 $scope.competitions = response.data;
-                createPieDataChart();
-                loadGeoChartData();
-                createAreaDataChart();
+                //console.log($scope.competitions);
+                console.log("Requesting competitions to <" + educenterAPI + ">");
+                $http.get(educenterAPI).then(function (response) {
+                    $scope.centers = response.data;
+                    //console.log($scope.centers);
+                    console.log("Requesting competitions to <" + sportcenterAPI + ">");
+                    $http.get(sportcenterAPI).then(function (response) {
+                        $scope.sportcenter = response.data;
+                        //console.log($scope.sportcenter);
+                        var dataChar=[
+                            ['Location', 'Parent', 'Día', 'Mes', 'Año'],
+                            ['Global',null,0, 0, 0],
+                            ['Centro Educativo','Global', 0, 0, 0],
+                            ['Centro Deportivo','Global', 0, 0, 0],
+                            ['No catalogado','Global', 0, 0, 0],
+                        ];
+
+                        $scope.competitions.forEach(function (competition) {
+                            if (competition.activity==="Escolar"){
+                                var lugar = "";
+                                $scope.sportcenter.forEach(function (sprtcenter) {
+                                    if(sprtcenter.name.indexOf(competition.sportcenter) > -1) {
+                                        lugar=sprtcenter.name;
+                                    }
+                                });
+                                if (lugar ===""){
+                                    dataChar.push([
+                                        competition.name,
+                                        "Centro Educativo",
+                                        competition.day, competition.month,competition.year
+                                    ]);
+                                }else{
+                                    dataChar.push([
+                                        competition.name,
+                                        "No catalogado",
+                                        competition.day, competition.month,competition.year
+                                    ]);
+                                }
+                            }else{
+                                var lugar = "";
+                                $scope.centers.forEach(function (center) {
+                                    if(center.name.indexOf(competition.schoolcenter) > -1) {
+                                        lugar=center.name;
+                                    }
+                                });
+                                if (lugar ===""){
+                                    dataChar.push([
+                                        competition.name,
+                                        "Centro Deportivo",
+                                        competition.day, competition.month,competition.year
+                                    ]);
+                                }else{
+                                    dataChar.push([
+                                        competition.name,
+                                        "No catalogado",
+                                        competition.day, competition.month,competition.year
+                                    ]);
+                                }
+                            }
+                        });
+                        //console.log(dataChar);
+                        treeMap(dataChar);
+                    }, function (response) {
+                        console.log("Data received: " + JSON.stringify(response.data, null, 2));
+                    });
+                }, function (response) {
+                    console.log("Data received: " + JSON.stringify(response.data, null, 2));
+                });
             }, function (response) {
                 console.log("Data received: " + JSON.stringify(response.data, null, 2));
             });
+        }
+
+        function treeMap(dataChar) {
+            google.charts.load('current', {'packages':['treemap']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable(dataChar);
+                tree = new google.visualization.TreeMap(document.getElementById('tree_map'));
+                tree.draw(data, {
+                    minColor: '#f00',
+                    midColor: '#ddd',
+                    maxColor: '#0d0',
+                    headerHeight: 15,
+                    fontColor: 'black',
+                    showScale: true
+                });
+
+            }
         }
 
     });
