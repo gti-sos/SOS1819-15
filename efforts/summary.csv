@@ -1,0 +1,24 @@
+﻿Project,Client,Title,Duration
+SOS1819-15,,#1 Registrar información en el repositorio común de la asignatura,01:40:29
+SOS1819-15,,#10 Realizar una API REST sobre la fuente de datos,01:59:49
+SOS1819-15,,#11 Realizar prueba de la API REST de la fuente de datos usando POSTMAN,01:01:55
+SOS1819-15,,#12 Realizar API REST con todo los métodos de recursos,03:45:58
+SOS1819-15,,#14 API Rest,03:42:24
+SOS1819-15,,#15 Implementar búsquedas por todos los campos del recurso en la API,00:50:00
+SOS1819-15,,#16 No se debe recibir ni enviar la propiedad _id autogenerada por MongoDB.,00:25:10
+SOS1819-15,,#17 Integración de algún sistema de autenticación basado en JWT en el back-end,05:13:41
+SOS1819-15,,#18 Utilizar 3 widgets de bibliotecas distintos para representar los datos de la API,01:21:49
+SOS1819-15,,#19 Análisis de la información accesible mediante /#/!/integrations,00:18:52
+SOS1819-15,,#2 Implementar workspace en C9,00:33:56
+SOS1819-15,,"#20 Los enlaces a los vídeos de todos los componentes del grupo deben estar incluidos en una nueva vista de la aplicación de Heroku, accesible en http://sos1819-XX.herokuapp.com/#!/about.",00:03:16
+SOS1819-15,,#21 Cada grupo  debe tener una visualización integrada de todos los datos en un único widget accesible en la vista en http://sos1819-XX.herokuapp.com/#!/analytics,00:53:13
+SOS1819-15,,#3 Elaborar ficha del trabajo a partir de la plantilla,00:08:40
+SOS1819-15,,#4 Elaboracion documento Api Rest,02:54:52
+SOS1819-15,,#5 Actualizar ficha del trabajo a partir de la plantilla,01:05:09
+SOS1819-15,,#6 Actualizar ficha del trabajo a partir de la plantilla; Añadir Ejemplos,00:17:52
+SOS1819-15,,#7 Ejemplo de diseño API REST para fuente de datos,02:30:48
+SOS1819-15,,#8 Heroku,05:52:49
+SOS1819-15,,#9 Creación del documento de Google Docs explicando API,10:52:53
+SOS1819-15,,,00:00:28
+,,#1 Hacer L02,00:00:06
+,,,00:26:35
