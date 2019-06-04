@@ -3,7 +3,9 @@
     align-content: center;
     text-align: center;
 }
-
+body{
+    margin-top: 60px;
+}
 #container {
     min-width: 310px;
     max-width: 800px;
