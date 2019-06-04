@@ -28,3 +28,6 @@
     - [https://sos1819-15.herokuapp.com/#!/integrations](https://sos1819-15.herokuapp.com/#!/integrations) (Group integrations.)
 -   **About**:
     - [https://sos1819-15.herokuapp.com/#!/about](https://sos1819-15.herokuapp.com/#!/about)
+-   **Docker commands**:
+    - Deploy: docker pull danramirez/sos1819-15
+    - Run: docker run -p 8080:8080 -d danramirez/sos1819-15
