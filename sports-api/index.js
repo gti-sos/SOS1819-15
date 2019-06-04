@@ -32,4 +32,4 @@ module.exports = {
     educationsCentersSecurev2 : function(app, BASE_PATH){
         apiV2.educationsCentersSecure(app,BASE_PATH+"/v2");
     }
-}
+};

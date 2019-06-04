@@ -3,7 +3,6 @@ var sportsCompetitionsSecure =  require("./sports-competitions/sportsCompetition
 var educationsCenters =  require("./educations-centers/educationsCenters.js");
 var educationsCentersSecure =  require("./educations-centers/educationsCentersSecure.js");
 
-
 module.exports = {
     sportsCompetitions : function(app, BASE_PATH){
         sportsCompetitions(app,BASE_PATH);

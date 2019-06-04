@@ -15,9 +15,9 @@ var whitelist = ['https://sos1819-06.herokuapp.com/#!/', 'https://sos1819-12.her
 var corsOptionsDelegate = function (req, callback) {
     var corsOptions;
     if (whitelist.indexOf(req.header('Origin')) !== -1) {
-        corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+        corsOptions = {origin: true} // reflect (enable) the requested origin in the CORS response
     } else {
-        corsOptions = { origin: false } // disable CORS for this request
+        corsOptions = {origin: false} // disable CORS for this request
     }
     callback(null, corsOptions) // callback expects two parameters: error and options
 };
@@ -263,8 +263,22 @@ module.exports = function (app, BASE_PATH) {
         res.sendStatus(405);
     });
 
+    app.get("/auth0/thenoun/", cors(corsOptionsDelegate), (req, res) => {
+        var NounProject = require('the-noun-project'),
+            nounProject = new NounProject({
+                key: process.env.THE_NOUN_KEY,
+                secret: process.env.THE_NOUN_SECRET
+            });
+        nounProject.getIconsByTerm("sports", {limit: 5}, function (err, data) {
+            if (!err) {
+                console.log(data.icons);
+                res.send(data.icons);
+            }
+        });
+    });
+
     console.log("sports-competitions (v2) registered");
-}
+};
 
 function validation(newCompetitions) {
     let r = false;
@@ -391,7 +405,7 @@ function addData(r) {
                 name: "Campeonato de Andalucía de Natación de Aguas Abiertas",
                 sportcenter: "CEAR Isla de la Cartuja",
                 schoolcenter: "",
-                activity: "Natación",
+                activity: "Natacion",
                 lengthactivity: 10,
                 totaldistance: 12.5,
                 inscriptionprice: 0,
@@ -526,7 +540,7 @@ function addData(r) {
                 name: "Fiesta Del Agua (programa Distrito: Sur)",
                 sportcenter: "Piscina Tiro de Linea",
                 schoolcenter: "",
-                activity: "Natación",
+                activity: "Natacion",
                 lengthactivity: 10,
                 totaldistance: 0,
                 inscriptionprice: 0,
@@ -541,7 +555,7 @@ function addData(r) {
                 name: "Acuatlón Velá de Triana",
                 sportcenter: "",
                 schoolcenter: "",
-                activity: "Acuática",
+                activity: "Acuatica",
                 lengthactivity: 5.6,
                 totaldistance: 20,
                 inscriptionprice: 0,
@@ -556,7 +570,7 @@ function addData(r) {
                 name: "Copa del Mundo de Fútbol 7 para personas con discapacidad intelectual",
                 sportcenter: "C.D. Ramón Cisneros",
                 schoolcenter: "",
-                activity: "Fútbol",
+                activity: "Futbol",
                 lengthactivity: 3,
                 totaldistance: 0,
                 inscriptionprice: 0,
@@ -646,7 +660,7 @@ function addData(r) {
                 name: "Ascenso a Vela del Guadalquivir",
                 sportcenter: "CEAR Isla de la Cartuja",
                 schoolcenter: "",
-                activity: "Acuática",
+                activity: "Acuatica",
                 lengthactivity: 8,
                 totaldistance: 0,
                 inscriptionprice: 0,
@@ -737,7 +751,7 @@ function addData(r) {
                 name: "Regata Sevilla - Betis de Remo",
                 sportcenter: "Puente del Alamillo",
                 schoolcenter: "",
-                activity: "Acuática",
+                activity: "Acuatica",
                 lengthactivity: 3,
                 totaldistance: 15,
                 inscriptionprice: 0,
@@ -782,7 +796,7 @@ function addData(r) {
                 name: "Campeonato de Andalucía de Pádel de Selecciones por Provincias",
                 sportcenter: "I.D. La Cartuja",
                 schoolcenter: "",
-                activity: "Pádel",
+                activity: "Padel",
                 lengthactivity: 10,
                 totaldistance: 0,
                 inscriptionprice: 0,
@@ -812,7 +826,7 @@ function addData(r) {
                 name: "Festival de Fútbol 'Otras Capacidades'",
                 sportcenter: "C.D. San Pablo",
                 schoolcenter: "",
-                activity: "Fútbol",
+                activity: "Futbol",
                 lengthactivity: 10,
                 totaldistance: 0,
                 inscriptionprice: 0,
@@ -827,7 +841,7 @@ function addData(r) {
                 name: "Máster Absoluto y de Veteranos de Pádel",
                 sportcenter: "",
                 schoolcenter: "",
-                activity: "Pádel",
+                activity: "Padel",
                 lengthactivity: 10,
                 totaldistance: 0,
                 inscriptionprice: 0
@@ -855,7 +869,7 @@ function addData(r) {
                 name: "WATERPOLO - 9ª Jornada de la Liga Nacional de Primera División",
                 sportcenter: "C.D. Hytasa",
                 schoolcenter: "",
-                activity: "Acuática",
+                activity: "Acuatica",
                 lengthactivity: 2,
                 totaldistance: 0,
                 inscriptionprice: 0,
@@ -870,7 +884,7 @@ function addData(r) {
                 name: "11ª Jornada de la Liga Nacional de Primera División",
                 sportcenter: "C.D. Hytasa",
                 schoolcenter: "",
-                activity: "Acuática",
+                activity: "Acuatica",
                 lengthactivity: 2,
                 totaldistance: 0,
                 inscriptionprice: 0,
@@ -948,7 +962,7 @@ function addData(r) {
                 name: "I Jornada Naufit",
                 sportcenter: "Playa de la Caleta",
                 schoolcenter: "",
-                activity: "Acuática",
+                activity: "Acuatica",
                 lengthactivity: 3,
                 totaldistance: 0,
                 inscriptionprice: 0,

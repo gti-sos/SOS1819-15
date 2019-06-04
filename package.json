@@ -12,7 +12,10 @@
     "echarts": "^4.2.1",
     "express": "^4.16.4",
     "mongodb": "^3.2.3",
-    "request": "^2.88.0"
+    "oauth": "^0.9.15",
+    "request": "^2.88.0",
+    "simple-oauth2": "^2.2.1",
+    "the-noun-project": "^2.1.0"
   },
   "devDependencies": {},
   "scripts": {

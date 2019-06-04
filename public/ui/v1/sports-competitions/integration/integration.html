@@ -1,5 +1,5 @@
 <div id="main">
-    <h3>Lista de transferencias. Api G6</h3>
+    <h3>Lista de transferencias. Api 1: SOS G6</h3>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -20,8 +20,7 @@
         </tr>
         </tbody>
     </table>
-
-    <h3>Lista de desempleo juvenil. Api G12</h3>
+    <h3>Lista de desempleo juvenil. Api 2: SOS G12</h3>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -42,5 +41,49 @@
         </tr>
         </tbody>
     </table>
-
+    <h3>Reviews de películas por evaluación de público. API 3:  New York Times</h3>
+    <h4>Biblioteca GoogleCharts</h4>
+    <div id="bar_chart"></div>
+    <h3>Lista de VideoJuegos. API 4:  giantbomb</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Fecha lanzamiento</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="videogame in videoGames">
+            <th scope="row">{{ videogame.id }}</th>
+            <td>{{videogame.name}}</td>
+            <td>{{videogame.deck}}</td>
+            <td>{{videogame.original_release_date}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Lanzamientos al espacio de SpaceX. API 5: spaceX</h3>
+    <h4>Biblioteca Echarts</h4>
+    <div id="bubble_chart" class="bubble_chart" style="min-width: 300px;max-width: 800px;height: 300px;margin: 1em auto;"></div>
+    <h3>Lista iconos deportes. API 6: API Dribble</h3>
+    <h4>API con AUTH0</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fecha subida</th>
+            <th scope="col">Imagen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="data in auth0API">
+            <th scope="row">{{ data.id }}</th>
+            <td>{{data.attribution}}</td>
+            <td>{{data.date_uploaded}}</td>
+            <td><img src='{{data.preview_url_84}}' /></td>
+        </tr>
+        </tbody>
+    </table>
 </div>

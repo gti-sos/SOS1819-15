@@ -1,314 +1,207 @@
 angular
     .module("SOS1819-15App")
     .controller("IntegrationCtrlCompetitions", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function ($scope, $http, $routeParams, $location, $rootScope) {
-        // Set up the chart
 
-        var yearList = [];
-        var yearCountCenter = [];
-        var yearCountDisaster = [];
-
-        $scope.url = "/api/v2/educations-centers";
         var API = "/api/v2/sports-competitions";
-        var externalAPIg06 = "https://sos1819-06.herokuapp.com/api/v1/transfer-stats/";
-        var externalAPIg12 = "https://sos1819-12.herokuapp.com/api/v1/youth-unemployment-stats";
+        // SOS partners APIs
+        var sosAPIg06 = "https://sos1819-06.herokuapp.com/api/v1/transfer-stats/";
+        var soslAPIg12 = "https://sos1819-12.herokuapp.com/api/v1/youth-unemployment-stats";
         var proxyTransferStats = "/proxy/transfer-stats";
         var proxyYouthStats = "/proxy/youth-unemployment-stats";
+
+        // External APIS
+        var proxyNewyorkTimes = "/proxy/newyorkTimes";
+        var proxyVideogames = "/proxy/videogames";
+        var proxyspaceX = "/proxy/spaceX";
         refresh();
 
         function refresh() {
-            console.log("Requesting competitions to <" + externalAPIg06 + ">");
-            $http.get(externalAPIg06).then(function (response) {
+            // API 1
+            console.log("Requesting to < " + sosAPIg06 + " >");
+            $http.get(sosAPIg06).then(function (response) {
                 $scope.transfers = response.data;
-                console.log($scope.transfers);
             }, function (response) {
                 console.log("Data received: " + JSON.stringify(response.data, null, 2));
             });
 
-            console.log("Requesting competitions to <" + proxyYouthStats + ">");
+            // API 2
+            console.log("Requesting to < " + proxyYouthStats + " >");
             $http.get(proxyYouthStats).then(function (response) {
                 $scope.unemploymentsStats = response.data;
-                console.log($scope.unemploymentsStats);
             }, function (response) {
                 console.log("Data received: " + JSON.stringify(response.data, null, 2));
             });
 
+            // API 3
+            console.log("Requesting to < " + proxyNewyorkTimes + " >");
+            $http.get(proxyNewyorkTimes).then(function (response) {
+                $scope.moviesReviews = response.data.results;
+                barChar();
+            }, function (response) {
+                console.log("Data received: " + JSON.stringify(response.data, null, 2));
+            });
+
+            // API 4
+            console.log("Requesting to < " + proxyVideogames + " >");
+            $http.get(proxyVideogames).then(function (response) {
+                $scope.videoGames = response.data.results;
+            }, function (response) {
+                console.log("Data received: " + JSON.stringify(response.data, null, 2));
+            });
+            // API 5
+            console.log("Requesting to < " + proxyspaceX + " >");
+            $http.get(proxyspaceX).then(function (response) {
+                $scope.launches = response.data;
+                bubble_chart();
+            }, function (response) {
+                console.log("Data received: " + JSON.stringify(response.data, null, 2));
+            });
+
+            // API 6
+            console.log("Requesting to < " + "/auth0/thenoun/" + " >");
+            $http.get("/auth0/thenoun/").then(function (response) {
+                $scope.auth0API = response.data;
+                console.log($scope.auth0API)
+            }, function (response) {
+                console.log("Data received: " + JSON.stringify(response.data, null, 2));
+            });
         }
 
-        function createMajorDisaster(response) {
-            for (i = 1980; i <= 2010; i++) {
-                yearCountDisaster.push(response.data.filter(center => center.year === i).length);
-            }
 
-            var trace1 = {
-                type: "scatter",
-                mode: "lines",
-                x: yearList,
-                y: yearCountCenter,
-                line: {color: '#17BECF'}
-            };
-
-            var trace2 = {
-                type: "scatter",
-                mode: "lines",
-                x: yearList,
-                y: yearCountDisaster,
-                line: {color: '#7F7F7F'}
-            };
-
-            var data = [trace1, trace2];
-
-            var layout = {
-                title: 'Custom Range',
-                xaxis: {
-                    range: ['1980', '2010'],
-                    type: 'date'
-                },
-                yaxis: {
-                    autorange: true,
-                    range: [86.8700008333, 138.870004167],
-                    type: 'linear'
+        // For api 3
+        function barChar() {
+            var data = [];
+            $scope.moviesReviews.forEach(function (movie) {
+                data.push([movie.mpaa_rating, 0]);
+            });
+            var result = data.reduce(function (res, obj) {
+                if (!(obj[0] in res))
+                    res.__array.push(res[obj[0]] = obj);
+                else {
+                    res[obj[0]][1] += 1;
                 }
-            };
+                return res;
+            }, {__array: []}).__array
+                .sort(function (a, b) {
+                    return b.lengthactivity - a.lengthactivity;
+                });
+            result.splice(0, 0, ['Rating', 'Num']);
+            google.charts.load('current', {packages: ['corechart', 'bar']});
+            google.charts.setOnLoadCallback(drawStacked);
 
-            Plotly.newPlot('sos1', data, layout, {showSendToCloud: true});
+            function drawStacked() {
+                var data = new google.visualization.arrayToDataTable(result);
+
+
+                var options = {
+                    title: 'Reviews de películas por evaluación de público',
+                    isStacked: true,
+                    hAxis: {
+                        title: 'Evaluación',
+                        format: 'h:mm a',
+                    },
+                    vAxis: {
+                        title: 'Cantidad'
+                    }
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
+                chart.draw(data, options);
+            }
         }
 
-        function createPollutionStats(response) {
+        // For APi 5
+        function bubble_chart() {
+            console.log("Drawing Area Chart");
+            var anios = ['2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2018', '2019'];
+            var exito = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var fallo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            $scope.launches.forEach(function (launch) {
+                var pos = anios.indexOf(launch.launch_year);
+                if (launch.launch_success === false) {
+                    fallo[pos] += 1;
+                } else {
+                    exito[pos] += 1;
+                }
+            });
+            var dataExito = [];
+            var dataFallo = [];
+            for (i = 0; i < anios.length; i++) {
+                dataExito.push([anios[i], exito[i]]);
+                dataFallo.push([anios[i], fallo[i]]);
+            }
+            var dataAll = [
+                dataExito, dataFallo
+            ];
 
-            yearCountDisaster.push(response.data.filter(center => center.year === i).length);
-
-            Highcharts.chart('container-pollution', {
-                chart: {
-                    type: 'column'
+            var markLineOpt = {
+                animation: false,
+                label: {
+                    normal: {
+                        formatter: 'y = 0.5 * x + 3',
+                        textStyle: {
+                            align: 'right'
+                        }
+                    }
                 },
-                title: {
-                    text: 'Relación pais y contaminación percapita'
-                },
-                xAxis: {
-                    categories: ['España', 'Alemania', 'Reino Unido', 'Francia', 'Italia']
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Contaminación per capita'
+                lineStyle: {
+                    normal: {
+                        type: 'solid'
                     }
                 },
                 tooltip: {
-                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
-                    shared: true
+                    formatter: 'y = 0.5 * x + 3'
                 },
-                plotOptions: {
-                    column: {
-                        stacking: 'normal'
-                    }
+                data: [[{
+                    coord: [0, 3],
+                    symbol: 'none'
+                }, {
+                    coord: [0, 3],
+                    symbol: 'none'
+                }]]
+            };
+
+            option = {
+                title: {
+                    text: '',
+                    x: 'center',
+                    y: 0
                 },
-                series: [{
-                    name: '2015',
-                    data: [
-                        response.data.filter(center => center.country === "spain" && center.year === 2015)[0].pollution_perca
-                        , response.data.filter(center => center.country === "alemania" && center.year === 2015)[0].pollution_perca
-                        , response.data.filter(center => center.country === "reino unido" && center.year === 2015)[0].pollution_perca
-                        , response.data.filter(center => center.country === "francia" && center.year === 2015)[0].pollution_perca
-                        , response.data.filter(center => center.country === "italia" && center.year === 2015)[0].pollution_perca]
-                }, {
-                    name: '2016',
-                    data: [
-                        response.data.filter(center => center.country === "spain" && center.year === 2016)[0].pollution_perca
-                        , response.data.filter(center => center.country === "alemania" && center.year === 2016)[0].pollution_perca
-                        , response.data.filter(center => center.country === "reino unido" && center.year === 2016)[0].pollution_perca
-                        , response.data.filter(center => center.country === "francia" && center.year === 2016)[0].pollution_perca
-                        , response.data.filter(center => center.country === "italia" && center.year === 2016)[0].pollution_perca]
-                }, {
-                    name: '2017',
-                    data: [
-                        response.data.filter(center => center.country === "spain" && center.year === 2017)[0].pollution_perca
-                        , response.data.filter(center => center.country === "alemania" && center.year === 2017)[0].pollution_perca
-                        , response.data.filter(center => center.country === "reino unido" && center.year === 2017)[0].pollution_perca
-                        , response.data.filter(center => center.country === "francia" && center.year === 2017)[0].pollution_perca
-                        , response.data.filter(center => center.country === "italia" && center.year === 2017)[0].pollution_perca]
-                }]
-            });
-        }
-
-        function getBitCoin(response) {
-
-            var listCoins = [];
-
-            for (i = 0; i < response.length; i++) {
-                listCoins.push(response.data[i].usd);
-            }
-            var oilCanvas = document.getElementById("oilChart");
-
-            var oilData = {
-                labels: [
-                    "Bitcoin",
-                    "Dash",
-                    "Ethereum",
-                    "Litecoin",
-                    "Monero",
-                    "Ripple"
+                grid: [
+                    {x: '7%', y: '7%', width: '38%', height: '50%'},
+                    {x2: '7%', y: '7%', width: '38%', height: '50%'}
                 ],
-                datasets: [
+                tooltip: {
+                    formatter: 'Grupo {a}: ({c})'
+                },
+                xAxis: [
+                    {gridIndex: 0, min: 2006, max: 2019},
+                    {gridIndex: 1, min: 2006, max: 2019}
+                ],
+                yAxis: [
+                    {gridIndex: 0, min: 0, max: 25},
+                    {gridIndex: 1, min: 0, max: 25}
+                ],
+                series: [
                     {
-                        data: [response.data.bitcoin.usd,
-                            response.data.dash.usd,
-                            response.data.ethereum.usd,
-                            response.data.litecoin.usd,
-                            response.data.monero.usd,
-                            response.data.ripple.usd],
-                        backgroundColor: [
-                            "#FF6384",
-                            "#63FF84",
-                            "#84FF63",
-                            "#8463FF",
-                            "#6384FF",
-                            "#aa0006"
-                        ]
-                    }]
-            };
-
-            var pieChart = new Chart(oilCanvas, {
-                type: 'pie',
-                data: oilData
-            });
-        }
-
-        function getNationalGrid(response) {
-
-            $scope.factors = response.data
-
-
-        }
-
-        function getRick(response) {
-
-            $scope.ricks = response.data.results
-
-
-        }
-
-        function getPolice(response) {
-
-            var nameListPolice = [];
-            var latPolice = [];
-            var lonPolice = [];
-
-            for (i = 0; i < response.data.length; i++) {
-                if (response.data[i].location != null) {
-                    nameListPolice.push(response.data[i].legislation);
-                    latPolice.push(response.data[i].location.latitude);
-                    lonPolice.push(response.data[i].location.longitude);
-                }
-            }
-
-            var data = [{
-                type: 'scattermapbox',
-                mode: 'markers+text',
-                text: nameListPolice,
-                lon: lonPolice,
-                lat: latPolice,
-                marker: {
-                    size: 7,
-                    color: '#da0034',
-                    line: {
-                        width: 1
-                    }
-                },
-                name: 'Delitos'
-            }];
-
-            var layout = {
-                font: {
-                    color: 'white'
-                },
-                dragmode: 'zoom',
-                mapbox: {
-                    center: {
-                        lat: 51.2115,
-                        lon: -2.6436
+                        name: 'Exitos',
+                        type: 'scatter',
+                        xAxisIndex: 0,
+                        yAxisIndex: 0,
+                        data: dataAll[0],
+                        markLine: markLineOpt
                     },
-                    domain: {
-                        x: [0, 1],
-                        y: [0, 1]
-                    },
-                    zoom: 8
-                },
-                margin: {
-                    r: 20,
-                    t: 40,
-                    b: 20,
-                    l: 20,
-                    pad: 0
-                },
-                showlegend: true,
-                annotations: [{
-                    x: 0,
-                    y: 0,
-                    xref: 'paper',
-                    yref: 'paper',
-                    text: 'Source: <a href="https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh" style="color: rgb(255,255,255)">NASA</a>',
-                    showarrow: false
-                }]
-            };
-
-            Plotly.setPlotConfig({
-                mapboxAccessToken: 'pk.eyJ1IjoiZGFucmFtaXJleiIsImEiOiJjandiNnJwdWwwOTJvM3ludjJ1ZjFsNGRrIn0.4Dtx2mdBN8juQzEGD1TdEw'
-            });
-
-            Plotly.newPlot('map', data, layout);
-        }
-
-        function getSevici(response) {
-
-            function compare(a, b) {
-                if (a.free_bikes > b.free_bikes) {
-                    return -1;
-                }
-                if (a.free_bikes < b.free_bikes) {
-                    return 1;
-                }
-                return 0;
-            }
-
-            var seviciTest = response.data.network.stations.sort(compare).slice(0, 10);
-
-            $scope.sevicis = seviciTest
-
-        }
-
-        function getPokemon(poke1, poke2, poke3, poke4, poke5) {
-
-            console.log(poke1);
-            console.log(poke2);
-            console.log(poke3);
-            console.log(poke4);
-            console.log(poke5);
-
-            new Chart(document.getElementById("radar-chart"), {
-                type: 'radar',
-                data: {
-                    labels: ["Generación 1", "Generación 2", "Generación 3", "Generación 4", "Generación 5"],
-                    datasets: [
-                        {
-                            label: "Cantidad de Pokemon por generación",
-                            fill: true,
-                            backgroundColor: "rgba(179,181,198,0.2)",
-                            borderColor: "rgba(179,181,198,1)",
-                            pointBorderColor: "#fff",
-                            pointBackgroundColor: "rgba(179,181,198,1)",
-                            data: [poke1, poke2, poke3, poke4, poke5]
-                        }
-                    ]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: 'Cantidad de Pokemon por generación'
+                    {
+                        name: 'Fallos',
+                        type: 'scatter',
+                        xAxisIndex: 1,
+                        yAxisIndex: 1,
+                        data: dataAll[1],
+                        markLine: markLineOpt
                     }
-                }
-            });
-
-
+                ]
+            };
+            var myChart = echarts.init(document.getElementById('bubble_chart'));
+            myChart.setOption(option);
         }
-
     }]);

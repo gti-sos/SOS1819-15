@@ -31,7 +31,6 @@ sportsAPI.sportsCompetitionsSecurev2(app, BASE_PATH);
 sportsAPI.educationsCentersv2(app, BASE_PATH);
 sportsAPI.educationsCentersSecurev2(app, BASE_PATH);
 
-
 app.use("/proxy", require('./sports-api/externalRoutes.js'));
 app.use("/", express.static(__dirname + "/public"));
 /*

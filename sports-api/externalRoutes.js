@@ -16,7 +16,22 @@ router.get('/major-disasters', function (req, res) {
 
     .get('/transfer-stats', function (req, res) {
         req.pipe(request('https://sos1819-06.herokuapp.com/api/v1/transfer-stats')).pipe(res);
+    })
+
+    // External APIS
+    .get('/newyorkTimes', function (req, res) {
+        var id = process.env.NY_APP_ID;
+        req.pipe(request('https://api.nytimes.com/svc/movies/v2/reviews/search.json?api-key='+id)).pipe(res);
+    })
+    .get('/spaceX', function (req, res) {
+        req.pipe(request('https://api.spacexdata.com/v3/launches/')).pipe(res);
+    })
+    .get('/videogames', function (req, res) {
+        var id = process.env.GIANTBOMB_APP_ID;
+        req.pipe(request('https://www.giantbomb.com/api/games/?api_key='+id+'&format=json&sort=date_last_updated:desc&limit=15')).pipe(res);
     });
+
+
 
 
 module.exports = router;
