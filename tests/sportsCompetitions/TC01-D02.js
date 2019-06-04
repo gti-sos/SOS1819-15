@@ -35,7 +35,7 @@ describe("Automatization test from sportsCompetitions UI - D02 - ", function () 
         element.all(by.css(".btn-eliminar")).last().click();
 
         var competitions = element.all(by.repeater("comp in competitions"));
-        expect(competitions.count()).toBeLessThan(14);
+        expect(competitions.count()).toBeLessThan(46);
     });
 });
     
