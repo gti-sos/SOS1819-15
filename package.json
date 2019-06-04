@@ -11,8 +11,8 @@
     "dotenv": "^8.0.0",
     "echarts": "^4.2.1",
     "express": "^4.16.4",
-    "request": "2.58.x",
-    "mongodb": "^3.2.3"
+    "mongodb": "^3.2.3",
+    "request": "^2.88.0"
   },
   "devDependencies": {},
   "scripts": {
