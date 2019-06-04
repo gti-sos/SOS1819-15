@@ -29,7 +29,7 @@ describe("Data is loaded", function(){
         element(by.css(".boton-guardar")).click();
 
         var resultModal = element(by.id('alert-success'));
-        browser.wait(until.visibilityO4f(resultModal), 5000, "Message should appear within 5 seconds");
+        browser.wait(until.visibilityOf(resultModal), 5000, "Message should appear within 5 seconds");
         expect(resultModal.getText()).toContain('Creado correctamente');
     });
     it("delete", function () {
